@@ -44,7 +44,55 @@ plt.grid()
 plt.tight_layout()
 plt.show()
 
+---------------------------------------------------------------------------------------------------------------
+# 1
+import numpy as np
+import matplotlib.pyplot as plt
 
+# Take input from user
+start = float(input("Enter start value: "))
+end = float(input("Enter end value: "))
+points = int(input("Enter number of points: "))
+
+# Create input array
+x = np.linspace(start, end, points)
+
+# Activation functions
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
+
+def tanh(x):
+    return np.tanh(x)
+
+def relu(x):
+    return np.maximum(0, x)
+
+def leaky_relu(x):
+    return np.maximum(0.01 * x, x)
+
+# Plot graphs
+plt.figure(figsize=(10, 8))
+
+plt.subplot(2, 2, 1)
+plt.plot(x, sigmoid(x))
+plt.title("Sigmoid")
+
+plt.subplot(2, 2, 2)
+plt.plot(x, tanh(x))
+plt.title("Tanh")
+
+plt.subplot(2, 2, 3)
+plt.plot(x, relu(x))
+plt.title("ReLU")
+
+plt.subplot(2, 2, 4)
+plt.plot(x, leaky_relu(x))
+plt.title("Leaky ReLU")
+
+plt.tight_layout()
+plt.show()
+
+-----------------------------------------------------------------------------------------------------------------
 
 # 2
 
@@ -72,7 +120,53 @@ for x1, x2 in inputs:
     
     print(x1, x2, " ", output)
 
+--------------------------------------------------------------------------------
+# 2
+# McCulloch-Pitts neuron for ANDNOT
 
+def mp_neuron(A, B):
+    w1 = 1
+    w2 = -1
+    threshold = 1
+
+    net = A*w1 + B*w2
+    return 1 if net >= threshold else 0
+
+
+# Take input
+A = int(input("Enter value of A (0 or 1): "))
+B = int(input("Enter value of B (0 or 1): "))
+
+# Validate
+if (A not in [0,1]) or (B not in [0,1]):
+    print("Please enter only 0 or 1")
+else:
+    print("A B Output")
+    print(A, B, mp_neuron(A, B))
+
+# McCulloch-Pitts neuron for ANDNOT
+
+def mp_neuron(A, B):
+    w1 = 1     # weight for A
+    w2 = -1    # weight for B
+    threshold = 1
+
+    net = A*w1 + B*w2
+
+    if net >= threshold:
+        return 1
+    else:
+        return 0
+
+
+# Test all combinations
+inputs = [(0,0), (0,1), (1,0), (1,1)]
+
+print("A B Output")
+for A, B in inputs:
+    print(A, B, mp_neuron(A, B))
+
+-----------------------------------------------------------------------------------------
 
 # 3
 # input: last bit only (even=0, odd=1)
@@ -107,7 +201,80 @@ if result == 0:
 else:
     print("Odd")
 
+-------------------------------------------------------------------------------------------
+# 3
+# Perceptron-style Even/Odd recognition for digits 0–9
 
+def perceptron(x):
+    w = 1
+    b = 0
+
+    net = x * w + b
+
+    # Even/Odd check
+    if net % 2 == 0:
+        return 0   # Even
+    else:
+        return 1   # Odd
+
+
+print("Number  Type")
+for num in range(10):
+    result = perceptron(num)
+    if result == 0:
+        print(num, "     EVEN")
+    else:
+        print(num, "     ODD")
+
+""OR""
+# Step function
+def step_function(net):
+    return 1 if net >= 0 else 0
+
+
+# Perceptron-style function
+def perceptron(num):
+    # target using correct logic
+    target = 1 if num % 2 != 0 else -1   # ODD = 1, EVEN = -1
+
+    # simple weights (demo)
+    w = 1
+    net = w * target
+
+    output = step_function(net)
+
+    return "ODD" if output == 1 else "EVEN"
+
+
+# Menu
+print("Choose an option:")
+print("1. Show all numbers (0–9)")
+print("2. Check a single number")
+
+choice = int(input("Enter your choice (1 or 2): "))
+
+
+# Option 1: Show all
+if choice == 1:
+    print("\nNumber  Type")
+    for num in range(10):
+        print(num, "     ", perceptron(num))
+
+
+# Option 2: Single input
+elif choice == 2:
+    num = int(input("Enter a number (0–9): "))
+
+    if num < 0 or num > 9:
+        print("Please enter between 0 and 9")
+    else:
+        print("\nNumber  Type")
+        print(num, "     ", perceptron(num))
+
+
+else:
+    print("Invalid choice")
+------------------------------------------------------------------------------------
 
 # 4
 import matplotlib.pyplot as plt
@@ -154,7 +321,57 @@ plt.ylabel("x2")
 plt.grid()
 plt.show()
 
+-------------------------------------------------------------------------------------------
+#4
+# Step function
+def step_function(net):
+    return 1 if net >= 0 else 0
 
+
+# Perceptron-style function
+def perceptron(num):
+    # target using correct logic
+    target = 1 if num % 2 != 0 else -1   # ODD = 1, EVEN = -1
+
+    # simple weights (demo)
+    w = 1
+    net = w * target
+
+    output = step_function(net)
+
+    return "ODD" if output == 1 else "EVEN"
+
+
+# Menu
+print("Choose an option:")
+print("1. Show all numbers (0–9)")
+print("2. Check a single number")
+
+choice = int(input("Enter your choice (1 or 2): "))
+
+
+# Option 1: Show all
+if choice == 1:
+    print("\nNumber  Type")
+    for num in range(10):
+        print(num, "     ", perceptron(num))
+
+
+# Option 2: Single input
+elif choice == 2:
+    num = int(input("Enter a number (0–9): "))
+
+    if num < 0 or num > 9:
+        print("Please enter between 0 and 9")
+    else:
+        print("\nNumber  Type")
+        print(num, "     ", perceptron(num))
+
+
+else:
+    print("Invalid choice")
+
+-----------------------------------------------------------------------------
 #5 
 import numpy as np
 
@@ -194,7 +411,58 @@ X_recalled = sign(np.dot(Y_test, W.T))
 print("\nInput Pattern Y:", Y_test)
 print("Recalled Pattern X:", X_recalled)
 
+--------------------------------------------------------------------------------
+# 5
+import numpy as np
 
+# Sign activation function
+def sign(x):
+    return np.where(x >= 0, 1, -1)
+
+
+# ---- Number of pairs ----
+n = int(input("Enter number of vector pairs: "))
+
+X_list = []
+Y_list = []
+
+# ---- Take inputs ----
+for i in range(n):
+    print(f"\nPair {i+1}:")
+    X = list(map(int, input("Enter X (use 1 and -1): ").split()))
+    Y = list(map(int, input("Enter Y (use 1 and -1): ").split()))
+
+    X_list.append(np.array(X))
+    Y_list.append(np.array(Y))
+
+
+# ---- Weight matrix ----
+W = np.zeros((len(X_list[0]), len(Y_list[0])))
+
+for i in range(n):
+    W += np.outer(X_list[i], Y_list[i])
+
+print("\nWeight Matrix:\n", W)
+
+
+# ---- Recall functions ----
+def recall_Y(X):
+    return sign(np.dot(X, W))
+
+def recall_X(Y):
+    return sign(np.dot(Y, W.T))
+
+
+# ---- Testing all pairs ----
+print("\nForward Recall (X → Y):")
+for i in range(n):
+    print(f"X{i+1} ->", recall_Y(X_list[i]))
+
+print("\nBackward Recall (Y → X):")
+for i in range(n):
+    print(f"Y{i+1} ->", recall_X(Y_list[i]))
+
+--------------------------------------------------------------------------
 # 6
 import numpy as np
 
@@ -242,7 +510,59 @@ for epoch in range(5000):
 # -------- Step 5: Output --------
 print("Final Output:\n", output)
 
+-----------------------------------------------------------------------------------------------
+#6
+import numpy as np
 
+# sigmoid
+def sig(x):
+    return 1/(1+np.exp(-x))
+
+# derivative
+def dsig(x):
+    return x*(1-x)
+
+
+# training data (XOR)
+X = np.array([[0,0],[0,1],[1,0],[1,1]])
+Y = np.array([[0],[1],[1],[0]])
+
+# weights
+np.random.seed(1)
+W1 = np.random.rand(2,2)
+W2 = np.random.rand(2,1)
+
+# training
+for i in range(3000):
+    h = sig(np.dot(X,W1))
+    o = sig(np.dot(h,W2))
+
+    e = Y - o
+
+    d2 = e * dsig(o)
+    d1 = d2.dot(W2.T) * dsig(h)
+
+    W2 += h.T.dot(d2)
+    W1 += X.T.dot(d1)
+
+
+# input loop
+while True:
+    s = input("enter two binary inputs or q to quit: ")
+
+    if s == 'q':
+        break
+
+    a,b = map(int, s.split())
+
+    x = np.array([[a,b]])
+
+    h = sig(np.dot(x,W1))
+    o = sig(np.dot(h,W2))
+
+    print("output:", 1 if o[0][0] > 0.5 else 0)
+
+-----------------------------------------------------------------------------------------------------
 
 # 7
 import numpy as np
@@ -292,7 +612,74 @@ for epoch in range(5000):
 print("Final Output:")
 print(output)
 
+---------------------------------------------------------------------------------------------
+#7
+import numpy as np
 
+# Activation function
+def sigmoid(x):
+    return 1/(1+np.exp(-x))
+
+# Derivative
+def dsigmoid(x):
+    return x*(1-x)
+
+
+# ---- XOR Training Data ----
+X = np.array([[0,0],[0,1],[1,0],[1,1]])
+Y = np.array([[0],[1],[1],[0]])
+
+# ---- Initialize weights ----
+np.random.seed(1)
+W1 = np.random.rand(2,2)
+W2 = np.random.rand(2,1)
+
+# ---- Training ----
+for i in range(3000):
+    # Forward
+    hidden = sigmoid(np.dot(X, W1))
+    output = sigmoid(np.dot(hidden, W2))
+
+    # Error
+    error = Y - output
+
+    # Backpropagation
+    d2 = error * dsigmoid(output)
+    d1 = d2.dot(W2.T) * dsigmoid(hidden)
+
+    # Update weights
+    W2 += hidden.T.dot(d2)
+    W1 += X.T.dot(d1)
+
+
+# ---- User Input ----
+while True:
+    s = input("Enter two binary inputs or q to quit: ")
+
+    if s.lower() == 'q':
+        break
+
+    try:
+        a, b = map(int, s.split())
+
+        if a not in [0,1] or b not in [0,1]:
+            print("Enter only 0 or 1")
+            continue
+
+        inp = np.array([[a, b]])
+
+        # Forward pass
+        hidden = sigmoid(np.dot(inp, W1))
+        out = sigmoid(np.dot(hidden, W2))
+
+        result = 1 if out[0][0] > 0.5 else 0
+
+        print("Output:", result)
+
+    except:
+        print("Invalid input. Enter like: 1 0")
+
+-------------------------------------------------------------------------------------------------
 
 # 8
 import numpy as np
@@ -350,7 +737,62 @@ for epoch in range(5000):
 # -------- Step 5: Output --------
 print("Final Output:\n", final_output)
 
+------------------------------------------------------------------------------------------------
+#8
+import numpy as np
 
+# activation
+def sig(x):
+    return 1/(1+np.exp(-x))
+
+def dsig(x):
+    return x*(1-x)
+
+
+# inputs
+n = int(input("number of training samples: "))
+inp = int(input("number of input neurons: "))
+hid = int(input("number of hidden neurons: "))
+out = int(input("number of output neurons: "))
+
+print("enter input values:")
+X = np.array([list(map(float, input().split())) for _ in range(n)])
+
+print("enter output values:")
+Y = np.array([list(map(float, input().split())) for _ in range(n)])
+
+epochs = int(input("enter epochs: "))
+
+
+# weights
+W1 = np.random.rand(inp, hid)
+W2 = np.random.rand(hid, out)
+
+
+# training
+for _ in range(epochs):
+    h = sig(X @ W1)
+    o = sig(h @ W2)
+
+    e = Y - o
+
+    W2 += h.T @ (e * dsig(o))
+    W1 += X.T @ ((e * dsig(o)) @ W2.T * dsig(h))
+
+
+print("\nfinal output:")
+print(o)
+
+
+# testing
+test = np.array([list(map(float, input("enter test input: ").split()))])
+
+h = sig(test @ W1)
+o = sig(h @ W2)
+
+print("predicted output:", o)
+
+---------------------------------------------------------------------------------------------------------
 
 # 9
 import numpy as np
@@ -388,7 +830,46 @@ output = sign(np.dot(W, test))
 
 print("Recalled Pattern:", output)
 
+-------------------------------------------------------------------------------------------------
+#9
+import numpy as np
 
+# sign function
+def sign(x):
+    return np.where(x >= 0, 1, -1)
+
+
+# ---- Take input ----
+n = int(input("Enter size of each vector: "))
+
+patterns = []
+print("Enter 4 vectors (use 1 and -1):")
+
+for i in range(4):
+    p = list(map(int, input(f"Vector {i+1}: ").split()))
+    patterns.append(np.array(p))
+
+# ---- Weight matrix ----
+W = np.zeros((n, n))
+
+for p in patterns:
+    W += np.outer(p, p)
+
+# remove self-connection
+np.fill_diagonal(W, 0)
+
+print("\nWeight Matrix:\n", W)
+
+
+# ---- Recall ----
+test = list(map(int, input("\nEnter test vector: ").split()))
+test = np.array(test)
+
+result = sign(np.dot(W, test))
+
+print("Recalled Pattern:", result)
+
+-----------------------------------------------------------------------------------------------
 
 # 10
 import cv2
@@ -412,7 +893,7 @@ cv2.imshow('Output', img)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
 
-
+-----------------------------------------------------------------------------------------------------------------------
 
 
 # 11
@@ -467,8 +948,65 @@ loss, acc = model2.evaluate(X2, y2, verbose=0)
 
 print("Accuracy:", acc)
 
+--------------------------------------------------------------------------------------------------
+#11
+import tensorflow as tf
+import numpy as np
 
+# Training data
+X = np.array([
+    [1],
+    [2],
+    [3],
+    [4],
+    [5],
+    [6]
+], dtype=float)
 
+y = np.array([
+    [0],
+    [0],
+    [0],
+    [1],
+    [1],
+    [1]
+], dtype=float)
+
+# Create model
+model = tf.keras.Sequential([
+    
+    tf.keras.Input(shape=(1,)),
+    
+    tf.keras.layers.Dense(
+        1,
+        activation='sigmoid'
+    )
+])
+
+# Compile model
+model.compile(
+    optimizer='adam',
+    loss='binary_crossentropy',
+    metrics=['accuracy']
+)
+
+# Train model
+model.fit(X, y, epochs=100)
+
+# Evaluate
+loss, accuracy = model.evaluate(X, y)
+
+print("Loss =", loss)
+print("Accuracy =", accuracy)
+
+# Prediction
+prediction = model.predict(
+    np.array([[7]], dtype=float)
+)
+
+print("Prediction for 7 =", prediction)
+
+---------------------------------------------------------------------------------------------
 
 # 12
 import tensorflow as tf
@@ -511,8 +1049,119 @@ test_loss, test_acc = model.evaluate(X_test, y_test)
 
 print("Test Accuracy:", test_acc)
 
+------------------------------------------------------------------------------------------------
+#12 
+import tensorflow as tf
+from tensorflow.keras import datasets, layers, models
+import matplotlib.pyplot as plt
 
+# ---------------- LOAD DATA ----------------
 
+(train_images, train_labels), (test_images, test_labels) = datasets.mnist.load_data()
+
+# Reshape for CNN
+train_images = train_images.reshape((60000, 28, 28, 1))
+test_images = test_images.reshape((10000, 28, 28, 1))
+
+# Normalize
+train_images = train_images / 255.0
+test_images = test_images / 255.0
+
+# ---------------- CREATE CNN MODEL ----------------
+
+model = models.Sequential([
+
+    tf.keras.Input(shape=(28,28,1)),
+
+    # Convolution Layer
+    layers.Conv2D(32, (3,3), activation='relu'),
+
+    # Pooling Layer
+    layers.MaxPooling2D((2,2)),
+
+    # Second Convolution Layer
+    layers.Conv2D(64, (3,3), activation='relu'),
+
+    # Pooling Layer
+    layers.MaxPooling2D((2,2)),
+
+    # Flatten
+    layers.Flatten(),
+
+    # Dense Layer
+    layers.Dense(64, activation='relu'),
+
+    # Dropout reduces overfitting
+    layers.Dropout(0.5),
+
+    # Output Layer
+    layers.Dense(10, activation='softmax')
+])
+
+# ---------------- COMPILE MODEL ----------------
+
+model.compile(
+    optimizer='adam',
+    loss='sparse_categorical_crossentropy',
+    metrics=['accuracy']
+)
+
+# ---------------- TRAIN MODEL ----------------
+
+history = model.fit(
+    train_images,
+    train_labels,
+    epochs=5,
+    validation_data=(test_images, test_labels)
+)
+
+# ---------------- EVALUATE MODEL ----------------
+
+loss, accuracy = model.evaluate(
+    test_images,
+    test_labels
+)
+
+print("Test Accuracy =", accuracy)
+
+# ---------------- PREDICT ----------------
+
+import numpy as np
+
+predictions = model.predict(test_images)
+
+predicted_digit = np.argmax(predictions[0])
+
+print("Predicted Digit =", predicted_digit)
+print("Actual Digit =", test_labels[0])
+
+# ---------------- PLOT GRAPHS ----------------
+
+# Accuracy Graph
+plt.plot(history.history['accuracy'])
+plt.plot(history.history['val_accuracy'])
+
+plt.title('Model Accuracy')
+plt.ylabel('Accuracy')
+plt.xlabel('Epoch')
+
+plt.legend(['Train', 'Validation'])
+
+plt.show()
+
+# Loss Graph
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+
+plt.title('Model Loss')
+plt.ylabel('Loss')
+plt.xlabel('Epoch')
+
+plt.legend(['Train', 'Validation'])
+
+plt.show()
+
+-------------------------------------------------------------------------------------------------
 
 # 13
 import tensorflow as tf
@@ -548,3 +1197,58 @@ model.fit(X_train, y_train, epochs=3)
 # Evaluate
 loss, acc = model.evaluate(X_test, y_test)
 print("Accuracy:", acc)
+
+-------------------------------------------------------------------------------------------------------
+#13
+import tensorflow as tf
+from tensorflow.keras.datasets import mnist
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Flatten
+import numpy as np
+
+# Load dataset
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
+
+# Normalize values
+x_train = x_train / 255.0
+x_test = x_test / 255.0
+
+# Create model
+model = Sequential([
+
+    Flatten(input_shape=(28, 28)),
+
+    Dense(128, activation='relu'),
+
+    Dense(10, activation='softmax')
+])
+
+# Compile model
+model.compile(
+    optimizer='adam',
+    loss='sparse_categorical_crossentropy',
+    metrics=['accuracy']
+)
+
+# Train model
+model.fit(
+    x_train,
+    y_train,
+    epochs=5
+)
+
+# Evaluate model
+loss, accuracy = model.evaluate(
+    x_test,
+    y_test
+)
+
+print("Accuracy =", accuracy)
+
+# Predict
+prediction = model.predict(x_test)
+
+predicted_digit = np.argmax(prediction[0])
+
+print("Predicted Digit =", predicted_digit)
+print("Actual Digit =", y_test[0])
