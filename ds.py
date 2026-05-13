@@ -642,7 +642,378 @@ for col in df.columns[:-1]:
 
 
 
++++++++++++++++++++++++++++++++++++  CODE EXPLAINATION  +++++++++++++++++++++++++++++++++++++++++
+CODE 1 EXPLANATION (Data Wrangling Titanic)
+Line
+df = pd.read_csv(...)
 
+Reads Titanic dataset.
+
+Line
+print(df.isnull().sum())
+
+Checks missing values in every column.
+
+Line
+df['Age'] = df['Age'].astype(float)
+
+Converts Age column datatype to float.
+
+Line
+df['Survived'] = df['Survived'].astype(int)
+
+Converts Survived column into integer.
+
+Line
+df['Age'] = (df['Age'] - df['Age'].min()) / ...
+
+Performs normalization.
+
+Range becomes:
+0 to 1
+
+Line
+df['Sex'] = df['Sex'].map({'male':0,'female':1})
+
+Converts categorical data into numeric form.
+
+male → 0
+female → 1
+
+Line
+pd.get_dummies()
+
+Performs one-hot encoding.
+
+Converts categorical column into multiple binary columns.
+
+Viva Questions CODE 1
+What is normalization?
+
+Scaling values between 0 and 1.
+
+Why preprocessing needed?
+
+To clean data before machine learning.
+
+What are missing values?
+
+Empty/null data entries.
+
+What is one-hot encoding?
+
+Converting categorical data into binary columns.
+----------------------------
+CODE 2 EXPLANATION (Missing Values & Outliers)
+Line
+np.nan
+
+Represents missing value.
+
+Line
+df.fillna(...)
+
+Fills missing values.
+
+Line
+numeric_only=True
+
+Applies operation only on numeric columns.
+
+Line
+Q1 = quantile(0.25)
+
+First quartile.
+
+Line
+Q3 = quantile(0.75)
+
+Third quartile.
+
+Line
+IQR = Q3 - Q1
+
+Interquartile range.
+
+Used to detect outliers.
+
+Outlier Formula
+
+Outlier<Q1−1.5(IQR)orOutlier>Q3+1.5(IQR)
+
+Line
+np.log(df['Marks'])
+
+Log transformation.
+
+Reduces skewness.
+
+Viva Questions CODE 2
+What is outlier?
+
+Abnormally large/small value.
+
+Why remove outliers?
+
+They affect model accuracy.
+
+What is IQR?
+
+Difference between Q3 and Q1.
+---------------------------
+CODE 3 EXPLANATION (Statistical Analysis)
+Line
+groupby()
+
+Groups data based on categories.
+
+Line
+agg(['mean','median'])
+
+Performs multiple statistical operations.
+
+Line
+apply(list)
+
+Converts grouped values into lists.
+
+Line
+grouped.mean()
+
+Calculates mean of each group.
+
+Viva Questions CODE 3
+Difference between mean and median?
+Mean = average
+Median = middle value
+Why use groupby?
+
+To analyze grouped data.
+----------------------------
+CODE 4 EXPLANATION (Linear Regression)
+What is Linear Regression?
+
+Predicts continuous values.
+
+Example:
+
+House price prediction
+Line
+X = df.drop('medv', axis=1)
+
+Independent variables/features.
+
+Line
+y = df['medv']
+
+Dependent variable/target.
+
+Line
+train_test_split()
+
+Splits dataset into training and testing.
+
+Line
+model.fit()
+
+Trains model.
+
+Line
+model.predict()
+
+Predicts outputs.
+
+Mean Squared Error
+
+MSE=
+n
+1
+	​
+
+∑(y−
+y
+^
+	​
+
+)
+2
+
+Viva Questions CODE 4
+What is regression?
+
+Predicting continuous values.
+
+What is dependent variable?
+
+Output variable.
+
+What is R2 score?
+
+Measures goodness of fit.
+---------------------------
+CODE 5 EXPLANATION (Logistic Regression)
+What is Logistic Regression?
+
+Classification algorithm.
+
+Used for:
+
+Yes/No prediction
+Line
+StandardScaler()
+
+Standardizes data.
+
+Mean = 0
+Standard deviation = 1
+
+Confusion Matrix Terms
+Term	Meaning
+TP	Correct positive
+TN	Correct negative
+FP	Incorrect positive
+FN	Incorrect negative
+Viva Questions CODE 5
+Difference between Linear & Logistic Regression?
+Linear → continuous output
+Logistic → classification
+What is confusion matrix?
+
+Performance evaluation table.
+----------------------------------
+CODE 6 EXPLANATION (Naive Bayes)
+What is Naive Bayes?
+
+Probabilistic classification algorithm.
+
+Based on Bayes theorem.
+
+GaussianNB
+
+Naive Bayes for continuous data.
+
+Line
+model.fit()
+
+Trains classifier.
+
+Line
+confusion_matrix()
+
+Compares actual vs predicted values.
+
+Viva Questions CODE 6
+Why called Naive Bayes?
+
+Assumes features are independent.
+
+What is probability classifier?
+
+Classifier based on probability.
+-------------------------------------
+CODE 7 EXPLANATION (NLP)
+What is NLTK?
+
+Used for:
+
+NLP tasks
+Tokenization
+Stemming
+Lemmatization
+Tokenization
+
+Splitting sentence into words.
+
+POS Tagging
+
+Identifies grammar type:
+
+noun
+verb
+adjective
+Stopwords
+
+Common unnecessary words:
+
+is
+the
+and
+Stemming
+
+Reduces word to root form.
+
+Example:
+running → run
+
+Lemmatization
+
+Converts word into meaningful root word.
+
+better than stemming.
+
+CountVectorizer
+
+Converts text into numerical vectors.
+
+TF-IDF
+
+Measures importance of words.
+
+Viva Questions CODE 7
+Difference between stemming and lemmatization?
+Stemming may produce non-meaningful root
+Lemmatization gives meaningful word
+What is NLP?
+
+Processing human language using computers.
+--------------------------------------
+CODE 8 EXPLANATION (Titanic Visualization)
+countplot()
+
+Counts category frequencies.
+
+histplot()
+
+Displays distribution.
+
+kde=True
+
+Shows smooth density curve.
+
+Viva Questions CODE 8
+Difference between histogram and countplot?
+Histogram → numerical data
+Countplot → categorical data
+CODE 9 EXPLANATION (Boxplot)
+boxplot()
+
+Displays:
+
+median
+quartiles
+outliers
+Viva Questions CODE 9
+What does boxplot show?
+
+Spread and outliers of data.
+
+CODE 10 EXPLANATION (Iris Visualization)
+hist()
+
+Plots histogram of all numerical columns.
+
+for col in df.columns[:-1]
+
+Loops through all columns except last.
+
+Viva Questions CODE 10
+Why use histogram?
+
+To understand data distribution.
+
+Why boxplot useful?
+
+To detect outliers easily.
 
 
 
