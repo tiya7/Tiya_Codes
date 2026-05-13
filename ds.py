@@ -842,7 +842,116 @@ print(
 # END OF PROGRAM
 # ============================================================
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
- #Assignment - 7
+#Assignment - 4
+                      # __________________________
+                       #__________________________
+
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+
+# Load Dataset
+df = pd.read_csv(r"D:\Madhura's Projects\INSEM\DataSets\HousingData.csv")
+
+# Handle missing values
+df.fillna(df.select_dtypes(include='number').mean(), inplace=True)
+
+# Features and Target
+X = df.drop("MEDV", axis=1)
+y = df["MEDV"]
+
+# Split Data
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Train Model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Prediction
+y_pred = model.predict(X_test)
+
+# Output
+print("MSE:", mean_squared_error(y_test, y_pred))
+print("R2 Score:", r2_score(y_test, y_pred))
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Assignment - 5
+                      # __________________________
+                       #__________________________
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score
+
+df = pd.read_csv(r"D:/Madhura's Projects/INSEM/DataSets/Social_Network_Ads.csv")
+
+X = df[['Age', 'EstimatedSalary']]
+y = df['Purchased']
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.25, random_state=42
+)
+
+model = LogisticRegression()
+model.fit(X_train, y_train)
+
+y_pred = model.predict(X_test)
+
+cm = confusion_matrix(y_test, y_pred)
+
+TN = cm[0][0]
+FP = cm[0][1]
+FN = cm[1][0]
+TP = cm[1][1]
+
+print("Confusion Matrix:\n", cm)
+print("TP:", TP)
+print("FP:", FP)
+print("TN:", TN)
+print("FN:", FN)
+
+print("Accuracy:", accuracy_score(y_test, y_pred))
+print("Error Rate:", 1 - accuracy_score(y_test, y_pred))
+print("Precision:", precision_score(y_test, y_pred))
+print("Recall:", recall_score(y_test, y_pred))
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Assignment - 6
+                      # __________________________
+                       #__________________________
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score
+
+df = pd.read_csv(r"D:/Madhura's Projects/INSEM/DataSets/Iris.csv")
+
+X = df.iloc[:, 1:5]
+y = df["Species"]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.25, random_state=42
+)
+
+model = GaussianNB()
+model.fit(X_train, y_train)
+
+y_pred = model.predict(X_test)
+
+cm = confusion_matrix(y_test, y_pred)
+
+print("Confusion Matrix:\n", cm)
+
+print("Accuracy:", accuracy_score(y_test, y_pred))
+print("Error Rate:", 1 - accuracy_score(y_test, y_pred))
+
+print("Precision:", precision_score(y_test, y_pred, average='macro'))
+print("Recall:", recall_score(y_test, y_pred, average='macro'))
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Assignment - 7
                       # __________________________
                        #__________________________
 
