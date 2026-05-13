@@ -1,3 +1,657 @@
+===1===
+
+import pandas as pd
+import numpy as np
+df = pd.read_csv(r"C:\Users\supri\Downloads\Titanic-Dataset.csv")
+print(df.head())
+----------------
+print(df.isnull().sum())
+-----------------
+print(df.describe())
+-------------------
+print(df.shape)
+---------------
+print(df.info())
+---------------
+print(df.dtypes)
+----------------
+df['Age'] = df['Age'].astype(float)
+df['Survived'] = df['Survived'].astype(int)
+df['Age'] = (df['Age'] - df['Age'].min()) / (df['Age'].max() - df['Age'].min())
+df['Sex'] = df['Sex'].map({'male': 0, 'female': 1})
+df = pd.get_dummies(df, columns=['Embarked'])
+print(df.head())
+_________________________________________________________________________________________________________________
+_________________________________________________________________________________________________________________
+===2===
+
+import pandas as pd
+import numpy as np
+data = {
+    'Name': ['A','B','C','D','E'],
+    'Marks': [85, 90, np.nan, 200, 75],   # missing + outlier
+    'StudyHours': [2, 3, 4, 100, 2],      # outlier
+    'Attendance': [80, 85, 90, np.nan, 88]
+}
+df = pd.DataFrame(data)
+print("Original Data:\n", df)
+df.fillna(df.mean(numeric_only=True), inplace=True)
+print("\nAfter Handling Missing Values:\n", df)
+numeric_df = df.select_dtypes(include=np.number)
+
+Q1 = numeric_df.quantile(0.25)
+Q3 = numeric_df.quantile(0.75)
+IQR = Q3 - Q1
+
+df = df[~((numeric_df < (Q1 - 1.5 * IQR)) | 
+          (numeric_df > (Q3 + 1.5 * IQR))).any(axis=1)]
+
+print("\nAfter Removing Outliers:\n", df)
+df['Log_Marks'] = np.log(df['Marks'])
+print("\nAfter Transformation:\n", df)
+_________________________________________________________________________________________________________________
+_________________________________________________________________________________________________________________
+===3===
+
+import pandas as pd
+data = {
+    'AgeGroup': ['Young','Young','Adult','Adult','Senior','Senior'],
+    'Income': [20000,25000,40000,42000,30000,28000]
+}
+df = pd.DataFrame(data)
+grouped = df.groupby('AgeGroup')['Income']
+print(grouped.agg(['mean','median','min','max','std']))
+------------------------
+income_list = df.groupby('AgeGroup')['Income'].apply(list)
+print(income_list)
+-------------------------
+import pandas as pd
+df = pd.read_csv(r"C:\Users\supri\Downloads\Iris.csv")
+print(df.columns) 
+grouped = df.groupby('Species')
+print(grouped.mean())
+print(grouped.std())
+print(grouped.quantile([0.25, 0.5, 0.75]))
+df.columns = df.columns.str.lower()
+grouped = df.groupby('species')
+_________________________________________________________________________________________________________________
+_________________________________________________________________________________________________________________
+===4===
+
+!pip install pandas numpy scikit-learn matplotlib seaborn
+-----------------
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+-----------------------
+url = "https://raw.githubusercontent.com/selva86/datasets/master/BostonHousing.csv"
+df = pd.read_csv(url)
+print(df.head())
+-------------------------
+print(df.shape)
+print(df.info())
+print(df.describe())
+----------------------------
+print(df.isnull().sum())
+---------------------------
+X = df.drop('medv', axis=1)   # independent variables
+y = df['medv']                # dependent variable (price)
+------------------------
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+print("Training data:", X_train.shape)
+print("Testing data:", X_test.shape)
+-------------------------
+from sklearn.linear_model import LinearRegression
+model = LinearRegression()
+model.fit(X_train, y_train)
+print("Model trained successfully!")
+------------------
+y_pred = model.predict(X_test)
+print("Predictions:\n", y_pred[:5])
+-----------------------------
+from sklearn.metrics import mean_squared_error, r2_score
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+print("Mean Squared Error:", mse)
+print("R2 Score:", r2)
+-----------------------------
+import matplotlib.pyplot as plt
+plt.scatter(y_test, y_pred)
+plt.xlabel("Actual Prices")
+plt.ylabel("Predicted Prices")
+plt.title("Actual vs Predicted Prices")
+plt.show()
+_________________________________________________________________________________________________________________
+_________________________________________________________________________________________________________________
+===5===
+
+!pip install pandas numpy scikit-learn matplotlib
+-----------------
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix
+-----------------------------
+df = pd.read_csv(r"C:\Users\supri\Downloads\Social_Network_Ads.csv")
+print(df.head())
+-------------------------
+X = df[['Age', 'EstimatedSalary']]
+y = df['Purchased']
+--------------------------
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.25,
+    random_state=0
+)
+------------------
+sc = StandardScaler()
+
+X_train = sc.fit_transform(X_train)
+X_test = sc.transform(X_test)
+-----------------------------
+model = LogisticRegression()
+model.fit(X_train, y_train)
+-----------------------------
+y_pred = model.predict(X_test)
+print(y_pred)
+------------------------------
+cm = confusion_matrix(y_test, y_pred)
+matrix = pd.DataFrame(
+    cm,
+    columns=['Predicted Negative', 'Predicted Positive'],
+    index=['Actual Negative', 'Actual Positive']
+)
+
+print(matrix)
+---------------------
+TN = cm[0][0]
+FP = cm[0][1]
+FN = cm[1][0]
+TP = cm[1][1]
+
+print("True Positive =", TP)
+print("False Positive =", FP)
+print("True Negative =", TN)
+print("False Negative =", FN)
+-------------------
+accuracy = (TP + TN) / (TP + TN + FP + FN)
+error_rate = (FP + FN) / (TP + TN + FP + FN)
+precision = TP / (TP + FP)
+recall = TP / (TP + FN)
+print("Accuracy =", accuracy)
+print("Error Rate =", error_rate)
+print("Precision =", precision)
+print("Recall =", recall)
+--------------------------------
+_________________________________________________________________________________________________________________
+_________________________________________________________________________________________________________________
+===6===
+
+!pip install pandas numpy scikit-learn
+-------------
+iris = load_iris()
+df = pd.read_csv(r"C:\Users\supri\Downloads\Iris.csv")
+df['species'] = iris.target
+df['species'] = df['species'].map({
+    0: 'Iris-setosa',
+    1: 'Iris-versicolor',
+    2: 'Iris-virginica'
+})
+print(df.head())
+------------------
+X = df.drop('species', axis=1)   # features
+y = df['species']               # target
+-----------------------------
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=42
+)
+----------------------
+from sklearn.naive_bayes import GaussianNB
+model = GaussianNB()
+model.fit(X_train, y_train)
+print("Model trained successfully")
+------------------------
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.metrics import confusion_matrix
+cm = confusion_matrix(y_test, y_pred)
+labels = ['Iris-setosa', 'Iris-versicolor', 'Iris-virginica']
+plt.figure(figsize=(6,5))
+sns.heatmap(
+    cm,
+    annot=True,
+    fmt='d',
+    cmap='Blues',
+    xticklabels=labels,
+    yticklabels=labels
+)
+plt.xlabel("Predicted Label")
+plt.ylabel("Actual Label")
+plt.title("Confusion Matrix")
+plt.show()
+--------------------------
+import numpy as np
+y_test_bin = [1 if i == 'Iris-setosa' else 0 for i in y_test]
+y_pred_bin = [1 if i == 'Iris-setosa' else 0 for i in y_pred]
+cm_bin = confusion_matrix(y_test_bin, y_pred_bin)
+TN, FP, FN, TP = cm_bin.ravel()
+print("TP:", TP)
+print("TN:", TN)
+print("FP:", FP)
+print("FN:", FN)
+accuracy = (TP + TN) / (TP + TN + FP + FN)
+error_rate = 1 - accuracy
+precision = TP / (TP + FP)
+recall = TP / (TP + FN)
+print("Accuracy:", accuracy)
+print("Error Rate:", error_rate)
+print("Precision:", precision)
+print("Recall:", recall)
+------------------------------------
+OR
+----------------------------------------
+# === 6 ===
+
+# Install required libraries
+!pip install pandas numpy scikit-learn seaborn matplotlib
+
+# ---------------------------------------------
+
+# Import libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import confusion_matrix
+
+# ---------------------------------------------
+
+# Load iris dataset
+iris = load_iris()
+
+# Read CSV file
+df = pd.read_csv(r"C:\Users\supri\Downloads\Iris.csv")
+
+# Add species column
+df['species'] = iris.target
+
+# Map numeric values to species names
+df['species'] = df['species'].map({
+    0: 'Iris-setosa',
+    1: 'Iris-versicolor',
+    2: 'Iris-virginica'
+})
+
+# Display dataset
+print(df.head())
+
+# ---------------------------------------------
+
+# Features and target
+X = df.drop('species', axis=1)
+
+y = df['species']
+
+# ---------------------------------------------
+
+# Split dataset
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.3,
+    random_state=42
+)
+
+print("Training data shape:", X_train.shape)
+print("Testing data shape:", X_test.shape)
+
+# ---------------------------------------------
+
+# Create Gaussian Naive Bayes model
+model = GaussianNB()
+
+# Train model
+model.fit(X_train, y_train)
+
+print("Model trained successfully")
+
+# ---------------------------------------------
+
+# Prediction
+y_pred = model.predict(X_test)
+
+print("Predicted Values:")
+print(y_pred)
+
+# ---------------------------------------------
+
+# Confusion Matrix
+cm = confusion_matrix(y_test, y_pred)
+
+labels = [
+    'Iris-setosa',
+    'Iris-versicolor',
+    'Iris-virginica'
+]
+
+plt.figure(figsize=(6,5))
+
+sns.heatmap(
+    cm,
+    annot=True,
+    fmt='d',
+    cmap='Blues',
+    xticklabels=labels,
+    yticklabels=labels
+)
+
+plt.xlabel("Predicted Label")
+plt.ylabel("Actual Label")
+plt.title("Confusion Matrix")
+
+plt.show()
+
+# ---------------------------------------------
+
+# Convert into binary classification
+# Iris-setosa = 1
+# Others = 0
+
+y_test_bin = [1 if i == 'Iris-setosa' else 0 for i in y_test]
+
+y_pred_bin = [1 if i == 'Iris-setosa' else 0 for i in y_pred]
+
+# ---------------------------------------------
+
+# Binary confusion matrix
+cm_bin = confusion_matrix(y_test_bin, y_pred_bin)
+
+TN, FP, FN, TP = cm_bin.ravel()
+
+print("TP:", TP)
+print("TN:", TN)
+print("FP:", FP)
+print("FN:", FN)
+
+# ---------------------------------------------
+
+# Performance metrics
+accuracy = (TP + TN) / (TP + TN + FP + FN)
+
+error_rate = 1 - accuracy
+
+precision = TP / (TP + FP)
+
+recall = TP / (TP + FN)
+
+print("Accuracy:", accuracy)
+
+print("Error Rate:", error_rate)
+
+print("Precision:", precision)
+
+print("Recall:", recall)
+_________________________________________________________________________________________________________________
+_________________________________________________________________________________________________________________
+===7===
+
+!pip install nltk scikit-learn
+-----------------
+import nltk
+import pandas as pd
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer, WordNetLemmatizer
+from nltk import pos_tag
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('wordnet')
+text = """
+Text Analytics is the process of converting unstructured text data
+into meaningful information. Natural Language Processing helps
+computers understand human language.
+"""
+---------------------
+tokens = word_tokenize(text)
+print("Tokens:\n", tokens)
+-------------
+pos_tags = pos_tag(tokens)
+print(pos_tags)
+---------
+stop_words = set(stopwords.words('english'))
+filtered_words = [word for word in tokens if word.lower() not in stop_words]
+print("After Stopword Removal:\n", filtered_words)
+--------------
+stemmer = PorterStemmer()
+stemmed_words = [stemmer.stem(word) for word in filtered_words]
+print("Stemmed Words:\n", stemmed_words)
+--------------------
+lemmatizer = WordNetLemmatizer()
+lemmatized_words = [lemmatizer.lemmatize(word) for word in filtered_words]
+print("Lemmatized Words:\n", lemmatized_words)
+-----------------
+documents = [
+    "Text analytics converts text into information",
+    "Natural language processing understands text"
+]
+cv = CountVectorizer()
+tf_matrix = cv.fit_transform(documents)
+tf = pd.DataFrame(
+    tf_matrix.toarray(),
+    columns=cv.get_feature_names_out()
+)
+print("\nTerm Frequency:")
+print(tf)
+---------------------
+tfidf = TfidfVectorizer()
+X_tfidf = tfidf.fit_transform(documents)
+print("TF-IDF Values:\n", X_tfidf.toarray())
+-----------------------------
+_________________________________________________________________________________________________________________
+_________________________________________________________________________________________________________________
+===8===
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+df = sns.load_dataset('titanic')
+print(df.head())
+print(df.info())
+--------------------
+sns.countplot(x='survived', data=df)
+plt.show()
+sns.countplot(x='survived', hue='sex', data=df)
+plt.show()
+sns.histplot(df['age'], kde=True)
+plt.show()
+----------------
+import seaborn as sns
+import matplotlib.pyplot as plt
+df = sns.load_dataset('titanic')
+sns.histplot(df['fare'], kde=True)
+plt.title("Fare Distribution")
+plt.xlabel("Fare")
+plt.ylabel("Count")
+plt.show()
+-----------------------
+OR
+-----------------------
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Read Titanic dataset using pd.read_csv()
+
+df = pd.read_csv(r"C:\Users\supri\Downloads\titanic.csv")
+
+# Display first 5 rows
+print(df.head())
+
+# Display dataset information
+print(df.info())
+
+# ---------------------------------------------
+
+# Count plot of survived passengers
+
+sns.countplot(x='survived', data=df)
+
+plt.show()
+
+# ---------------------------------------------
+
+# Count plot based on gender
+
+sns.countplot(x='survived', hue='sex', data=df)
+
+plt.show()
+
+# ---------------------------------------------
+
+# Age distribution graph
+
+sns.histplot(df['age'], kde=True)
+
+plt.show()
+
+# ---------------------------------------------
+
+# Fare distribution graph
+
+sns.histplot(df['fare'], kde=True)
+
+plt.title("Fare Distribution")
+
+plt.xlabel("Fare")
+
+plt.ylabel("Count")
+
+plt.show()
+_________________________________________________________________________________________________________________
+_________________________________________________________________________________________________________________
+===9===
+import seaborn as sns
+import matplotlib.pyplot as plt
+df = sns.load_dataset('titanic')
+sns.boxplot(x='sex', y='age', hue='survived', data=df)
+plt.title("Age Distribution by Gender and Survival")
+plt.xlabel("Gender")
+plt.ylabel("Age")
+plt.show()
+---------------------
+OR
+---------------------
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Read Titanic dataset using pd.read_csv()
+
+df = pd.read_csv(r"C:\Users\supri\Downloads\titanic.csv")
+
+# Boxplot for age distribution by gender and survival
+
+sns.boxplot(
+    x='sex',
+    y='age',
+    hue='survived',
+    data=df
+)
+
+plt.title("Age Distribution by Gender and Survival")
+
+plt.xlabel("Gender")
+
+plt.ylabel("Age")
+
+plt.show()
+_________________________________________________________________________________________________________________
+_________________________________________________________________________________________________________________
+===10===
+
+import seaborn as sns
+import pandas as pd
+import matplotlib.pyplot as plt
+df = sns.load_dataset('iris')
+print(df.head())
+print(df.dtypes)
+df.hist(figsize=(8,6))
+plt.show()
+--------------------------
+import seaborn as sns
+for col in df.columns[:-1]:
+    sns.boxplot(x=df[col])
+    plt.title(col)
+    plt.show()
+------------------
+OR
+--------------------
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Read Iris dataset using pd.read_csv()
+
+df = pd.read_csv(r"C:\Users\supri\Downloads\Iris.csv")
+
+# Display first 5 rows
+print(df.head())
+
+# Display data types
+print(df.dtypes)
+
+# ---------------------------------------------
+
+# Histogram plots
+
+df.hist(figsize=(8,6))
+
+plt.show()
+
+# ---------------------------------------------
+
+# Boxplots for each column
+
+for col in df.columns[:-1]:
+
+    sns.boxplot(x=df[col])
+
+    plt.title(col)
+
+    plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                            #Assignment - 1
                       # __________________________
