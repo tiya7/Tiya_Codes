@@ -1325,6 +1325,171 @@ plt.title("Age Distribution by Gender and Survival")
 # Show Plot
 plt.show()
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Assignment - 10
+                      # __________________________
+                       #__________________________
+
+
+# ============================================================
+# DATA VISUALIZATION III
+# ============================================================
+
+# ============================================================
+# IMPORT REQUIRED LIBRARIES
+# ============================================================
+
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# ============================================================
+# LOAD IRIS DATASET
+# ============================================================
+
+iris = sns.load_dataset('iris')
+
+print("\n================ FIRST 5 ROWS ================\n")
+
+print(iris.head())
+
+# ============================================================
+# DATASET INFORMATION
+# ============================================================
+
+print("\n================ DATASET SHAPE ================\n")
+
+print(iris.shape)
+
+print("\n================ COLUMN NAMES ================\n")
+
+print(iris.columns)
+
+print("\n================ DATA TYPES ================\n")
+
+print(iris.dtypes)
+
+# ============================================================
+# FEATURES AND TYPES
+# ============================================================
+
+print("\n================ FEATURES AND TYPES ================\n")
+
+for column in iris.columns:
+    
+    if iris[column].dtype == 'object':
+        
+        print(column, " --> Nominal / Categorical")
+    
+    else:
+        
+        print(column, " --> Numeric")
+
+# ============================================================
+# HISTOGRAMS
+# ============================================================
+
+iris.hist(
+    figsize=(10,8),
+    bins=20
+)
+
+plt.suptitle("Histograms of Iris Dataset Features")
+
+plt.show()
+
+# ============================================================
+# BOXPLOTS
+# ============================================================
+
+plt.figure(figsize=(12,6))
+
+sns.boxplot(data=iris)
+
+plt.title("Boxplots of Iris Dataset Features")
+
+plt.show()
+
+# ============================================================
+# INDIVIDUAL BOXPLOTS
+# ============================================================
+
+numeric_columns = iris.select_dtypes(include=['float64']).columns
+
+for column in numeric_columns:
+    
+    plt.figure(figsize=(6,4))
+    
+    sns.boxplot(
+        y=iris[column]
+    )
+    
+    plt.title(f"Boxplot of {column}")
+    
+    plt.show()
+
+# ============================================================
+# OBSERVATIONS
+# ============================================================
+
+print("\n================ OBSERVATIONS ================\n")
+
+print("1. All flower measurement features are numeric.")
+
+print("\n2. Species column is categorical (nominal).")
+
+print("\n3. Histograms show that sepal and petal measurements are distributed differently.")
+
+print("\n4. Petal length and petal width show wider variation compared to sepal features.")
+
+print("\n5. Boxplots help identify outliers in some features.")
+
+print("\n6. Sepal width contains a few outliers.")
+
+print("\n7. Most data values are concentrated within the interquartile range.")
+
+print("\n8. Iris dataset is comparatively clean with very few extreme outliers.")
+
+# ============================================================
+# END OF PROGRAM
+# ============================================================
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#10
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load Dataset
+df = pd.read_csv("Iris.csv")
+
+# Display first 5 rows
+print(df.head())
+
+# Display Data Types
+print("\nFeature Types:\n")
+print(df.dtypes)
+
+# ------------------------------------------------
+# Histograms
+# ------------------------------------------------
+
+df.hist(figsize=(10, 8))
+
+plt.suptitle("Histograms of Iris Dataset Features")
+
+plt.show()
+
+# ------------------------------------------------
+# Boxplots
+# ------------------------------------------------
+
+df.plot(kind='box',
+        subplots=True,
+        layout=(3,2),
+        figsize=(10,8))
+
+plt.suptitle("Boxplots of Iris Dataset Features")
+
+plt.show()
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
