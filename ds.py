@@ -984,6 +984,7 @@ Viva Questions CODE 8
 Difference between histogram and countplot?
 Histogram → numerical data
 Countplot → categorical data
+-----------------------------------------
 CODE 9 EXPLANATION (Boxplot)
 boxplot()
 
@@ -996,7 +997,7 @@ Viva Questions CODE 9
 What does boxplot show?
 
 Spread and outliers of data.
-
+----------------------------------
 CODE 10 EXPLANATION (Iris Visualization)
 hist()
 
