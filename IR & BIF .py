@@ -1,300 +1,224 @@
-{
- "cells": [
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "aa7a1ba7-4dd2-485b-80fe-9c99fa159d65",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# IR 1\n",
-    "\n",
-    "import nltk\n",
-    "from nltk.corpus import stopwords\n",
-    "from nltk.stem import PorterStemmer\n",
-    "from nltk.tokenize import word_tokenize\n",
-    "\n",
-    "nltk.download('stopwords')\n",
-    "nltk.download('punkt')\n",
-    "nltk.download('punkt_tab')\n",
-    "\n",
-    "file = open(\"D:\\\\Insem\\\\document.txt\", \"r\")\n",
-    "text = file.read()\n",
-    "file.close()\n",
-    "\n",
-    "words = word_tokenize(text)\n",
-    "stop = stopwords.words('english')\n",
-    "stemmer = PorterStemmer()\n",
-    "\n",
-    "for word in words:\n",
-    "    if word.lower() not in stop and word.isalpha():\n",
-    "        print(stemmer.stem(word.lower()))"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "d4153e9f-1c4e-4088-8b98-b17ffc25a1f4",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# IR 2\n",
-    "\n",
-    "documents = {\n",
-    "    1: \"python is easy\",\n",
-    "    2: \"python is useful\",\n",
-    "    3: \"java is useful\"\n",
-    "}\n",
-    "\n",
-    "inverted = {}\n",
-    "\n",
-    "for doc_id, text in documents.items():\n",
-    "    for word in text.split():\n",
-    "        if word not in inverted:\n",
-    "            inverted[word] = []\n",
-    "        if doc_id not in inverted[word]:\n",
-    "            inverted[word].append(doc_id)\n",
-    "\n",
-    "print(\"Inverted Index:\", inverted)\n",
-    "\n",
-    "search = input(\"Enter word to search: \")\n",
-    "\n",
-    "if search in inverted:\n",
-    "    print(\"Documents found:\", inverted[search])\n",
-    "else:\n",
-    "    print(\"No documents found\")"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "bf6ce99c-01ea-4d5c-a214-8b207951867c",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# IR 3\n",
-    "\n",
-    "import pandas as pd\n",
-    "from sklearn.feature_extraction.text import CountVectorizer\n",
-    "from sklearn.naive_bayes import MultinomialNB\n",
-    "from sklearn.model_selection import train_test_split\n",
-    "\n",
-    "data = {\n",
-    "    'email': [\n",
-    "        'Win a free prize',\n",
-    "        'Claim your free money',\n",
-    "        'Meeting is at 10 am',\n",
-    "        'Please submit your assignment',\n",
-    "        'Win cash now',\n",
-    "        'Let us meet tomorrow'\n",
-    "    ],\n",
-    "    'label': ['spam', 'spam', 'ham', 'ham', 'spam', 'ham']\n",
-    "}\n",
-    "\n",
-    "df = pd.DataFrame(data)\n",
-    "\n",
-    "X = df['email']\n",
-    "y = df['label']\n",
-    "\n",
-    "vectorizer = CountVectorizer()\n",
-    "X = vectorizer.fit_transform(X)\n",
-    "\n",
-    "model = MultinomialNB()\n",
-    "model.fit(X, y)\n",
-    "\n",
-    "email = input(\"Enter email text: \")\n",
-    "email = vectorizer.transform([email])\n",
-    "\n",
-    "result = model.predict(email)\n",
-    "\n",
-    "print(\"Email is:\", result[0])"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "13c77dc3-47bf-4a6d-8158-4f0da91f9a30",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# IR 4\n",
-    "\n",
-    "from sklearn.datasets import load_iris\n",
-    "from sklearn.cluster import AgglomerativeClustering\n",
-    "\n",
-    "# Load dataset\n",
-    "data = load_iris()\n",
-    "X = data.data\n",
-    "\n",
-    "# Apply clustering\n",
-    "model = AgglomerativeClustering(n_clusters=3)\n",
-    "result = model.fit_predict(X)\n",
-    "\n",
-    "print(\"Cluster labels:\")\n",
-    "print(result)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "44e5d1b1-313d-45d4-bca1-23b05570a81e",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# IR 5\n",
-    "\n",
-    "import requests\n",
-    "from bs4 import BeautifulSoup\n",
-    "\n",
-    "url = \"https://books.toscrape.com/\"\n",
-    "page = requests.get(url)\n",
-    "\n",
-    "soup = BeautifulSoup(page.text, \"html.parser\")\n",
-    "\n",
-    "products = soup.find_all(\"article\", class_=\"product_pod\")\n",
-    "\n",
-    "for product in products:\n",
-    "    name = product.h3.a[\"title\"]\n",
-    "    price = product.find(\"p\", class_=\"price_color\").text\n",
-    "    link = product.h3.a[\"href\"]\n",
-    "\n",
-    "    print(\"Name:\", name)\n",
-    "    print(\"Price:\", price)\n",
-    "    print(\"Link:\", link)\n",
-    "    print()"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "bb72b746-daa5-4bdb-9fbb-4c6afbdcaa31",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# BIF 1\n",
-    "\n",
-    "dna = \"ATGCGATCGATGAAATAG\"\n",
-    "\n",
-    "# Find sequence length\n",
-    "print(\"DNA Sequence:\", dna)\n",
-    "print(\"Length:\", len(dna))\n",
-    "\n",
-    "# Calculate GC content\n",
-    "gc = dna.count('G') + dna.count('C')\n",
-    "gc_content = (gc / len(dna)) * 100\n",
-    "print(\"GC Content:\", gc_content, \"%\")\n",
-    "\n",
-    "# Find motif\n",
-    "motif = input(\"Enter motif to search: \")\n",
-    "print(\"Motif Count:\", dna.count(motif))\n",
-    "\n",
-    "# Find coding region (start and stop codons)\n",
-    "start = dna.find(\"ATG\")\n",
-    "stop = dna.find(\"TAG\", start)\n",
-    "\n",
-    "if start != -1 and stop != -1:\n",
-    "    print(\"Coding Region:\", dna[start:stop + 3])\n",
-    "else:\n",
-    "    print(\"Coding region not found\")"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "85237024-cbc3-4ef8-955d-6552e36a1d0f",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# BIF 2\n",
-    "\n",
-    "import pandas as pd\n",
-    "\n",
-    "# Create dataset\n",
-    "data = pd.DataFrame({\n",
-    "    \"Gene\": [\"GeneA\", \"GeneB\", \"GeneC\"],\n",
-    "    \"Control1\": [100, 200, 50],\n",
-    "    \"Control2\": [110, 190, 55],\n",
-    "    \"Treatment1\": [250, 80, 52],\n",
-    "    \"Treatment2\": [260, 90, 49]\n",
-    "})\n",
-    "\n",
-    "# Calculate averages\n",
-    "data[\"Control_Avg\"] = data[[\"Control1\", \"Control2\"]].mean(axis=1)\n",
-    "data[\"Treatment_Avg\"] = data[[\"Treatment1\", \"Treatment2\"]].mean(axis=1)\n",
-    "\n",
-    "# Calculate fold change\n",
-    "data[\"Fold_Change\"] = data[\"Treatment_Avg\"] / data[\"Control_Avg\"]\n",
-    "\n",
-    "# Identify genes\n",
-    "for i, row in data.iterrows():\n",
-    "    if row[\"Fold_Change\"] > 1.5:\n",
-    "        print(row[\"Gene\"], \"is upregulated\")\n",
-    "    elif row[\"Fold_Change\"] < 0.67:\n",
-    "        print(row[\"Gene\"], \"is downregulated\")\n",
-    "    else:\n",
-    "        print(row[\"Gene\"], \"shows little change\")"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "3a88835f-32dd-4315-82e1-afd724eee27d",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# BIF 4\n",
-    "\n",
-    "from sklearn.datasets import load_breast_cancer\n",
-    "from sklearn.model_selection import train_test_split\n",
-    "from sklearn.ensemble import RandomForestClassifier\n",
-    "from sklearn.metrics import accuracy_score\n",
-    "\n",
-    "# Load dataset\n",
-    "data = load_breast_cancer()\n",
-    "X = data.data\n",
-    "y = data.target\n",
-    "\n",
-    "# Split dataset\n",
-    "X_train, X_test, y_train, y_test = train_test_split(\n",
-    "    X, y, test_size=0.2, random_state=42\n",
-    ")\n",
-    "\n",
-    "# Train model\n",
-    "model = RandomForestClassifier(random_state=42)\n",
-    "model.fit(X_train, y_train)\n",
-    "\n",
-    "# Predict results\n",
-    "y_pred = model.predict(X_test)\n",
-    "\n",
-    "# Calculate accuracy\n",
-    "print(\"Accuracy:\", accuracy_score(y_test, y_pred) * 100, \"%\")\n",
-    "\n",
-    "# Show important features\n",
-    "print(\"Important Features:\")\n",
-    "for name, score in zip(data.feature_names, model.feature_importances_):\n",
-    "    print(name, \":\", round(score, 3))"
-   ]
-  }
- ],
- "metadata": {
-  "kernelspec": {
-   "display_name": "Python 3 (ipykernel)",
-   "language": "python",
-   "name": "python3"
-  },
-  "language_info": {
-   "codemirror_mode": {
-    "name": "ipython",
-    "version": 3
-   },
-   "file_extension": ".py",
-   "mimetype": "text/x-python",
-   "name": "python",
-   "nbconvert_exporter": "python",
-   "pygments_lexer": "ipython3",
-   "version": "3.13.1"
-  }
- },
- "nbformat": 4,
- "nbformat_minor": 5
+# IR 1
+
+import nltk
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer
+from nltk.tokenize import word_tokenize
+
+nltk.download('stopwords')
+nltk.download('punkt')
+nltk.download('punkt_tab')
+
+file = open("D:\\Insem\\document.txt", "r")
+text = file.read()
+file.close()
+
+words = word_tokenize(text)
+stop = stopwords.words('english')
+stemmer = PorterStemmer()
+
+for word in words:
+    if word.lower() not in stop and word.isalpha():
+        print(stemmer.stem(word.lower()))
+
+------------------------------------------------------------------------------------------
+
+# IR 2
+
+documents = {
+    1: "python is easy",
+    2: "python is useful",
+    3: "java is useful"
 }
+
+inverted = {}
+
+for doc_id, text in documents.items():
+    for word in text.split():
+        if word not in inverted:
+            inverted[word] = []
+        if doc_id not in inverted[word]:
+            inverted[word].append(doc_id)
+
+print("Inverted Index:", inverted)
+
+search = input("Enter word to search: ")
+
+if search in inverted:
+    print("Documents found:", inverted[search])
+else:
+    print("No documents found")
+
+------------------------------------------------------------------------------------------
+
+# IR 3
+
+import pandas as pd
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.model_selection import train_test_split
+
+data = {
+    'email': [
+        'Win a free prize',
+        'Claim your free money',
+        'Meeting is at 10 am',
+        'Please submit your assignment',
+        'Win cash now',
+        'Let us meet tomorrow'
+    ],
+    'label': ['spam', 'spam', 'ham', 'ham', 'spam', 'ham']
+}
+
+df = pd.DataFrame(data)
+
+X = df['email']
+y = df['label']
+
+vectorizer = CountVectorizer()
+X = vectorizer.fit_transform(X)
+
+model = MultinomialNB()
+model.fit(X, y)
+
+email = input("Enter email text: ")
+email = vectorizer.transform([email])
+
+result = model.predict(email)
+
+print("Email is:", result[0])
+
+------------------------------------------------------------------------------------------
+
+# IR 4
+
+from sklearn.datasets import load_iris
+from sklearn.cluster import AgglomerativeClustering
+
+# Load dataset
+data = load_iris()
+X = data.data
+
+# Apply clustering
+model = AgglomerativeClustering(n_clusters=3)
+result = model.fit_predict(X)
+
+print("Cluster labels:")
+print(result)
+
+------------------------------------------------------------------------------------------
+
+# IR 5
+
+import requests
+from bs4 import BeautifulSoup
+
+url = "https://books.toscrape.com/"
+page = requests.get(url)
+
+soup = BeautifulSoup(page.text, "html.parser")
+
+products = soup.find_all("article", class_="product_pod")
+
+for product in products:
+    name = product.h3.a["title"]
+    price = product.find("p", class_="price_color").text
+    link = product.h3.a["href"]
+
+    print("Name:", name)
+    print("Price:", price)
+    print("Link:", link)
+    print()
+
+------------------------------------------------------------------------------------------
+
+# BIF 1
+
+dna = "ATGCGATCGATGAAATAG"
+
+# Find sequence length
+print("DNA Sequence:", dna)
+print("Length:", len(dna))
+
+# Calculate GC content
+gc = dna.count('G') + dna.count('C')
+gc_content = (gc / len(dna)) * 100
+print("GC Content:", gc_content, "%")
+
+# Find motif
+motif = input("Enter motif to search: ")
+print("Motif Count:", dna.count(motif))
+
+# Find coding region (start and stop codons)
+start = dna.find("ATG")
+stop = dna.find("TAG", start)
+
+if start != -1 and stop != -1:
+    print("Coding Region:", dna[start:stop + 3])
+else:
+    print("Coding region not found")
+
+------------------------------------------------------------------------------------------
+
+# BIF 2
+
+import pandas as pd
+
+# Create dataset
+data = pd.DataFrame({
+    "Gene": ["GeneA", "GeneB", "GeneC"],
+    "Control1": [100, 200, 50],
+    "Control2": [110, 190, 55],
+    "Treatment1": [250, 80, 52],
+    "Treatment2": [260, 90, 49]
+})
+
+# Calculate averages
+data["Control_Avg"] = data[["Control1", "Control2"]].mean(axis=1)
+data["Treatment_Avg"] = data[["Treatment1", "Treatment2"]].mean(axis=1)
+
+# Calculate fold change
+data["Fold_Change"] = data["Treatment_Avg"] / data["Control_Avg"]
+
+# Identify genes
+for i, row in data.iterrows():
+    if row["Fold_Change"] > 1.5:
+        print(row["Gene"], "is upregulated")
+    elif row["Fold_Change"] < 0.67:
+        print(row["Gene"], "is downregulated")
+    else:
+        print(row["Gene"], "shows little change")
+
+------------------------------------------------------------------------------------------
+
+# BIF 4
+
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+
+# Load dataset
+data = load_breast_cancer()
+X = data.data
+y = data.target
+
+# Split dataset
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Train model
+model = RandomForestClassifier(random_state=42)
+model.fit(X_train, y_train)
+
+# Predict results
+y_pred = model.predict(X_test)
+
+# Calculate accuracy
+print("Accuracy:", accuracy_score(y_test, y_pred) * 100, "%")
+
+# Show important features
+print("Important Features:")
+for name, score in zip(data.feature_names, model.feature_importances_):
+    print(name, ":", round(score, 3))
