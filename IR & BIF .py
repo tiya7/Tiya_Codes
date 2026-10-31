@@ -21,6 +21,37 @@ for word in words:
     if word.lower() not in stop and word.isalpha():
         print(stemmer.stem(word.lower()))
 
+document.txt file :: 
+The students are studying and playing games.
+Information retrieval is an important field.
+
+#OR#
+
+# IR 1
+from nltk.stem import PorterStemmer
+
+# Input text
+text = "The students are studying and playing games"
+
+# Convert text to lowercase
+words = text.lower().split()
+
+# Define stop words
+stop_words = {"the", "are", "and"}
+
+# Create stemmer
+ps = PorterStemmer()
+
+# Remove stop words and perform stemming
+result = []
+
+for word in words:
+    if word.isalpha() and word not in stop_words:
+        result.append(ps.stem(word))
+
+# Display output
+print("Original Text:", text)
+print("Processed Text:", result)
 ------------------------------------------------------------------------------------------
 
 # IR 2
@@ -88,6 +119,21 @@ result = model.predict(email)
 
 print("Email is:", result[0])
 
+examples spam::
+You won a car worth rupees 100000. to claim this you need to pay rupees 50000 which is refundable amount.
+"URGENT: Act immediately or your account will be deleted today!!!"
+Congratulations! You won a free lottery prize.
+Win cash now. Claim your reward.
+Get free money by clicking this link.
+You have won a free iPhone.
+Urgent! Claim your prize today.
+examples ham ::
+Please attend the college lecture tomorrow.
+Submit your assignment before Monday.
+Let us meet at 10 am.
+Your examination timetable is ready.
+Please send me the project report.
+The meeting is scheduled for tomorrow.
 ------------------------------------------------------------------------------------------
 
 # IR 4
@@ -106,7 +152,122 @@ result = model.fit_predict(X)
 print("Cluster labels:")
 print(result)
 
+#OR#
+
+# IR 4
+
+import pandas as pd
+
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.pipeline import make_pipeline
+from sklearn.metrics import accuracy_score, classification_report
+
+# Load dataset
+df = pd.read_csv("spam_ham_dataset.csv")
+
+# Select required columns
+df = df[["label", "text"]].dropna()
+
+# Separate input and output
+X = df["text"]
+y = df["label"]
+
+# Split dataset
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.2,
+    random_state=42,
+    stratify=y
+)
+
+# Create Naive Bayes model
+model = make_pipeline(
+    CountVectorizer(),
+    MultinomialNB()
+)
+
+# Train model
+model.fit(X_train, y_train)
+
+# Predict test data
+predictions = model.predict(X_test)
+
+# Evaluate model
+print("Accuracy:",
+      accuracy_score(y_test, predictions) * 100, "%")
+
+print("\nClassification Report:")
+print(classification_report(y_test, predictions))
+
+# Test a new email
+email = input("\nEnter email message: ")
+
+prediction = model.predict([email])
+
+print("Email Classification:", prediction[0])
+
 ------------------------------------------------------------------------------------------
+
+# IR 5
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+from sklearn.cluster import AgglomerativeClustering
+from sklearn.preprocessing import StandardScaler
+from scipy.cluster.hierarchy import dendrogram, linkage
+
+# Load dataset
+df = pd.read_csv("Mall_Customers.csv")
+
+# Select numerical features
+X = df[[
+    "Age",
+    "Annual Income (k$)",
+    "Spending Score (1-100)"
+]]
+
+# Scale the data
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# Create clustering model
+model = AgglomerativeClustering(n_clusters=3)
+
+# Fit model and predict clusters
+labels = model.fit_predict(X_scaled)
+
+# Display cluster labels
+df["Cluster"] = labels
+
+print("Cluster Labels:")
+print(df[["CustomerID", "Cluster"]].head(10))
+
+print("\nNumber of Customers in Each Cluster:")
+print(df["Cluster"].value_counts())
+
+# Generate linkage matrix
+linked = linkage(X_scaled, method="ward")
+
+# Plot dendrogram
+plt.figure(figsize=(10, 6))
+
+dendrogram(linked)
+
+plt.title("Agglomerative Hierarchical Clustering")
+plt.xlabel("Customers")
+plt.ylabel("Distance")
+
+plt.show()
+
+# Save clustered data
+df.to_csv("Clustered_Customers.csv", index=False)
+
+print("\nResults saved in Clustered_Customers.csv")
+
+#OR#
 
 # IR 5
 
