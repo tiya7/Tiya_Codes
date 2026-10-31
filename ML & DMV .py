@@ -1,4 +1,5 @@
-# ML 1
+# ML 1 Feature Transformation (Any one)
+A. To use PCA Algorithm for dimensionality reduction.
 
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -83,7 +84,9 @@ plt.ylabel("PC2")
 plt.title("PCA on Wine Dataset")
 plt.show()
 ---------------------------------------------------------------------------------------------
-# ML 2
+# ML 2 Regression Analysis:(Any one)
+A. Predict the price of the Uber ride from a given pickup point to the agreed drop-off 
+location. 
 
 import pandas as pd
 import numpy as np
@@ -270,7 +273,71 @@ for name, model in [
     print("R2 Score:", r2_score(y_test, pred))
     print("RMSE:", mean_squared_error(y_test, pred) ** 0.5)
  ---------------------------------------------------------------------------------------------
-# ML 3
+# ML 3 Classification Analysis (Any one)
+A. Implementation of Support Vector Machines (SVM) for classifying images of hand-
+written digits into their respective numerical classes (0 to 9).
+
+                                                        
+# 1. Import libraries
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_digits
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+
+# 2. Load handwritten digits dataset
+digits = load_digits()
+
+X = digits.data
+y = digits.target
+
+# 3. Display all digits from 0 to 9
+fig, axes = plt.subplots(2, 5, figsize=(10, 5))
+
+for i, ax in enumerate(axes.flat):
+    ax.imshow(digits.images[i], cmap='gray')
+    ax.set_title("Digit: " + str(digits.target[i]))
+    ax.axis('off')
+
+plt.show()
+
+# 4. Split dataset into training and testing
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# 5. Create and train SVM model
+model = SVC(kernel='linear')
+model.fit(X_train, y_train)
+
+# 6. Predict digits
+y_pred = model.predict(X_test)
+
+# 7. Calculate accuracy
+print("Accuracy:", accuracy_score(y_test, y_pred) * 100)
+
+# 8. Display classification report
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred))
+
+# 9. Display confusion matrix
+print("\nConfusion Matrix:")
+print(confusion_matrix(y_test, y_pred))
+
+# 10. Display actual and predicted digits
+fig, axes = plt.subplots(2, 5, figsize=(10, 5))
+
+for i, ax in enumerate(axes.flat):
+    ax.imshow(X_test[i].reshape(8, 8), cmap='gray')
+    ax.set_title("Actual: " + str(y_test[i]) +
+                 "\nPredicted: " + str(y_pred[i]))
+    ax.axis('off')
+
+plt.tight_layout()
+plt.show()
+
+#OR#
 
 import matplotlib.pyplot as plt
 
@@ -358,7 +425,9 @@ print("Actual Digits:", y_test[:10])
 print("Predicted Digits:", pred[:10])
 print("Accuracy:", accuracy_score(y_test, pred) * 100, "%")
 ---------------------------------------------------------------------------------------------
-# ML 4
+# ML 4 Clustering Analysis (Any one)
+A. Implement K-Means clustering on Iris.csv dataset. Determine the number of clusters 
+using the elbow method.
 
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -462,7 +531,8 @@ model.fit(X)
 print("Cluster Labels:")
 print(model.labels_)
 ---------------------------------------------------------------------------------------------
-# ML 5
+# ML 5 Ensemble Learning (Any one)
+A. Implement Random Forest Classifier model to predict the safety of the car.
 
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -1168,7 +1238,12 @@ Keeps all features generally	Can perform feature selection
 
 _____________________________________________________________________________________________________________________
       
-# DMV 1
+# DMV 1  Data Loading, Storage and File Formats
+Problem Statement: Analyzing Sales Data from Multiple File Formats
+Dataset: Sales data in multiple file formats (e.g., CSV, Excel, JSON)
+Description: The goal is to load and analyze sales data from different file formats, including 
+CSV, Excel, and JSON, and perform data cleaning, transformation, and analysis on the 
+dataset.
 
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -1270,7 +1345,13 @@ plt.show()
 data.to_csv("Cleaned_Sales_Data.csv", index=False)
 print("\nCleaned data saved successfully.")
 ---------------------------------------------------------------------------------------------
-# DMV 2
+# DMV 2  Interacting with Web APIs
+Problem Statement: Analyzing Weather Data from OpenWeatherMap API
+Dataset: Weather data retrieved from OpenWeatherMap API
+Description: The goal is to interact with the OpenWeatherMap API to retrieve weather data 
+for a specific location and perform data modeling and visualization to analyze weather 
+patterns over time.
+    
 import requests
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -1350,7 +1431,14 @@ else:
     data.to_csv("Weather_Data.csv", index=False)
     print("Weather data saved successfully.")
 ---------------------------------------------------------------------------------------------
-# DMV 3
+# DMV 3 Data Cleaning and Preparation
+Problem Statement: Analyzing Customer Churn in a Telecommunications Company
+Dataset: "Telecom_Customer_Churn.csv"
+Description: The dataset contains information about customers of a telecommunications 
+company and whether they have churned (i.e., discontinued their services). The dataset 
+includes various attributes of the customers, such as their demographics, usage patterns, and 
+account information. The goal is to perform data cleaning and preparation to gain insights 
+into the factors that contribute to customer churn.
 
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -1477,7 +1565,14 @@ data.to_csv("Cleaned_Telecom_Data.csv", index=False)
 print("Cleaned telecom data saved successfully.")
 ---------------------------------------------------------------------------------------------
 
-# DMV 4
+# DMV 4  Data Wrangling
+Problem Statement: Data Wrangling on Real Estate Market
+Dataset: "RealEstate_Prices.csv"
+Description: The dataset contains information about housing prices in a specific real estate 
+market. It includes various attributes such as property characteristics, location, sale prices, 
+and other relevant features. The goal is to perform data wrangling to gain insights into the 
+factors influencing housing prices and prepare the dataset for further analysis or modeling.
+    
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -1579,7 +1674,14 @@ print("Data cleaning completed!")
 print("Training data:", X_train.shape)
 print("Testing data:", X_test.shape)
 ---------------------------------------------------------------------------------------------
-# DMV 5
+# DMV 5  Data Visualization using matplotlib
+Problem Statement: Analyzing Air Quality Index (AQI) Trends in a City 
+Dataset: "City_Air_Quality.csv"
+Description: The dataset contains information about air quality measurements in a specific 
+city over a period of time. It includes attributes such as date, time, pollutant levels (e.g., PM2.5, 
+PM10, CO), and the Air Quality Index (AQI) values. The goal is to use the matplotlib library 
+to create visualizations that effectively represent the AQI trends and patterns for different 
+pollutants in the city. 
 
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -1699,7 +1801,13 @@ print(data)
 data.to_csv("cleaned_realestate.csv", index=False)
 print("\nCleaned data saved!")
 ---------------------------------------------------------------------------------------------
-# DMV 6
+# DMV 6 Data Aggregation
+Problem Statement: Analyzing Sales Performance by Region in a Retail Company
+Dataset: "Retail_Sales_Data.csv"
+Description: The dataset contains information about sales transactions in a retail company. It 
+includes attributes such as transaction date, product category, quantity sold, and sales 
+amount. The goal is to perform data aggregation to analyze the sales performance by region 
+and identify the top-performing regions.
 
 import pandas as pd
 import matplotlib.pyplot as plt
