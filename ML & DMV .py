@@ -1,3 +1,58 @@
+# ML 1
+
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+
+# Load dataset
+data = pd.read_csv("Wine.csv")
+
+print(data.head())
+print(data.info())
+
+# Separate features and target
+X = data.drop("Customer_Segment", axis=1)
+y = data["Customer_Segment"]
+
+# Standardize the data
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# Apply PCA
+pca = PCA(n_components=2)
+X_pca = pca.fit_transform(X_scaled)
+
+# Create new dataframe
+pca_data = pd.DataFrame(
+    X_pca, columns=["PC1", "PC2"]
+)
+pca_data["Class"] = y.values
+
+print("\nExplained Variance:")
+print(pca.explained_variance_ratio_)
+
+print("\nTotal Variance Captured:")
+print(pca.explained_variance_ratio_.sum() * 100, "%")
+
+# Visualize PCA
+for group in sorted(pca_data["Class"].unique()):
+    subset = pca_data[pca_data["Class"] == group]
+    plt.scatter(
+        subset["PC1"], subset["PC2"],
+        label="Class " + str(group)
+    )
+
+plt.title("PCA on Wine Dataset")
+plt.xlabel("Principal Component 1")
+plt.ylabel("Principal Component 2")
+plt.legend()
+plt.show()
+
+# Save output
+pca_data.to_csv("PCA_Output.csv", index=False)
+
+#OR#
 
 # ML 1
 
@@ -28,6 +83,147 @@ plt.ylabel("PC2")
 plt.title("PCA on Wine Dataset")
 plt.show()
 ---------------------------------------------------------------------------------------------
+# ML 2
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LinearRegression, Ridge, Lasso
+from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
+
+# Load dataset
+data = pd.read_csv("uber.csv")
+
+print(data.head())
+print(data.info())
+
+# Remove unnecessary columns and duplicates
+data = data.drop(columns=["Unnamed: 0", "key"], errors="ignore")
+data = data.drop_duplicates()
+
+# Convert date and numerical columns
+data["pickup_datetime"] = pd.to_datetime(
+    data["pickup_datetime"], errors="coerce", utc=True
+)
+
+cols = [
+    "fare_amount", "pickup_longitude", "pickup_latitude",
+    "dropoff_longitude", "dropoff_latitude", "passenger_count"
+]
+
+for col in cols:
+    data[col] = pd.to_numeric(data[col], errors="coerce")
+
+data = data.dropna()
+
+# Remove invalid values
+data = data[
+    (data["fare_amount"] > 0) &
+    (data["fare_amount"] <= 100) &
+    (data["passenger_count"] >= 1) &
+    (data["passenger_count"] <= 6) &
+    (data["pickup_longitude"].between(-75, -72)) &
+    (data["dropoff_longitude"].between(-75, -72)) &
+    (data["pickup_latitude"].between(40, 42)) &
+    (data["dropoff_latitude"].between(40, 42))
+].copy()
+
+# Identify outliers using IQR
+Q1 = data["fare_amount"].quantile(0.25)
+Q3 = data["fare_amount"].quantile(0.75)
+IQR = Q3 - Q1
+
+lower = max(0, Q1 - 1.5 * IQR)
+upper = Q3 + 1.5 * IQR
+
+outliers = data[
+    (data["fare_amount"] < lower) |
+    (data["fare_amount"] > upper)
+]
+
+print("Number of outliers:", len(outliers))
+
+# Remove outliers
+data = data[
+    (data["fare_amount"] >= lower) &
+    (data["fare_amount"] <= upper)
+].copy()
+
+# Calculate ride distance using Haversine formula
+lat1 = np.radians(data["pickup_latitude"])
+lat2 = np.radians(data["dropoff_latitude"])
+lon1 = np.radians(data["pickup_longitude"])
+lon2 = np.radians(data["dropoff_longitude"])
+
+dlat = lat2 - lat1
+dlon = lon2 - lon1
+
+a = np.sin(dlat / 2)**2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon / 2)**2
+
+data["distance"] = 6371 * 2 * np.arcsin(np.sqrt(a))
+
+# Extract time features
+data["hour"] = data["pickup_datetime"].dt.hour
+data["day"] = data["pickup_datetime"].dt.day
+data["month"] = data["pickup_datetime"].dt.month
+
+# Check correlation
+features = [
+    "fare_amount", "distance", "passenger_count",
+    "hour", "day", "month"
+]
+
+print("\nCorrelation:")
+print(data[features].corr())
+
+sns.heatmap(data[features].corr(), annot=True, cmap="coolwarm")
+plt.title("Correlation Heatmap")
+plt.show()
+
+# Split data into input and output
+X = data[[
+    "distance", "passenger_count", "hour", "day", "month"
+]]
+
+y = data["fare_amount"]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Standardize features
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# Create regression models
+models = {
+    "Linear Regression": LinearRegression(),
+    "Ridge Regression": Ridge(alpha=1.0),
+    "Lasso Regression": Lasso(alpha=0.01, max_iter=10000)
+}
+
+# Train and evaluate models
+for name, model in models.items():
+
+    model.fit(X_train, y_train)
+    prediction = model.predict(X_test)
+
+    r2 = r2_score(y_test, prediction)
+    rmse = np.sqrt(mean_squared_error(y_test, prediction))
+    mae = mean_absolute_error(y_test, prediction)
+
+    print("\n", name)
+    print("R2 Score:", r2)
+    print("RMSE:", rmse)
+    print("MAE:", mae)
+
+#OR#
+
 # ML 2
 
 import pandas as pd
@@ -76,6 +272,65 @@ for name, model in [
  ---------------------------------------------------------------------------------------------
 # ML 3
 
+import matplotlib.pyplot as plt
+
+from sklearn.datasets import load_digits
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+
+# Load handwritten digits dataset
+digits = load_digits()
+
+X = digits.data
+y = digits.target
+
+print("Dataset Shape:", X.shape)
+
+# Display sample images
+fig, axes = plt.subplots(1, 5, figsize=(10, 3))
+
+for ax, image, label in zip(axes, digits.images[:5], y[:5]):
+    ax.imshow(image, cmap="gray")
+    ax.set_title("Digit: " + str(label))
+    ax.axis("off")
+
+plt.show()
+
+# Split dataset
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+
+# Standardize data
+scaler = StandardScaler()
+
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# Create SVM model
+model = SVC(kernel="rbf")
+
+# Train model
+model.fit(X_train, y_train)
+
+# Predict digits
+y_pred = model.predict(X_test)
+
+# Evaluate model
+print("\nAccuracy:", accuracy_score(y_test, y_pred))
+
+print("\nConfusion Matrix:")
+print(confusion_matrix(y_test, y_pred))
+
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred))
+
+#OR#
+
+#ML 3
+
 from sklearn.datasets import load_digits
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
@@ -105,6 +360,80 @@ print("Accuracy:", accuracy_score(y_test, pred) * 100, "%")
 ---------------------------------------------------------------------------------------------
 # ML 4
 
+import pandas as pd
+import matplotlib.pyplot as plt
+
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans
+
+# Load dataset
+data = pd.read_csv("Iris.csv")
+
+print(data.head())
+
+# Remove ID and Species columns
+X = data.drop(columns=["Id", "Species"], errors="ignore")
+
+# Standardize data
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# Elbow Method
+wcss = []
+
+for k in range(1, 11):
+
+    model = KMeans(
+        n_clusters=k,
+        random_state=42,
+        n_init=10
+    )
+
+    model.fit(X_scaled)
+    wcss.append(model.inertia_)
+
+# Plot Elbow graph
+plt.plot(range(1, 11), wcss, marker="o")
+plt.title("Elbow Method")
+plt.xlabel("Number of Clusters")
+plt.ylabel("WCSS")
+plt.show()
+
+# Apply K-Means with 3 clusters
+kmeans = KMeans(
+    n_clusters=3,
+    random_state=42,
+    n_init=10
+)
+
+data["Cluster"] = kmeans.fit_predict(X_scaled)
+
+print("\nCluster Results:")
+print(data[["Species", "Cluster"]].head(10))
+
+print("\nCluster Counts:")
+print(data["Cluster"].value_counts())
+
+# Visualize clusters
+plt.scatter(
+    X_scaled[:, 0],
+    X_scaled[:, 1],
+    c=data["Cluster"],
+    cmap="viridis"
+)
+
+plt.title("K-Means Clustering")
+plt.xlabel("Sepal Length")
+plt.ylabel("Sepal Width")
+plt.show()
+
+# Save results
+data.to_csv("Iris_Clustered.csv", index=False)
+
+#OR#
+
+#ML 4
+
 import matplotlib.pyplot as plt
 from sklearn.datasets import load_iris
 from sklearn.cluster import KMeans
@@ -133,6 +462,86 @@ model.fit(X)
 print("Cluster Labels:")
 print(model.labels_)
 ---------------------------------------------------------------------------------------------
+# ML 5
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+
+# Load dataset
+columns = [
+    "buying", "maint", "doors",
+    "persons", "lug_boot", "safety", "class"
+]
+
+data = pd.read_csv(
+    "car_evaluation.csv",
+    header=None,
+    names=columns
+)
+
+print(data.head())
+
+# Separate features and target
+X = data.drop("class", axis=1)
+y = data["class"]
+
+# Convert categorical data into numerical data
+for col in X.columns:
+    encoder = LabelEncoder()
+    X[col] = encoder.fit_transform(X[col])
+
+# Encode target variable
+target_encoder = LabelEncoder()
+y = target_encoder.fit_transform(y)
+
+# Split dataset
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+
+# Create Random Forest model
+model = RandomForestClassifier(
+    n_estimators=100,
+    random_state=42
+)
+
+# Train model
+model.fit(X_train, y_train)
+
+# Predict output
+y_pred = model.predict(X_test)
+
+# Evaluate model
+print("\nAccuracy:", accuracy_score(y_test, y_pred))
+
+print("\nConfusion Matrix:")
+print(confusion_matrix(y_test, y_pred))
+
+print("\nClassification Report:")
+print(classification_report(
+    y_test, y_pred,
+    target_names=target_encoder.classes_
+))
+
+# Feature importance
+importance = pd.Series(
+    model.feature_importances_,
+    index=X.columns
+)
+
+importance.plot(kind="bar")
+plt.title("Feature Importance")
+plt.xlabel("Features")
+plt.ylabel("Importance")
+plt.show()
+
+#OR#
+
 # ML 5
 
 import pandas as pd
@@ -170,7 +579,294 @@ pred = model.predict(X_test)
 print("Accuracy:", accuracy_score(y_test, pred) * 100, "%")
 print("Predictions:", pred[:10])
 ---------------------------------------------------------------------------------------------
-# ML 6
+# ML 6 A Maze
+
+import numpy as np
+import random
+
+# Maze: 0 = Path, 1 = Wall, 2 = Goal
+maze = np.array([
+    [0, 0, 0, 1, 0],
+    [1, 1, 0, 1, 0],
+    [0, 0, 0, 0, 0],
+    [0, 1, 1, 1, 0],
+    [0, 0, 0, 0, 2]
+])
+
+start = (0, 0)
+goal = (4, 4)
+
+rows, cols = maze.shape
+
+# Actions: Up, Down, Left, Right
+actions = [
+    (-1, 0), (1, 0), (0, -1), (0, 1)
+]
+
+Q = np.zeros((rows * cols, 4))
+
+alpha = 0.1
+gamma = 0.9
+epsilon = 0.2
+
+episodes = 3000
+
+def get_state(position):
+    return position[0] * cols + position[1]
+
+def valid_moves(position):
+    moves = []
+
+    for i, (dr, dc) in enumerate(actions):
+
+        nr = position[0] + dr
+        nc = position[1] + dc
+
+        if (0 <= nr < rows and
+            0 <= nc < cols and maze[nr, nc] != 1):
+
+            moves.append(i)
+
+    return moves
+
+# Training
+for episode in range(episodes):
+
+    position = start
+
+    for step in range(100):
+
+        state = get_state(position)
+        possible = valid_moves(position)
+
+        if random.random() < epsilon:
+            action = random.choice(possible)
+        else:
+            action = possible[
+                np.argmax(Q[state, possible])
+            ]
+
+        dr, dc = actions[action]
+
+        next_position = (
+            position[0] + dr,
+            position[1] + dc
+        )
+
+        if next_position == goal:
+            reward = 100
+            done = True
+        else:
+            reward = -1
+            done = False
+
+        next_state = get_state(next_position)
+
+        if done:
+            target = reward
+        else:
+            next_moves = valid_moves(next_position)
+            target = reward + gamma * np.max(
+                Q[next_state, next_moves]
+            )
+
+        Q[state, action] += alpha * (
+            target - Q[state, action]
+        )
+
+        position = next_position
+
+        if done:
+            break
+
+# Testing
+position = start
+path = [position]
+
+for step in range(50):
+
+    state = get_state(position)
+    possible = valid_moves(position)
+
+    action = possible[
+        np.argmax(Q[state, possible])
+    ]
+
+    dr, dc = actions[action]
+
+    position = (
+        position[0] + dr,
+        position[1] + dc
+    )
+
+    path.append(position)
+
+    if position == goal:
+        break
+
+print("Learned Path:", path)
+print("Goal Reached:", position == goal)
+
+#OR#
+
+# ML 6 C Tic Tac Toe
+
+import random
+
+# Q-table
+Q = {}
+
+alpha = 0.2
+gamma = 0.9
+epsilon = 1.0
+episodes = 30000
+
+# Find available positions
+def available_moves(board):
+    return [i for i in range(9) if board[i] == 0]
+
+# Check winner
+def check_winner(board):
+
+    lines = [
+        (0,1,2), (3,4,5), (6,7,8),
+        (0,3,6), (1,4,7), (2,5,8),
+        (0,4,8), (2,4,6)
+    ]
+
+    for a, b, c in lines:
+
+        if board[a] == board[b] == board[c] != 0:
+            return board[a]
+
+    if 0 not in board:
+        return 0
+
+    return None
+
+# Get Q-values
+def get_q(state):
+
+    if state not in Q:
+        Q[state] = [0.0] * 9
+
+    return Q[state]
+
+# Choose action
+def choose_action(board, explore=True):
+
+    moves = available_moves(board)
+    state = tuple(board)
+
+    if explore and random.random() < epsilon:
+        return random.choice(moves)
+
+    values = get_q(state)
+
+    return max(moves, key=lambda move: values[move])
+
+# Training
+for episode in range(episodes):
+
+    board = [0] * 9
+    game_over = False
+
+    while not game_over:
+
+        state = tuple(board)
+
+        action = choose_action(board)
+        board[action] = 1
+
+        result = check_winner(board)
+
+        if result == 1:
+            reward = 1
+            done = True
+
+        elif result == 0:
+            reward = 0
+            done = True
+
+        else:
+            # Opponent plays randomly
+            opponent = random.choice(available_moves(board))
+            board[opponent] = -1
+
+            result = check_winner(board)
+
+            if result == -1:
+                reward = -1
+                done = True
+
+            elif result == 0:
+                reward = 0
+                done = True
+
+            else:
+                reward = 0
+                done = False
+
+        old_values = get_q(state)
+
+        if done:
+            target = reward
+        else:
+            next_state = tuple(board)
+            next_moves = available_moves(board)
+            next_values = get_q(next_state)
+
+            target = reward + gamma * max(
+                next_values[m] for m in next_moves
+            )
+
+        old_values[action] += alpha * (
+            target - old_values[action]
+        )
+
+        game_over = done
+
+    epsilon = max(0.05, epsilon * 0.999)
+
+# Testing
+board = [0] * 9
+
+print("\nTic-Tac-Toe Testing:")
+
+while True:
+
+    action = choose_action(board, explore=False)
+    board[action] = 1
+
+    result = check_winner(board)
+
+    if result is not None:
+        break
+
+    opponent = random.choice(available_moves(board))
+    board[opponent] = -1
+
+    result = check_winner(board)
+
+    if result is not None:
+        break
+
+# Display board
+for i in range(0, 9, 3):
+    print(board[i:i+3])
+
+if result == 1:
+    print("Agent Wins!")
+
+elif result == -1:
+    print("Opponent Wins!")
+
+else:
+    print("Draw!")
+
+#OR#
+
+# ML 6 C
 
 import random
 
@@ -200,6 +896,278 @@ while position != goal:
 
 print("Goal reached!")
 ---------------------------------------------------------------------------------------------
+Viva questions
+
+1. Basic Machine Learning Viva Questions
+Question	Easy answer
+1. What is Machine Learning?	Machine Learning is a branch of AI that allows computers to learn from data and make predictions.
+2. What is Artificial Intelligence?	AI is the ability of machines to perform tasks that normally require human intelligence.
+3. What is the difference between AI and ML?	AI is the broader concept. ML is a subset of AI that learns from data.
+4. What are the types of ML?	Supervised, Unsupervised and Reinforcement Learning.
+5. What is supervised learning?	Learning using labelled data, where both input and correct output are provided.
+6. What is unsupervised learning?	Learning from unlabelled data to find hidden patterns.
+7. What is reinforcement learning?	Learning through rewards and penalties based on actions.
+8. What is a dataset?	A collection of data used for training and testing a model.
+9. What is a feature?	An input variable used to make predictions.
+10. What is a label?	The output or target variable that the model predicts.
+11. What is model training?	The process of teaching a model using data.
+12. What is model testing?	Checking how well the trained model performs on unseen data.
+13. What is overfitting?	When a model performs well on training data but poorly on new data.
+14. What is underfitting?	When a model is too simple to learn the patterns in data.
+15. What is accuracy?	The percentage of correct predictions made by a model.
+
+2. Experiment-wise Viva Questions
+Experiment 1: Principal Component Analysis (PCA)
+Unsupervised learning
+Question	Easy answer
+What is PCA?	PCA is a dimensionality reduction technique used to reduce the number of features.
+Why do we use PCA?	To reduce complexity, remove redundancy and make data easier to visualize.
+Is PCA supervised or unsupervised?	Unsupervised learning.
+What is dimensionality reduction?	Reducing the number of input features while preserving important information.
+What is a principal component?	A new variable that captures maximum variation in the data.
+What is variance?	A measure of how much data values are spread out.
+Why is standardization required in PCA?	To bring features to a common scale.
+What is explained variance?	The amount of information or variation retained by a principal component.
+Which dataset did we use?	Wine.csv
+What is the output of PCA?	Reduced-dimensional data, such as two principal components.
+
+Important theory questions
+1. Explain PCA and its applications.
+2. What are the advantages of dimensionality reduction?
+3. Explain the steps involved in PCA.
+4. Differentiate between PCA and feature selection.
+Experiment 2: Uber Fare Prediction using Regression
+Supervised learning
+Question	Easy answer
+What is regression?	A technique used to predict continuous numerical values.
+What is Linear Regression?	It predicts output using a straight-line relationship between input and output.
+What is Ridge Regression?	Regression that uses L2 regularization to reduce overfitting.
+What is Lasso Regression?	Regression that uses L1 regularization and can reduce some coefficients to zero.
+What is the difference between Ridge and Lasso?	Ridge shrinks coefficients. Lasso can make coefficients zero.
+What is the dependent variable?	The variable we want to predict.
+What is the independent variable?	The input variable used for prediction.
+What is RMSE?	Root Mean Squared Error. It measures prediction error.
+What is MAE?	Mean Absolute Error. It measures average absolute prediction error.
+What is R² score?	It indicates how much variation in the target is explained by the model.
+What is outlier detection?	Finding unusually high or low values in a dataset.
+Why do we calculate distance in Uber data?	To estimate the journey distance between pickup and drop-off locations.
+
+Important theory questions
+1. Explain Linear Regression with an example.
+2. Differentiate between Linear, Ridge and Lasso Regression.
+3. Explain MAE, MSE, RMSE and R².
+4. What is regularization? Explain L1 and L2.
+5. Explain data preprocessing in fare prediction.
+Experiment 3: SVM Handwritten Digit Classification
+Supervised learning
+Question	Easy answer
+What is SVM?	Support Vector Machine is an algorithm used for classification and regression.
+What is classification?	Predicting a category or class.
+What is a hyperplane?	A decision boundary that separates different classes.
+What are support vectors?	Data points closest to the decision boundary.
+What is a kernel?	A function used to handle data that cannot be separated linearly.
+Name different SVM kernels.	Linear, Polynomial, RBF and Sigmoid.
+Which kernel did we use?	RBF kernel.
+What is RBF?	Radial Basis Function.
+What is a confusion matrix?	A table that compares actual and predicted classes.
+What is precision?	Out of all predicted positive cases, how many were actually positive.
+What is recall?	Out of all actual positive cases, how many were correctly identified.
+Which dataset did we use?	Scikit-learn's built-in Digits dataset.
+
+Important theory questions
+1. Explain the working of SVM.
+2. Explain the different types of SVM kernels.
+3. What are hyperplanes and support vectors?
+4. Explain confusion matrix, precision, recall and F1-score.
+5. Differentiate between classification and regression.
+Experiment 4: K-Means Clustering on Iris Dataset
+Unsupervised learning
+Question	Easy answer
+What is clustering?	Grouping similar data points together.
+What is K-Means?	An unsupervised algorithm that divides data into K clusters.
+What does K represent?	Number of clusters.
+What is a centroid?	The centre of a cluster.
+What is the elbow method?	A method used to find the optimal number of clusters.
+What is WCSS?	Within-Cluster Sum of Squares. It measures the spread of points within clusters.
+What is the purpose of scaling?	To prevent large-valued features from dominating distance calculations.
+Is K-Means supervised?	No, it is unsupervised.
+Which distance is commonly used?	Euclidean distance.
+Which dataset did we use?	Iris.csv
+How many clusters did we select?	Three clusters.
+
+Important theory questions
+1. Explain the K-Means clustering algorithm.
+2. Explain the elbow method with a diagram.
+3. Differentiate between supervised and unsupervised learning.
+4. What are the advantages and limitations of K-Means?
+5. Explain the role of centroids in clustering.
+Experiment 5: Random Forest for Car Safety Classification
+Supervised learning
+Question	Easy answer
+What is Random Forest?	An ensemble learning algorithm that combines multiple decision trees.
+What is a decision tree?	A tree-like model that makes decisions based on conditions.
+What is ensemble learning?	Combining multiple models to improve prediction performance.
+What is bagging?	Training multiple models on different random samples of data.
+How does Random Forest predict?	It uses majority voting for classification.
+What is a root node?	The starting node of a decision tree.
+What is a leaf node?	The final node that gives the prediction.
+What is feature importance?	It indicates how useful a feature is in making predictions.
+What is label encoding?	Converting categorical values into numerical values.
+Which dataset did we use?	car_evaluation.csv
+What are the output classes?	Unacceptable, acceptable, good and very good.
+
+Important theory questions
+1. Explain the working of Random Forest.
+2. Differentiate between Decision Tree and Random Forest.
+3. Explain ensemble learning.
+4. What are the advantages of Random Forest?
+5. What is bagging and how does it reduce overfitting?
+Experiment 6: Reinforcement Learning
+Reinforcement learning
+
+Question	Easy answer
+What is Reinforcement Learning?	Learning by interacting with an environment and receiving rewards or penalties.
+What is an agent?	The learner or decision-maker.
+What is an environment?	The world in which the agent operates.
+What is an action?	A move or decision taken by the agent.
+What is a reward?	Feedback received after taking an action.
+What is a state?	The current situation of the agent.
+What is a policy?	A strategy that tells the agent which action to take.
+What is Q-Learning?	A reinforcement learning algorithm that learns the value of actions in different states.
+What is a Q-table?	A table that stores Q-values for state-action pairs.
+What is exploration?	Trying new actions to discover better rewards.
+What is exploitation?	Choosing the best-known action.
+What is epsilon?	A parameter controlling exploration in epsilon-greedy learning.
+What is a terminal state?	A state where an episode ends.
+
+A. Maze problem
+Question	Easy answer
+What is the goal in the maze?	Reach the destination from the starting point.
+What are the actions?	Up, down, left and right.
+What is a wall?	An obstacle that the agent cannot cross.
+What reward is given for reaching the goal?	A positive reward.
+Why does the agent receive a penalty for each step?	To encourage it to find a shorter path.
+
+B. Taxi problem
+Question	Easy answer
+What is Taxi-v3?	A built-in Gymnasium environment for reinforcement learning.
+What is the goal?	Pick up a passenger and drop them at the correct destination.
+What are the main actions?	Move, pick up and drop off.
+What is Gymnasium?	A Python library for creating and interacting with RL environments.
+What happens after a successful drop-off?	The agent receives a positive reward and the episode ends.
+
+C. Tic-Tac-Toe problem
+Question	Easy answer
+What is Tic-Tac-Toe?	A two-player game played on a 3×3 board.
+What are the symbols?	X and O.
+How does the agent win?	By placing three symbols in a row, column or diagonal.
+What is a draw?	When all cells are filled and nobody wins.
+How does Q-Learning help?	It learns which moves lead to winning outcomes.
+
+Important theory questions
+1. Explain the Reinforcement Learning architecture.
+2. Explain the Q-Learning algorithm.
+3. Differentiate between exploration and exploitation.
+4. Explain the reward and penalty mechanism.
+5. Explain the applications of Reinforcement Learning.
+6. Differentiate between supervised and reinforcement learning.
+
+3. Important Theory Syllabus Questions
+These are useful short-answer questions to prepare in addition to the experiment-wise viva.
+No.	Question	Short answer
+1	Define Machine Learning.	A technique that enables computers to learn from data.
+2	What is a model?	A mathematical representation learned from data.
+3	What is training data?	Data used to train the model.
+4	What is testing data?	Data used to evaluate the model.
+5	What is data preprocessing?	Cleaning and preparing raw data before training.
+6	What is normalization?	Scaling values to a common range, often 0 to 1.
+7	What is standardization?	Transforming data to have mean 0 and standard deviation 1.
+8	What is feature selection?	Selecting the most useful input features.
+9	What is feature extraction?	Creating new features from existing data.
+10	What is cross-validation?	Evaluating a model using multiple data splits.
+11	What is a loss function?	A function that measures prediction error.
+12	What is gradient descent?	An optimization method used to minimize loss.
+13	What is bias?	Error caused by overly simple assumptions in a model.
+14	What is variance?	Sensitivity of a model to changes in training data.
+15	What is hyperparameter tuning?	Finding suitable model settings to improve performance.
+16	What is a classification problem?	Predicting categories, such as spam or not spam.
+17	What is a regression problem?	Predicting numerical values, such as house prices.
+18	What is clustering?	Grouping similar data points.
+19	What is an algorithm?	A step-by-step procedure to solve a problem.
+20	What is prediction?	Using a trained model to estimate an output for new data.
+
+4. Full Forms to Remember
+Term	Full form
+AI	Artificial Intelligence
+ML	Machine Learning
+PCA	Principal Component Analysis
+SVM	Support Vector Machine
+KNN	K-Nearest Neighbors
+K-Means	K-Means Clustering Algorithm
+RL	Reinforcement Learning
+RF	Random Forest
+RBF	Radial Basis Function
+MSE	Mean Squared Error
+RMSE	Root Mean Squared Error
+MAE	Mean Absolute Error
+WCSS	Within-Cluster Sum of Squares
+CSV	Comma-Separated Values
+L1	Lasso Regularization
+L2	Ridge Regularization
+API	Application Programming Interface
+IDE	Integrated Development Environment
+Q-Learning	Quality Learning (commonly called Q-Learning, not an acronym)
+R²	Coefficient of Determination
+
+5. Python and Libraries Viva
+These questions are especially common when the examiner asks you to explain your code.
+Question	Answer
+What is Python?	A high-level programming language.
+What is Pandas?	A Python library used for data manipulation and analysis.
+What is NumPy?	A library used for numerical calculations and arrays.
+What is Matplotlib?	A library used for data visualization.
+What is Seaborn?	A library used to create statistical graphs.
+What is Scikit-learn?	A Python library used for machine learning.
+What is Gymnasium?	A library used for reinforcement learning environments.
+What is read_csv()?	Reads a CSV file into a DataFrame.
+What is head()?	Displays the first five rows by default.
+What is shape?	Returns the number of rows and columns.
+What is drop()?	Removes specified rows or columns.
+What is fit()?	Trains or learns from the supplied data.
+What is predict()?	Predicts outputs using a trained model.
+What is train_test_split()?	Divides data into training and testing sets.
+What is StandardScaler()?	Standardizes numerical features.
+
+6. Very Important Differences
+These are common viva questions. Learn these tables properly.
+
+1. Supervised vs Unsupervised Learning
+Supervised	Unsupervised
+Uses labelled data	Uses unlabelled data
+Has known output	No known output
+Classification and regression	Clustering and PCA
+Example: SVM	Example: K-Means
+
+2. Classification vs Regression
+Classification	Regression
+Predicts categories	Predicts numerical values
+Example: Car safety	Example: Uber fare
+Output: Good/Bad	Output: ₹250
+
+3. Overfitting vs Underfitting
+Overfitting	Underfitting
+Learns training data too closely	Fails to learn important patterns
+High training accuracy	Low training accuracy
+Poor generalization	Poor performance on training and testing data
+
+4. Ridge vs Lasso
+Ridge	Lasso
+L2 regularization	L1 regularization
+Shrinks coefficients	Can make coefficients zero
+Keeps all features generally	Can perform feature selection
+
+_____________________________________________________________________________________________________________________
+      
 # DMV 1
 
 import pandas as pd
