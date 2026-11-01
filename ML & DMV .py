@@ -1006,6 +1006,53 @@ Important theory questions
 2. What are the advantages of dimensionality reduction?
 3. Explain the steps involved in PCA.
 4. Differentiate between PCA and feature selection.
+Answers : 
+Q1. Explain PCA and its applications.
+Answer:
+- PCA stands for Principal Component Analysis.
+- It is a dimensionality reduction technique.
+- It reduces the number of features in a dataset.
+- It keeps the most important information from the original data.
+- It makes data easier to understand and process.
+Example: If a dataset has 10 columns, PCA can reduce them to 2 or 3 important components.
+
+Applications:
+1. Image processing.
+2. Data visualization.
+3. Face recognition.
+4. Medical data analysis.
+5. Machine learning.
+Q2. What are the advantages of dimensionality reduction?
+Answer:
+
+Dimensionality reduction means reducing the number of features in a dataset.
+
+Advantages:
+1. Reduces data complexity.
+2. Saves memory and storage.
+3. Reduces training time.
+4. Removes unnecessary information.
+5. Helps in data visualization.
+6. Can reduce overfitting.
+Q3. Explain the steps involved in PCA.
+Answer:
+
+The steps involved in PCA are:
+1. Collect data: Take the required dataset.
+2. Standardization: Convert data into a common scale.
+3. Calculate covariance: Find the relationship between features.
+4. Calculate eigenvalues and eigenvectors: Find important directions in data.
+5. Select components: Choose components with higher eigenvalues.
+6. Transform data: Convert original data into new principal components.
+\(\hat{y} = b_0 + b_1x\)
+Q4. Differentiate between PCA and Feature Selection.
+PCA	Feature Selection
+Reduces dimensions by creating new features.	Selects important existing features.
+Combines original features.	Keeps original features.
+New components are created.	No new features are created.
+May reduce interpretability.	Easy to understand.
+Example: PCA on 10 columns to get 2 components.	Example: Selecting 2 important columns from 10.
+
 Experiment 2: Uber Fare Prediction using Regression
 Supervised learning
 Question	Easy answer
@@ -1028,6 +1075,82 @@ Important theory questions
 3. Explain MAE, MSE, RMSE and R².
 4. What is regularization? Explain L1 and L2.
 5. Explain data preprocessing in fare prediction.
+Answers:
+Q1. Explain Linear Regression with an example.
+Answer:
+- Linear Regression is a supervised machine learning algorithm.
+- It is used to predict continuous numerical values.
+- It finds the relationship between input and output variables.
+- It uses a straight line to make predictions.
+Example: Predicting taxi fare based on distance travelled.
+
+Formula:
+\[
+y = mx+c
+\]
+
+Where:
+- y = Predicted output
+- m = Slope
+- x = Input value
+- c = Intercept
+\(\hat{y} = b_0 + b_1x\)
+Q2. Differentiate between Linear, Ridge and Lasso Regression.
+Linear Regression	Ridge Regression	Lasso Regression
+Basic regression algorithm.	Uses L2 regularization.	Uses L1 regularization.
+No penalty is added.	Adds penalty to squared coefficients.	Adds penalty to absolute coefficients.
+May overfit.	Helps reduce overfitting.	Helps reduce overfitting.
+Keeps all features.	Keeps features but reduces coefficients.	Can make some coefficients zero.
+
+Q3. Explain MAE, MSE, RMSE and R².
+Answer:
+
+These are evaluation metrics used to check the performance of a regression model.
+
+1. MAE (Mean Absolute Error):
+- Calculates the average absolute difference between actual and predicted values.
+- Lower MAE means better prediction.
+2. MSE (Mean Squared Error):
+- Calculates the average squared difference between actual and predicted values.
+- Penalizes large errors more.
+3. RMSE (Root Mean Squared Error):
+- It is the square root of MSE.
+- It measures prediction error in the original unit.
+4. R² Score (R-squared):
+- Measures how well the model explains the data.
+- A value closer to 1 generally indicates a better fit.
+Q4. What is Regularization? Explain L1 and L2.
+Answer:
+- Regularization is a technique used to prevent overfitting.
+- It adds a penalty to the model to control large coefficients.
+- It helps the model perform better on new data.
+Types:
+
+1. L1 Regularization (Lasso):
+- Adds the absolute values of coefficients as a penalty.
+- Can make some coefficients zero.
+- Helps in feature selection.
+2. L2 Regularization (Ridge):
+- Adds the squared values of coefficients as a penalty.
+- Reduces coefficient values.
+- Usually does not make them exactly zero.
+Q5. Explain data preprocessing in fare prediction.
+Answer:
+
+Data preprocessing means cleaning and preparing data before applying a machine learning algorithm.
+
+Steps:
+1. Load the fare dataset.
+2. Remove duplicate records.
+3. Handle missing values.
+4. Remove incorrect or unwanted values.
+5. Convert date and time into proper format.
+6. Select important features like distance and passenger count.
+7. Split data into training and testing sets.
+8. Train the regression model.
+Example: Removing records with negative fare amounts or incorrect distances.
+
+
 Experiment 3: SVM Handwritten Digit Classification
 Supervised learning
 Question	Easy answer
@@ -1050,6 +1173,100 @@ Important theory questions
 3. What are hyperplanes and support vectors?
 4. Explain confusion matrix, precision, recall and F1-score.
 5. Differentiate between classification and regression.
+Answers:
+Q1. Explain the working of SVM.
+Answer:
+- SVM stands for Support Vector Machine.
+- It is a supervised machine learning algorithm.
+- It is mainly used for classification.
+- It separates data into different classes using a decision boundary.
+- It tries to find the best boundary with the maximum margin.
+Example: Classifying emails as Spam or Not Spam.
+
+
+
+
+
+
+
+mdpi.com
+
+
+Q2. Explain the different types of SVM kernels.
+Answer:
+
+A kernel is used to separate data when a straight line cannot separate it properly.
+
+Types of kernels:
+1. Linear Kernel: Used when data can be separated using a straight line.
+2. Polynomial Kernel: Used for curved and more complex relationships.
+3. RBF Kernel: Used for non-linear data. It is commonly used.
+4. Sigmoid Kernel: Works similarly to the activation function used in neural networks.
+Q3. What are Hyperplanes and Support Vectors?
+Answer:
+
+Hyperplane:
+- A hyperplane is a decision boundary that separates different classes.
+- In 2D, it is a line.
+- In 3D, it is a plane.
+Support Vectors:
+- Support vectors are the nearest data points to the hyperplane.
+- They help decide the position of the hyperplane.
+- They are very important in SVM.
+
+
+
+
+
+
+
+medium.com
+
+
+Q4. Explain Confusion Matrix, Precision, Recall and F1-score.
+Answer:
+
+These are evaluation metrics used to measure classification model performance.
+
+1. Confusion Matrix:
+
+It shows the correct and incorrect predictions made by a model.
+Term	Meaning
+True Positive (TP)	Correctly predicted positive
+True Negative (TN)	Correctly predicted negative
+False Positive (FP)	Incorrectly predicted positive
+False Negative (FN)	Incorrectly predicted negative
+
+2. Precision:
+
+It tells how many predicted positive values are actually positive.
+\[
+Precision=\frac{TP}{TP+FP}
+\]
+
+3. Recall:
+
+It tells how many actual positive values are correctly identified.
+\[
+Recall=\frac{TP}{TP+FN}
+\]
+
+4. F1-score:
+
+It is the balance between precision and recall.
+\[
+F1=2\times\frac{Precision\times Recall}{Precision+Recall}
+\]
+
+Q5. Differentiate between Classification and Regression.
+Classification	Regression
+Predicts categories.	Predicts numerical values.
+Output is discrete.	Output is continuous.
+Used for class prediction.	Used for value prediction.
+Example: Spam or Not Spam.	Example: House price prediction.
+Algorithms: SVM, KNN.	Algorithms: Linear Regression, Ridge.
+
+
 Experiment 4: K-Means Clustering on Iris Dataset
 Unsupervised learning
 Question	Easy answer
@@ -1071,6 +1288,79 @@ Important theory questions
 3. Differentiate between supervised and unsupervised learning.
 4. What are the advantages and limitations of K-Means?
 5. Explain the role of centroids in clustering.
+Answers:
+Q1. Explain the K-Means clustering algorithm.
+Answer:
+- K-Means is an unsupervised machine learning algorithm.
+- It is used to group similar data points into clusters.
+- K represents the number of clusters.
+- Each cluster has a centre called a centroid.
+- Data points are grouped based on their distance from the centroid.
+Steps:
+1. Select the number of clusters (K).
+2. Initialize K centroids.
+3. Calculate the distance of each point from the centroids.
+4. Assign each point to its nearest centroid.
+5. Recalculate the centroids.
+6. Repeat until the clusters become stable.
+
+
+
+
+
+
+
+medium.com
+
+
+Q2. Explain the Elbow Method with a diagram.
+Answer:
+- The Elbow Method is used to find the best value of K.
+- It helps to select the optimal number of clusters.
+- It calculates WCSS (Within-Cluster Sum of Squares) for different K values.
+- We draw a graph between K values and WCSS.
+- The point where the graph looks like an elbow is selected as the best K.
+
+
+
+
+
+
+
+ceve543.github.io
+
+
+Q3. Differentiate between Supervised and Unsupervised Learning.
+Supervised Learning	Unsupervised Learning
+Uses labelled data.	Uses unlabelled data.
+Output is already known during training.	Output is not given.
+Used for prediction.	Used for finding patterns.
+Example: Classification.	Example: Clustering.
+Algorithms: SVM, Linear Regression.	Algorithms: K-Means, Hierarchical Clustering.
+
+Q4. What are the advantages and limitations of K-Means?
+Advantages:
+1. Easy to understand.
+2. Simple to implement.
+3. Fast for large datasets.
+4. Easy to identify clusters.
+5. Works well for clearly separated groups.
+Limitations:
+1. We must select K manually.
+2. Sensitive to outliers.
+3. Different initial centroids may give different results.
+4. Not suitable for all types of cluster shapes.
+5. Requires numerical data.
+Q5. Explain the role of Centroids in Clustering.
+Answer:
+- A centroid is the centre point of a cluster.
+- It represents all the data points in that cluster.
+- Every data point is assigned to its nearest centroid.
+- Centroids are updated by calculating the mean of the points in each cluster.
+- They help form and improve clusters.
+Example: If we divide students into 3 groups based on marks, each group will have one centroid.
+
+
 Experiment 5: Random Forest for Car Safety Classification
 Supervised learning
 Question	Easy answer
@@ -1092,6 +1382,60 @@ Important theory questions
 3. Explain ensemble learning.
 4. What are the advantages of Random Forest?
 5. What is bagging and how does it reduce overfitting?
+Answers:
+Q1. Explain the working of Random Forest.
+Answer:
+- Random Forest is a supervised machine learning algorithm.
+- It uses multiple Decision Trees to make predictions.
+- Each tree is trained on a random sample of data.
+- Each tree gives its own prediction.
+- The final output is decided by combining all tree predictions.
+For classification: Majority voting is used.
+
+For regression: Average prediction is calculated.
+
+
+
+
+
+
+
+lightning.ai
+
+
+Q2. Differentiate between Decision Tree and Random Forest.
+Decision Tree	Random Forest
+Uses a single tree.	Uses multiple trees.
+Easy to understand.	More complex.
+Can easily overfit.	Reduces overfitting.
+May give less stable results.	Usually gives more stable results.
+Faster to train.	Usually takes more training time.
+
+Q3. Explain Ensemble Learning.
+Answer:
+- Ensemble Learning is a technique that combines multiple machine learning models.
+- It improves prediction performance.
+- It gives better and more stable results than using a single model in many cases.
+- Random Forest is an example of ensemble learning.
+Example: Combining the predictions of 10 Decision Trees to get one final prediction.
+Q4. What are the advantages of Random Forest?
+Answer:
+1. Gives good prediction accuracy.
+2. Reduces overfitting compared to a single Decision Tree.
+3. Works for classification and regression.
+4. Handles large datasets.
+5. Can identify important features.
+6. Works with many input features.
+Q5. What is Bagging and how does it reduce overfitting?
+Answer:
+- Bagging stands for Bootstrap Aggregating.
+- It creates multiple random samples from the original dataset.
+- Different models are trained on these samples.
+- Their predictions are combined using voting or averaging.
+- It reduces variance and helps prevent overfitting.
+Example: Random Forest uses Bagging to train multiple Decision Trees.
+
+
 Experiment 6: Reinforcement Learning
 Reinforcement learning
 
@@ -1141,6 +1485,80 @@ Important theory questions
 4. Explain the reward and penalty mechanism.
 5. Explain the applications of Reinforcement Learning.
 6. Differentiate between supervised and reinforcement learning.
+Answers:
+Q1. Explain the Reinforcement Learning architecture.
+Answer:
+- Reinforcement Learning is a type of machine learning.
+- An agent learns by interacting with its environment.
+- It performs actions and receives rewards or penalties.
+- The agent learns from its experience.
+- Its main aim is to get maximum total reward.
+Main components:
+1. Agent: The learner or decision-maker.
+2. Environment: The place where the agent works.
+3. State: The current situation.
+4. Action: The step taken by the agent.
+5. Reward: Feedback received after an action.
+6. Policy: The strategy used to select actions.
+
+
+
+
+
+
+
+medium.com
+
+
+Q2. Explain the Q-Learning algorithm.
+Answer:
+- Q-Learning is a model-free Reinforcement Learning algorithm.
+- It helps an agent learn the best action in a particular state.
+- It uses a Q-table to store the values of actions.
+- The agent selects an action and receives a reward.
+- It updates the Q-value based on the reward.
+- It repeats this process until it learns the best actions.
+Steps:
+1. Initialize the Q-table with zeros.
+2. Observe the current state.
+3. Select an action.
+4. Perform the action.
+5. Receive a reward.
+6. Update the Q-value.
+7. Repeat until the agent learns the best policy.
+Q3. Differentiate between Exploration and Exploitation.
+Exploration	Exploitation
+Trying new actions.	Choosing the best-known action.
+Helps discover new rewards.	Uses existing knowledge.
+May involve some risk.	Usually chooses a familiar action.
+Example: Trying a new path.	Example: Choosing the shortest known path.
+
+Q4. Explain the Reward and Penalty Mechanism.
+Answer:
+- Reward and penalty are feedback given to the agent.
+- A reward is given for a good action.
+- A penalty is given for a wrong or unwanted action.
+- The agent learns from this feedback.
+- Its aim is to maximize rewards and minimize penalties.
+Example:
+- A robot reaching its destination gets +10 reward.
+- A robot hitting a wall gets -5 penalty.
+Q5. Explain the Applications of Reinforcement Learning.
+Answer:
+1. Robotics.
+2. Self-driving cars.
+3. Game playing.
+4. Traffic signal control.
+5. Healthcare.
+6. Recommendation systems.
+7. Industrial automation.
+Q6. Differentiate between Supervised and Reinforcement Learning.
+Supervised Learning	Reinforcement Learning
+Uses labelled data.	Learns through interaction.
+Correct output is provided during training.	Feedback is given through rewards or penalties.
+Learns from examples.	Learns from experience.
+No action-based environment is required.	Interacts with an environment.
+Example: Email classification.	Example: Robot navigation.
 
 3. Important Theory Syllabus Questions
 These are useful short-answer questions to prepare in addition to the experiment-wise viva.
