@@ -2212,3 +2212,1053 @@ print("Accuracy:", accuracy_score(y_test, y_pred))
 print("Classification Report:")
 
 print(classification_report(y_test, y_pred))
+-----------------------------------------------------------------------
+_________________________________________________________________________________________
+Viva Questions with algos
+
+2. BIOINFORMATICS (BIF) PRACTICALS
+Practical 1: DNA Sequence Analysis
+Aim: To analyze a DNA sequence and perform sequence manipulation, motif identification, GC content calculation and coding region identification.
+A. Theory to write
+DNA (Deoxyribonucleic Acid) is the hereditary material of living organisms.
+
+DNA consists of four nitrogenous bases:
+- A – Adenine
+- T – Thymine
+- G – Guanine
+- C – Cytosine
+DNA sequence analysis involves studying nucleotide sequences to identify important biological information.
+
+Operations performed:
+1. Sequence manipulation: Changing, extracting or modifying DNA sequences.
+2. Motif identification: Finding specific patterns of nucleotides.
+3. GC content: Calculating the percentage of G and C bases.
+4. ORF identification: Finding possible protein-coding regions.
+GC content formula:
+\[
+GC\%=\frac{G+C}{A+T+G+C}\times100
+\]
+
+Example:
+
+DNA sequence: ATGCGCAT
+- A = 2
+- T = 2
+- G = 2
+- C = 2
+\[
+GC\%=\frac{2+2}{8}\times100=50\%
+\]
+
+ORF: An Open Reading Frame is a sequence of DNA that starts with a start codon and continues until a stop codon in the same reading frame.
+- Start codon: ATG
+- Stop codons: TAA, TAG, TGA.
+B. One-line algorithm
+1. Start.
+2. Import Biopython.
+3. Take a DNA sequence as input.
+4. Calculate sequence length.
+5. Count A, T, G and C bases.
+6. Calculate GC percentage.
+7. Search for a specific motif.
+8. Identify possible ORFs using start and stop codons.
+9. Display the results.
+10. Stop.
+C. Practical viva questions and answers
+Q1. What is bioinformatics?
+
+Bioinformatics is the application of computer science, mathematics and statistics to analyze biological data.
+
+Q2. What is DNA?
+
+DNA is the hereditary material that stores genetic information.
+
+Q3. What is the full form of DNA?
+
+Deoxyribonucleic Acid.
+
+Q4. What are the four bases of DNA?
+
+Adenine, Thymine, Guanine and Cytosine.
+
+Q5. Which bases are complementary in DNA?
+- A pairs with T.
+- G pairs with C.
+Q6. What is a nucleotide?
+
+A nucleotide is the basic building block of DNA and RNA.
+
+Q7. What is GC content?
+
+It is the percentage of Guanine and Cytosine bases in a DNA sequence.
+
+Q8. Why is GC content important?
+
+It helps understand DNA composition, stability and certain genomic characteristics.
+
+Q9. What is a motif?
+
+A motif is a short, recurring sequence pattern that may have biological significance.
+
+Q10. What is an ORF?
+
+An Open Reading Frame is a continuous nucleotide sequence that could potentially encode a protein.
+
+Q11. What is a codon?
+
+A codon is a group of three nucleotides that specifies an amino acid or stop signal.
+
+Q12. What is a start codon?
+
+ATG is the usual DNA start codon. It corresponds to AUG in mRNA.
+
+Q13. Name the three stop codons.
+
+TAA, TAG and TGA.
+
+Q14. What is a mutation?
+
+A mutation is a change in the nucleotide sequence of DNA.
+
+Q15. What is reverse complement?
+
+It is the reverse of the complementary DNA sequence.
+
+Q16. What is transcription?
+
+The process of converting DNA information into RNA.
+
+Q17. What is translation?
+
+The process of converting mRNA information into a protein.
+
+Q18. What is Biopython?
+
+Biopython is an open-source Python library used for computational biology and bioinformatics.
+
+Q19. What is Seq in Biopython?
+
+Seq is a Biopython object used to represent and manipulate biological sequences.
+
+Q20. What is FASTA format?
+
+FASTA is a text-based format used to store DNA, RNA and protein sequences.
+
+Q21. What is the difference between DNA and RNA?
+DNA	RNA
+Deoxyribose sugar	Ribose sugar
+Usually double-stranded	Usually single-stranded
+Contains Thymine	Contains Uracil
+Stores genetic information	Helps in protein synthesis
+
+Q22. What is a gene?
+
+A gene is a segment of DNA that contains information to produce a functional product, such as a protein or RNA.
+
+Q23. What is a genome?
+
+The complete genetic material of an organism.
+
+Q24. What is a reading frame?
+
+A reading frame is the way a nucleotide sequence is divided into groups of three bases.
+
+Q25. How many reading frames are present in double-stranded DNA?
+
+Six possible reading frames: three on each strand.
+
+Practical 2: RNA-Seq Data Analysis and Differential Gene Expression
+Aim: To analyze RNA-Seq data and identify differentially expressed genes.
+A. Theory to write
+RNA-Seq stands for RNA Sequencing. It is a high-throughput sequencing technique used to study gene expression.
+
+It helps identify which genes are active and how much they are expressed under different conditions.
+
+Differential Gene Expression (DGE):
+
+It is the process of identifying genes whose expression levels differ between two or more conditions.
+
+For example:
+- Control group: Healthy cells.
+- Treatment group: Drug-treated cells.
+By comparing both groups, we can identify genes whose expression increases or decreases after treatment.
+
+Important terms:
+1. Read counts: Number of sequencing reads assigned to a gene.
+2. Normalization: Adjusting data for differences in sequencing depth and other technical factors.
+3. Fold change: Measures how much gene expression changes.
+4. p-value: Measures statistical evidence against the null hypothesis.
+5. Adjusted p-value: Corrects for multiple hypothesis testing.
+6. Upregulated genes: Genes with increased expression.
+7. Downregulated genes: Genes with decreased expression.
+Fold change formula:
+\[
+FC=\frac{\text{Expression in Treatment}}{\text{Expression in Control}}
+\]
+
+Log2 Fold Change:
+\[
+log_2FC=\log_2\left(\frac{Treatment}{Control}\right)
+\]
+
+Example:
+
+Control expression = 10
+
+Treatment expression = 40
+\[
+FC=40/10=4
+\]
+
+\[
+log_2FC=2
+\]
+
+This means the gene expression increased four times.
+B. One-line algorithm
+1. Start.
+2. Import the required libraries.
+3. Load the RNA-Seq count dataset.
+4. Perform data cleaning.
+5. Normalize the expression values.
+6. Separate control and treatment groups.
+7. Calculate fold change and log2 fold change.
+8. Calculate statistical significance and adjust p-values.
+9. Identify upregulated and downregulated genes.
+10. Visualize the results.
+11. Stop.
+C. Practical viva questions and answers
+Q1. What is RNA-Seq?
+
+RNA Sequencing is a technique used to measure and study gene expression.
+
+Q2. What is the full form of RNA?
+
+Ribonucleic Acid.
+
+Q3. What is gene expression?
+
+The process through which information from a gene is used to produce RNA or a protein.
+
+Q4. What is differential gene expression?
+
+It identifies genes that show different expression levels between experimental conditions.
+
+Q5. What is a control group?
+
+A reference group used for comparison with the treatment group.
+
+Q6. What is a treatment group?
+
+A group that receives a particular treatment or experimental condition.
+
+Q7. What is fold change?
+
+It is the ratio of gene expression between two conditions.
+
+Q8. What is log2 fold change?
+
+It is the base-2 logarithm of fold change, used to represent increases and decreases symmetrically.
+
+Q9. What does positive log2FC indicate?
+
+Positive log2FC indicates increased expression in the treatment group compared with the control group.
+
+Q10. What does negative log2FC indicate?
+
+Negative log2FC indicates decreased expression in the treatment group compared with the control group.
+
+Q11. What does log2FC = 0 mean?
+
+There is no change in expression between the two conditions.
+
+Q12. What does log2FC = 1 mean?
+
+Expression has doubled.
+
+Q13. What does log2FC = -1 mean?
+
+Expression has reduced to half.
+
+Q14. What is an upregulated gene?
+
+A gene whose expression increases under a particular condition.
+
+Q15. What is a downregulated gene?
+
+A gene whose expression decreases under a particular condition.
+
+Q16. What is a p-value?
+
+It measures how compatible the observed data are with the null hypothesis, assuming that hypothesis is true.
+
+Q17. What is an adjusted p-value?
+
+A p-value corrected for multiple statistical tests.
+
+Q18. What is FDR?
+
+False Discovery Rate. It controls the expected proportion of false discoveries among identified significant results.
+
+Q19. What is a commonly used significance threshold?
+
+Adjusted p-value or FDR less than 0.05 is commonly used.
+
+Q20. What is normalization?
+
+It adjusts expression data to make samples more comparable.
+
+Q21. Why is normalization important?
+
+Because different samples may have different sequencing depths and technical variations.
+
+Q22. What is a volcano plot?
+
+A graph used to visualize differentially expressed genes using log2 fold change and statistical significance.
+
+Q23. What is a heatmap?
+
+A graphical representation of data using different colours to show expression patterns.
+
+Q24. What is a count matrix?
+
+A table containing genes as rows, samples as columns and read counts as values.
+
+Q25. What is DESeq2?
+
+An R/Bioconductor package used for differential gene expression analysis of RNA-Seq count data.
+
+Q26. What is the difference between RNA-Seq and microarray?
+- RNA-Seq uses sequencing technology.
+- Microarray uses probes to measure gene expression.
+Q27. What is functional annotation?
+
+Assigning biological information and functions to genes.
+
+Q28. What is GO?
+
+Gene Ontology. It describes gene functions using biological process, molecular function and cellular component categories.
+
+Q29. What is KEGG?
+
+Kyoto Encyclopedia of Genes and Genomes. It provides information about biological pathways and molecular interactions.
+
+Q30. What is biological interpretation?
+
+Understanding the biological meaning of the identified differentially expressed genes.
+
+Practical 3: Molecular Docking and Virtual Screening
+Aim: To perform molecular docking between a protein target and a small molecule ligand and identify potential drug candidates.
+A. Theory to write
+Molecular docking is a computational technique used to predict how a small molecule (ligand) binds to a target protein.
+
+It helps understand the binding interaction and estimate the binding affinity.
+
+Important terms:
+- Protein: Biological molecule that performs important cellular functions.
+- Ligand: Small molecule that binds to a protein.
+- Receptor: Target protein to which a ligand binds.
+- Binding site: Region of the protein where the ligand binds.
+- Binding affinity: Strength of interaction between ligand and protein.
+- Docking score: A numerical estimate of binding favourability.
+Virtual screening:
+
+Virtual screening is a computational process used to examine a large collection of chemical compounds and identify potential drug candidates.
+
+Docking workflow:
+1. Obtain the protein structure from the Protein Data Bank.
+2. Prepare the protein by removing unnecessary molecules and adding required atoms.
+3. Obtain the ligand structure.
+4. Prepare the ligand.
+5. Define the binding site or search space.
+6. Perform molecular docking.
+7. Analyze binding scores and poses.
+8. Identify potential lead compounds.
+Important software:
+- AutoDock Vina.
+- AutoDock Tools.
+- PyMOL.
+- RDKit.
+- Biopython.
+B. One-line algorithm
+1. Start.
+2. Download the target protein structure.
+3. Obtain the ligand structure.
+4. Prepare the protein and ligand.
+5. Convert the required structures into PDBQT format.
+6. Define the docking grid or search box.
+7. Perform docking using AutoDock Vina.
+8. Obtain docking scores and binding poses.
+9. Compare the results.
+10. Identify potential lead compounds.
+11. Stop.
+C. Practical viva questions and answers
+Q1. What is molecular docking?
+
+It is a computational technique used to predict the binding position and interaction between a ligand and a protein.
+
+Q2. What is a ligand?
+
+A small molecule that binds to a target protein.
+
+Q3. What is a receptor?
+
+A biological target, usually a protein, that binds to a ligand.
+
+Q4. What is a protein?
+
+A biological macromolecule made up of amino acids.
+
+Q5. What is PDB?
+
+Protein Data Bank. It is a database containing 3D structures of proteins and other biological macromolecules.
+
+Q6. What is PDB ID?
+
+A unique identifier assigned to a structure stored in the Protein Data Bank.
+
+Q7. What is PDBQT?
+
+A file format used by AutoDock Vina that stores molecular coordinates along with atom types and partial charges.
+
+Q8. What is AutoDock Vina?
+
+An open-source molecular docking software used to predict ligand-protein binding poses and scores.
+
+Q9. What is RDKit?
+
+An open-source cheminformatics toolkit used to process, analyze and manipulate chemical structures.
+
+Q10. What is Biopython?
+
+A Python library used for biological sequence and structure-related computational tasks.
+
+Q11. What is binding affinity?
+
+It describes how strongly a ligand binds to a protein.
+
+Q12. What is the unit of docking score in AutoDock Vina?
+
+kcal/mol.
+
+Q13. What does a negative docking score mean?
+
+It represents favourable predicted binding according to the docking scoring function.
+
+Q14. Is a more negative Vina score generally better?
+
+Yes. It generally indicates more favourable predicted binding, but it does not prove that a compound is an effective drug.
+
+Q15. What is binding pose?
+
+The predicted position and orientation of a ligand inside a protein binding site.
+
+Q16. What is a binding pocket?
+
+The region of a protein where a ligand can bind.
+
+Q17. What is a hydrogen bond?
+
+An attractive interaction involving a hydrogen atom and an electronegative atom such as oxygen or nitrogen.
+
+Q18. What are hydrophobic interactions?
+
+Interactions between nonpolar regions of molecules that tend to avoid contact with water.
+
+Q19. What is virtual screening?
+
+Computational screening of many compounds to identify potential drug candidates.
+
+Q20. What is drug discovery?
+
+The process of identifying and developing potential new medicines.
+
+Q21. What is CADD?
+
+Computer-Aided Drug Design. It uses computational methods to support drug discovery and development.
+
+Q22. What is the difference between docking and virtual screening?
+- Docking predicts the binding pose and score of a ligand.
+- Virtual screening examines many compounds to find promising candidates, often using docking as one of its steps.
+Q23. What is an RMSD?
+
+Root Mean Square Deviation. It measures the difference between two sets of corresponding atomic coordinates.
+
+Q24. What is ADMET?
+
+Absorption, Distribution, Metabolism, Excretion and Toxicity.
+
+Q25. Why do we remove water molecules from a protein structure?
+
+Unnecessary water molecules may interfere with docking. However, structurally important water molecules should sometimes be retained.
+
+Q26. What is a conformer?
+
+A different spatial arrangement of the same molecule caused by rotation around chemical bonds.
+
+Q27. What is a lead compound?
+
+A promising molecule that can be further optimized during drug development.
+
+Q28. What is a grid box?
+
+A defined three-dimensional search region in which the docking algorithm searches for ligand binding poses.
+
+Q29. What is exhaustiveness in AutoDock Vina?
+
+It controls the computational search effort used to explore possible binding poses.
+
+Q30. Can docking prove that a drug will work in humans?
+
+No. Docking provides computational predictions that require experimental validation.
+
+Practical 4: Machine Learning for Genomic Data
+Aim: To apply machine learning algorithms such as Random Forest and SVM to classify genomic data.
+A. Theory to write
+Machine learning for genomic data involves applying machine learning algorithms to biological and genetic information to identify patterns and make predictions.
+
+It can be used to classify diseases, identify genetic markers and predict biological conditions.
+
+Algorithms:
+1. Random Forest: An ensemble learning algorithm that combines multiple decision trees.
+2. Support Vector Machine: A supervised learning algorithm that finds an optimal separating hyperplane between classes.
+Workflow:
+1. Load the genomic dataset.
+2. Perform data preprocessing.
+3. Select important features.
+4. Divide the dataset into training and testing sets.
+5. Train the ML model.
+6. Predict the classes.
+7. Evaluate the performance.
+B. One-line algorithm
+1. Start.
+2. Import the required libraries.
+3. Load the genomic dataset.
+4. Clean the dataset.
+5. Separate features and target labels.
+6. Encode categorical variables if required.
+7. Split the data into training and testing sets.
+8. Train Random Forest or SVM.
+9. Predict the test data.
+10. Calculate accuracy, precision, recall and F1-score.
+11. Display the results.
+12. Stop.
+C. Practical viva questions and answers
+Q1. What is genomic data?
+
+Genomic data contains information about the DNA and genetic material of an organism.
+
+Q2. What is machine learning?
+
+Machine learning is a branch of AI that enables computers to learn patterns from data and make predictions.
+
+Q3. What is genomic classification?
+
+It is the process of assigning genomic samples to predefined classes using their genetic features.
+
+Q4. What is a feature?
+
+A feature is an input variable used by a machine learning model.
+
+Q5. What is a label?
+
+A label is the output category that the model tries to predict.
+
+Q6. What is Random Forest?
+
+Random Forest is an ensemble algorithm that combines multiple decision trees to improve prediction.
+
+Q7. Why is it called Random Forest?
+
+Because it creates multiple decision trees using randomly selected samples and features.
+
+Q8. What is a decision tree?
+
+A tree-like model that makes decisions using conditions on input features.
+
+Q9. What is SVM?
+
+Support Vector Machine is a supervised learning algorithm used for classification and regression.
+
+Q10. What is a hyperplane?
+
+A decision boundary that separates different classes in a feature space.
+
+Q11. What are support vectors?
+
+The data points closest to the separating hyperplane. They help determine the decision boundary.
+
+Q12. What is a kernel?
+
+A mathematical function that helps SVM handle nonlinear relationships by implicitly mapping data into a higher-dimensional feature space.
+
+Q13. Name the types of SVM kernels.
+- Linear.
+- Polynomial.
+- RBF.
+- Sigmoid.
+Q14. What is an ensemble learning algorithm?
+
+An algorithm that combines multiple models to improve prediction performance.
+
+Q15. What is feature selection?
+
+Selecting the most useful input features for building a model.
+
+Q16. What is feature extraction?
+
+Transforming raw data into useful numerical features.
+
+Q17. What is a 3-mer?
+
+A sequence of three consecutive nucleotides.
+
+Example: ATG, GCA, TTC.
+
+Q18. Why are k-mers used in genomic classification?
+
+They convert DNA sequences into numerical features that machine learning algorithms can process.
+
+Q19. What is cross-validation?
+
+A technique used to evaluate a model by dividing data into multiple training and validation subsets.
+
+Q20. What is overfitting?
+
+When the model memorizes training data and performs poorly on unseen data.
+
+Q21. What is accuracy?
+
+The proportion of correctly classified samples.
+
+Q22. What is a confusion matrix?
+
+A table showing actual and predicted class values.
+
+Q23. What is precision?
+
+The proportion of correctly predicted positive cases among all predicted positive cases.
+
+Q24. What is recall?
+
+The proportion of actual positive cases correctly identified by the model.
+
+Q25. What is F1-score?
+
+The harmonic mean of precision and recall.
+
+Q26. What is the difference between Random Forest and SVM?
+Random Forest	SVM
+Uses multiple decision trees	Uses a separating hyperplane
+Ensemble algorithm	Margin-based algorithm
+Handles nonlinear data well	Uses kernels for nonlinear data
+Can provide feature importance	Depends on kernel and model interpretation
+
+Q27. What is a genetic marker?
+
+A measurable DNA sequence variation associated with a biological characteristic.
+
+Q28. What is classification accuracy?
+
+It measures how many samples the model predicts correctly out of all tested samples.
+
+Q29. Which library is used for machine learning in Python?
+
+Scikit-learn.
+
+Q30. What are the applications of genomic machine learning?
+
+Disease prediction, cancer classification, gene identification and genomic pattern recognition.
+___________________________________________________________________________________________________
+Theory Questions
+__________________
+PART C: BIF THEORY QUESTIONS AND ANSWERS
+This section covers the main Elective III concepts: biological databases, sequence analysis, sequence alignment, protein structure, molecular modelling, docking, drug design, RNA-Seq, systems biology and genomic machine learning.
+Unit I: Introduction to Bioinformatics and Biological Databases
+Q1. What is Bioinformatics?
+
+Bioinformatics combines biology, computer science, mathematics and statistics to store, analyze and interpret biological data.
+
+Q2. What are the applications of Bioinformatics?
+1. DNA sequence analysis.
+2. Protein structure prediction.
+3. Drug discovery.
+4. Disease identification.
+5. Genome analysis.
+6. Gene expression analysis.
+Q3. What is a biological database?
+
+A biological database is an organized collection of biological information such as DNA, RNA, protein sequences and structures.
+
+Q4. Name important biological databases.
+- GenBank.
+- EMBL/ENA.
+- DDBJ.
+- NCBI.
+- UniProt.
+- PDB.
+- KEGG.
+- GEO.
+Q5. What is NCBI?
+
+National Center for Biotechnology Information. It provides biological databases and bioinformatics tools.
+
+Q6. What is GenBank?
+
+GenBank is a public database of nucleotide sequences.
+
+Q7. What is UniProt?
+
+UniProt is a database containing protein sequence and functional information.
+
+Q8. What is PDB?
+
+Protein Data Bank. It stores three-dimensional structures of proteins and other biological macromolecules.
+
+Q9. What is EMBL?
+
+European Molecular Biology Laboratory. In sequence database contexts, EMBL/ENA refers to the European Nucleotide Archive.
+
+Q10. What is DDBJ?
+
+DNA Data Bank of Japan. It stores nucleotide sequence information.
+
+Q11. What is GEO?
+
+Gene Expression Omnibus. It is a public database for gene expression and other functional genomics data.
+
+Q12. What is FASTA format?
+
+A text-based format used to represent nucleotide or protein sequences.
+
+Example:
+>Sequence1
+ATGCGTACGTAG
+
+
+Q13. What is FASTQ format?
+
+A format used to store biological sequences along with their sequencing quality scores.
+
+Q14. What is the difference between FASTA and FASTQ?
+FASTA	FASTQ
+Stores sequences	Stores sequences and quality scores
+Simple format	Contains four lines per read in standard representation
+Starts with >	Starts with @
+
+Q15. What is a genome?
+
+The complete genetic material of an organism.
+
+Q16. What is a proteome?
+
+The complete set of proteins expressed by a cell, tissue or organism under particular conditions.
+
+Q17. What is a transcriptome?
+
+The complete set of RNA transcripts expressed by a cell or organism under a particular condition.
+
+Q18. What is a gene?
+
+A segment of DNA that contains instructions to produce a functional RNA or protein product.
+Unit II: Sequence Analysis and Alignment
+Q19. What is sequence alignment?
+
+Sequence alignment is the process of arranging DNA, RNA or protein sequences to identify similarities and differences.
+
+Q20. Why is sequence alignment performed?
+- To identify similar sequences.
+- To study evolutionary relationships.
+- To identify conserved regions.
+- To predict biological functions.
+Q21. What are the types of sequence alignment?
+1. Pairwise sequence alignment.
+2. Multiple sequence alignment.
+Q22. What is pairwise sequence alignment?
+
+It compares two biological sequences to identify similarities.
+
+Q23. What is Multiple Sequence Alignment (MSA)?
+
+It aligns three or more biological sequences to identify conserved regions and similarities.
+
+Q24. What is global alignment?
+
+Global alignment aligns two sequences over their entire length.
+
+Q25. What is local alignment?
+
+Local alignment identifies the most similar regions within two sequences.
+
+Q26. Difference between global and local alignment?
+Global alignment	Local alignment
+Compares entire sequences	Compares similar regions
+Suitable for similar-length sequences	Suitable for sequences with local similarities
+Needleman-Wunsch	Smith-Waterman
+
+Q27. What is BLAST?
+
+Basic Local Alignment Search Tool. It identifies similar sequences in biological databases.
+
+Q28. What is FASTA in sequence searching?
+
+FASTA is both a sequence file format and a family of tools used for sequence similarity searching.
+
+Q29. What is the difference between BLAST and FASTA?
+
+Both are used for sequence similarity searching. BLAST uses heuristic search methods, while FASTA uses its own heuristic approach based on sequence matches and refinement.
+
+Q30. What is a scoring matrix?
+
+A matrix used to assign scores to matches and mismatches during sequence alignment.
+
+Q31. What is PAM?
+
+Point Accepted Mutation. A substitution matrix used in protein sequence alignment.
+
+Q32. What is BLOSUM?
+
+Blocks Substitution Matrix. It is used to score amino acid substitutions in protein sequence alignment.
+
+Q33. What is an amino acid?
+
+An amino acid is the basic building block of a protein.
+
+Q34. How many standard amino acids are used to build proteins?
+
+20 standard amino acids.
+
+Q35. What is a gap in sequence alignment?
+
+A gap represents an insertion or deletion introduced to improve sequence alignment.
+
+Q36. What is gap penalty?
+
+A score penalty applied for introducing gaps during sequence alignment.
+
+Q37. What is sequence similarity?
+
+The degree of resemblance between two biological sequences.
+
+Q38. What is sequence identity?
+
+The percentage of exactly matching positions in an alignment.
+
+Q39. What is homology?
+
+Homology means that sequences share a common evolutionary origin.
+
+Important: Homology is not expressed as a percentage. We say two sequences are homologous or not homologous.
+
+Q40. What is E-value in BLAST?
+
+E-value is the expected number of matches with a similar score that could occur by chance in a database search.
+
+A lower E-value generally indicates a more statistically significant match.
+Unit III: Protein Structure, Modelling and Molecular Docking
+Q41. What is a protein?
+
+A protein is a biological macromolecule made up of amino acids connected by peptide bonds.
+
+Q42. What are the four levels of protein structure?
+1. Primary.
+2. Secondary.
+3. Tertiary.
+4. Quaternary.
+Q43. Explain primary structure.
+
+The linear sequence of amino acids in a protein.
+
+Q44. Explain secondary structure.
+
+Local folding patterns of proteins, mainly alpha helices and beta sheets.
+
+Q45. Explain tertiary structure.
+
+The overall three-dimensional folding of a single protein chain.
+
+Q46. Explain quaternary structure.
+
+The arrangement of two or more protein subunits into a functional protein complex.
+
+Q47. What is protein structure prediction?
+
+It is the process of predicting a protein's three-dimensional structure from its amino acid sequence or related structural information.
+
+Q48. What is homology modelling?
+
+A method of predicting a protein's 3D structure using a structurally known homologous protein as a template.
+
+Q49. What are the steps in homology modelling?
+1. Obtain the target sequence.
+2. Search for a similar template.
+3. Align target and template sequences.
+4. Build the structural model.
+5. Refine the model.
+6. Validate the model.
+Q50. What is a template?
+
+A known protein structure used as a reference to predict another protein structure.
+
+Q51. What is threading?
+
+A protein structure prediction technique that fits a target amino acid sequence onto known protein structural folds.
+
+Q52. What is ab initio modelling?
+
+Predicting a protein's structure from its sequence using physical and computational principles without relying on a closely related template.
+
+Q53. Differentiate homology modelling and threading.
+Homology modelling	Threading
+Uses a homologous protein template	Fits sequence onto known structural folds
+Relies on sequence similarity	Can work even with low sequence similarity
+Builds a model from alignment	Evaluates compatibility with structural frameworks
+
+Q54. What is molecular modelling?
+
+The computational representation and study of molecular structures and properties.
+
+Q55. What is molecular docking?
+
+Predicting how a ligand binds to a target protein.
+
+Q56. What are the applications of molecular docking?
+- Drug discovery.
+- Identifying lead compounds.
+- Studying protein-ligand interactions.
+- Virtual screening.
+Q57. What is CADD?
+
+Computer-Aided Drug Design. It uses computational techniques to support drug discovery.
+
+Q58. What are the two major approaches of CADD?
+1. Structure-Based Drug Design (SBDD).
+2. Ligand-Based Drug Design (LBDD).
+Q59. What is Structure-Based Drug Design?
+
+Drug design based on the 3D structure of the target protein.
+
+Q60. What is Ligand-Based Drug Design?
+
+Drug design based on the known properties and structures of active molecules.
+
+Q61. What is pharmacophore modelling?
+
+Identifying the essential chemical features required for a molecule to interact with a biological target.
+
+Q62. What is virtual screening?
+
+Computationally screening a large chemical library to identify promising drug candidates.
+
+Q63. What is ADMET?
+
+It describes the absorption, distribution, metabolism, excretion and toxicity properties of a drug candidate.
+
+Q64. What is a lead molecule?
+
+A molecule showing promising biological activity that can be optimized to develop a drug.
+
+Q65. What is a binding pocket?
+
+The specific region of a protein where a ligand binds.
+
+Q66. What is molecular dynamics simulation?
+
+A computational method used to study the movement and interactions of atoms and molecules over time.
+Unit IV: RNA-Seq, Systems Biology and Machine Learning
+Q67. What is gene expression?
+
+The process by which information in a gene is used to produce a functional RNA or protein.
+
+Q68. What is RNA-Seq?
+
+A sequencing-based method used to study RNA and measure gene expression.
+
+Q69. What is differential gene expression analysis?
+
+It identifies genes whose expression changes significantly between different biological conditions.
+
+Q70. What is fold change?
+
+It is the ratio of expression in one condition to expression in another condition.
+
+Q71. What is log2 fold change?
+
+The base-2 logarithm of the fold change, used to represent expression differences.
+
+Q72. What is an upregulated gene?
+
+A gene showing increased expression in the condition being studied.
+
+Q73. What is a downregulated gene?
+
+A gene showing decreased expression in the condition being studied.
+
+Q74. What is a p-value?
+
+A statistical measure used to assess evidence against a null hypothesis.
+
+Q75. What is FDR?
+
+False Discovery Rate. It controls the expected proportion of false-positive discoveries among identified significant results.
+
+Q76. What is systems biology?
+
+Systems biology studies biological systems as interacting networks of genes, proteins and other components.
+
+Q77. What is a biological network?
+
+A representation of relationships between biological components.
+
+Q78. What are the types of biological networks?
+1. Gene regulatory networks.
+2. Protein-protein interaction networks.
+3. Metabolic networks.
+4. Signalling networks.
+Q79. What is a gene regulatory network?
+
+A network showing how genes regulate the expression of other genes.
+
+Q80. What is a protein-protein interaction network?
+
+A network representing interactions between different proteins.
+
+Q81. What is a metabolic network?
+
+A network showing the biochemical reactions and metabolic pathways in an organism.
+
+Q82. What is a node?
+
+A node represents an individual component in a network, such as a gene or protein.
+
+Q83. What is an edge?
+
+An edge represents a relationship or interaction between two nodes.
+
+Q84. What is centrality?
+
+A measure of the importance of a node within a network.
+
+Q85. What is machine learning in bioinformatics?
+
+Using machine learning algorithms to analyze biological data and make predictions.
+
+Q86. What is genomic data classification?
+
+Classifying genetic samples into categories based on their genomic features.
+
+Q87. What is Random Forest?
+
+An ensemble learning algorithm that combines multiple decision trees.
+
+Q88. What is SVM?
+
+Support Vector Machine. It classifies data by finding an optimal separating boundary.
+
+Q89. What is feature selection in genomic data?
+
+Selecting important genes or genetic markers for model training.
+
+Q90. What is a biomarker?
+
+A measurable biological indicator that can provide information about a biological condition or disease.
