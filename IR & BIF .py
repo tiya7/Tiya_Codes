@@ -1374,7 +1374,8 @@ Q65. What is robots.txt?
 
 A file that specifies crawling rules for automated web crawlers.
 _______________________________________________________________________________________________________
-# BIF 1
+# BIF 1 
+DNA Sequence Analysis.
 
 dna = "ATGCGATCGATGAAATAG"
 
@@ -1468,6 +1469,7 @@ for orf in orfs[:10]:
 ------------------------------------------------------------------------------------------
 
 # BIF 2
+RNA-Seq Data Analysis.
 
 import pandas as pd
 
@@ -1593,6 +1595,7 @@ result.to_csv("differential_expression_results.csv")
 
 ------------------------------------------------------------------------------------------
 # BIF 3
+Molecular Docking and Virtual Screening.
 
 #cell 1
 import os
@@ -2128,8 +2131,9 @@ Virtual screening completed!
 1.975
 
 2.994
-
+--------------------------------------------------------------------------------------------
 # BIF 4
+Machine Learning for Genomic Data.
 
 from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
