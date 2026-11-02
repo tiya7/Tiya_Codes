@@ -52,6 +52,34 @@ for word in words:
 # Display output
 print("Original Text:", text)
 print("Processed Text:", result)
+
+#OR#
+
+import nltk
+import re
+
+nltk.download('stopwords')
+
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer
+
+text = "Information retrieval systems are retrieving useful documents from large collections."
+
+words = re.findall(r'\b[a-zA-Z]+\b', text.lower())
+
+stop_words = set(stopwords.words('english'))
+
+filtered_words = [word for word in words if word not in stop_words]
+
+stemmer = PorterStemmer()
+
+stemmed_words = [stemmer.stem(word) for word in filtered_words]
+
+print("Original Text:", text)
+print("Tokens:", words)
+print("After Stop Word Removal:", filtered_words)
+print("After Stemming:", stemmed_words)
+
 ------------------------------------------------------------------------------------------
 
 # IR 2
@@ -77,6 +105,40 @@ search = input("Enter word to search: ")
 
 if search in inverted:
     print("Documents found:", inverted[search])
+else:
+    print("No documents found")
+
+#OR#
+
+from collections import defaultdict
+
+documents = {
+    "D1": "information retrieval searches documents",
+    "D2": "data mining finds useful patterns",
+    "D3": "retrieval systems use inverted index",
+    "D4": "documents are ranked for search query"
+}
+
+inverted_index = defaultdict(list)
+
+for doc_id, text in documents.items():
+
+    words = text.lower().split()
+
+    for word in set(words):
+        inverted_index[word].append(doc_id)
+
+print("Inverted Index:")
+
+for word, doc_ids in inverted_index.items():
+    print(word, ":", doc_ids)
+
+query = input("Enter search word: ").lower()
+
+print("Retrieved Documents:")
+
+if query in inverted_index:
+    print(inverted_index[query])
 else:
     print("No documents found")
 
@@ -134,6 +196,48 @@ Let us meet at 10 am.
 Your examination timetable is ready.
 Please send me the project report.
 The meeting is scheduled for tomorrow.
+
+#OR#
+
+import pandas as pd
+
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.metrics import accuracy_score, classification_report
+
+df = pd.read_csv("spam.csv", encoding="latin-1")
+#df = pd.read_csv("spam_ham_dataset.csv")
+
+df = df[["Category", "Message"]]
+
+X = df["Message"]
+y = df["Category"]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+vectorizer = TfidfVectorizer(stop_words="english")
+
+X_train = vectorizer.fit_transform(X_train)
+X_test = vectorizer.transform(X_test)
+
+model = MultinomialNB()
+
+model.fit(X_train, y_train)
+
+y_pred = model.predict(X_test)
+
+print("Accuracy:", accuracy_score(y_test, y_pred))
+
+print(classification_report(y_test, y_pred))
+
+message = ["Congratulations! You won a free prize"]
+
+message = vectorizer.transform(message)
+
+print("Prediction:", model.predict(message))
 ------------------------------------------------------------------------------------------
 
 # IR 4
