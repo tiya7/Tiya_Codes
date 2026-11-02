@@ -3589,3 +3589,421 @@ score()	Calculates docking score
 Q90. What is a biomarker?
 
 A measurable biological indicator that can provide information about a biological condition or disease.
+________________________________________________________________________________________________________________
+Code explaination :
+
+# IR and BIF Practical Viva: Explanation of the `#OR#` Codes
+
+I’ll explain the second/alternative code for each practical in simple viva language. The aim is to help you explain not just what each line does, but also why we use it when the external examiner asks.
+
+Use the bold Viva answer as your ready-to-speak explanation.
+
+# Part A: Information Retrieval (IR)
+
+## IR 1: Text preprocessing using stop-word removal and stemming
+
+Code used: NLTK + regular expressions (`re`).
+
+| Code                                         | Explanation                                                 |
+| -------------------------------------------- | ----------------------------------------------------------- |
+| `import nltk`                                | Imports the Natural Language Toolkit library.               |
+| `import re`                                  | Imports regular expressions for extracting words from text. |
+| `nltk.download('stopwords')`                 | Downloads the English stop-word list.                       |
+| `stopwords.words('english')`                 | Gets common English words such as is, are, the, and.        |
+| `PorterStemmer()`                            | Creates an object to perform stemming.                      |
+| `text.lower()`                               | Converts the complete text into lowercase.                  |
+| `re.findall(r'\b[a-zA-Z]+\b', text.lower())` | Extracts individual alphabetic words from the text.         |
+| `set(stopwords.words('english'))`            | Stores stop words in a set for faster checking.             |
+| `filtered_words`                             | Removes words present in the stop-word list.                |
+| `stemmer.stem(word)`                         | Reduces words to their root-like form.                      |
+| `print()`                                    | Displays the original text and each preprocessing stage.    |
+
+Example:
+
+Input:\
+`Information retrieval systems are retrieving useful documents from large collections.`
+
+After stop-word removal:\
+`information retrieval systems retrieving useful documents large collections`
+
+After stemming:\
+`inform retriev system retriev use document larg collect`
+
+Viva answer:\
+This program performs text preprocessing. First, it converts text into lowercase and extracts words. Then it removes common stop words and applies Porter stemming to reduce words to their root forms. This helps reduce unnecessary words and improves information retrieval.
+
+Remember: Stemming does not always produce a grammatically correct English word. It produces a shortened root-like form.
+
+## IR 2: Document retrieval using an inverted index
+
+Code used: `defaultdict` from the `collections` module.
+
+| Code                                  | Explanation                                                                 |
+| ------------------------------------- | --------------------------------------------------------------------------- |
+| `from collections import defaultdict` | Imports a dictionary that automatically creates an empty list for new keys. |
+| `documents = {...}`                   | Stores documents with their IDs and text.                                   |
+| `defaultdict(list)`                   | Creates an empty inverted index.                                            |
+| `documents.items()`                   | Iterates through each document ID and its text.                             |
+| `text.lower().split()`                | Converts text to lowercase and separates it into words.                     |
+| `set(words)`                          | Removes duplicate words within the same document.                           |
+| `inverted_index[word].append(doc_id)` | Stores the document ID against each word.                                   |
+| `inverted_index.items()`              | Iterates through all words and their document IDs.                          |
+| `input()`                             | Accepts a search word from the user.                                        |
+| `inverted_index[query]`               | Retrieves documents containing the searched word.                           |
+
+Example inverted index:
+
+```
+information : [D1]
+retrieval   : [D1, D3]
+documents   : [D1, D4]
+useful      : [D2]
+```
+
+Viva answer:\
+An inverted index is a data structure that stores each unique word along with the IDs of documents in which it appears. Instead of searching every document individually, we directly search the index. This makes document retrieval faster.
+
+Important difference:
+
+- Normal index: Document → Words
+- Inverted index: Word → Documents
+
+## IR 3: Email spam classification using Naive Bayes
+
+Code used: CSV dataset + TF-IDF + Multinomial Naive Bayes.
+
+| Code                                          | Explanation                                                                   |
+| --------------------------------------------- | ----------------------------------------------------------------------------- |
+| `import pandas as pd`                         | Imports Pandas for handling tabular data.                                     |
+| `train_test_split`                            | Divides data into training and testing sets.                                  |
+| `TfidfVectorizer`                             | Converts text into numerical TF-IDF features.                                 |
+| `MultinomialNB`                               | Imports the Naive Bayes classification algorithm.                             |
+| `accuracy_score`                              | Calculates the accuracy of the model.                                         |
+| `classification_report`                       | Displays precision, recall and F1-score.                                      |
+| `pd.read_csv("spam.csv", encoding="latin-1")` | Reads the email dataset. Latin-1 helps handle special characters in the file. |
+| `df[["Category", "Message"]]`                 | Selects only the category and email message columns.                          |
+| `X = df["Message"]`                           | Stores email text as input.                                                   |
+| `y = df["Category"]`                          | Stores spam/ham labels as output.                                             |
+| `test_size=0.2`                               | Uses 20% data for testing and 80% for training.                               |
+| `random_state=42`                             | Ensures the same split each time.                                             |
+| `fit_transform(X_train)`                      | Learns vocabulary and converts training text into TF-IDF values.              |
+| `transform(X_test)`                           | Converts testing text using the same learned vocabulary.                      |
+| `model.fit()`                                 | Trains the Naive Bayes model.                                                 |
+| `model.predict()`                             | Predicts whether an email is spam or ham.                                     |
+
+Viva answer:\
+This program classifies emails as spam or ham using the Multinomial Naive Bayes algorithm. First, it loads an email dataset and separates messages from their labels. TF-IDF converts text into numerical features. The dataset is split into training and testing sets. Finally, the model is trained, tested and evaluated using accuracy and a classification report.
+
+Important viva questions:
+
+- What is TF-IDF? It measures the importance of a word in a document compared with the complete collection of documents.
+- What is Naive Bayes? It is a probabilistic classification algorithm based on Bayes' theorem.
+- What is ham? A legitimate email.
+- Why Multinomial Naive Bayes? It is commonly used for text classification with word-based features.
+
+## IR 4: Agglomerative hierarchical clustering
+
+Your pasted IR 4 section has a mistake: its second `#OR#` code is actually an email spam classification program, not clustering. Do not explain that as IR 4 in the viva.
+
+The correct clustering alternative is the Mall Customers program using `StandardScaler`, `linkage`, `dendrogram` and `AgglomerativeClustering`.
+
+| Code                                                    | Explanation                                                       |
+| ------------------------------------------------------- | ----------------------------------------------------------------- |
+| `import pandas as pd`                                   | Imports Pandas to read and handle the dataset.                    |
+| `StandardScaler`                                        | Standardizes numerical features.                                  |
+| `AgglomerativeClustering`                               | Imports the hierarchical clustering algorithm.                    |
+| `dendrogram, linkage`                                   | Imports functions to build and display a hierarchical tree.       |
+| `pd.read_csv("Mall_Customers.csv")`                     | Loads the customer dataset.                                       |
+| `df[["Annual Income (k$)", "Spending Score (1-100)"]]`  | Selects annual income and spending score.                         |
+| `StandardScaler()`                                      | Creates the scaling object.                                       |
+| `fit_transform(X)`                                      | Scales the selected features.                                     |
+| `linkage(X_scaled, method="ward")`                      | Calculates hierarchical cluster combinations using Ward's method. |
+| `dendrogram(Z)`                                         | Displays the tree-like structure of clusters.                     |
+| `AgglomerativeClustering(n_clusters=5, linkage="ward")` | Creates a model to form five clusters using Ward linkage.         |
+| `fit_predict(X_scaled)`                                 | Fits the model and assigns a cluster label to each customer.      |
+| `plt.scatter()`                                         | Displays customers in a scatter plot, coloured by cluster.        |
+
+Viva answer:\
+Agglomerative clustering is a bottom-up hierarchical clustering algorithm. Initially, every data point is treated as a separate cluster. The algorithm repeatedly merges the closest clusters until the required number of clusters is obtained. A dendrogram visually represents this merging process.
+
+Why do we use StandardScaler?\
+To bring features to a similar scale so that a feature with larger numerical values does not dominate the clustering.
+
+What is a dendrogram?\
+A tree-like diagram that shows how individual data points or clusters are merged at different distances.
+
+What is Ward linkage?\
+It merges clusters in a way that minimizes the increase in within-cluster variance.
+
+## IR 5: Web crawler for e-commerce product information
+
+Code used: Requests + BeautifulSoup + Pandas.
+
+| Code                                          | Explanation                                      |
+| --------------------------------------------- | ------------------------------------------------ |
+| `import requests`                             | Imports the library used to send HTTP requests.  |
+| `import pandas as pd`                         | Imports Pandas to store product information.     |
+| `BeautifulSoup`                               | Imports the HTML parser.                         |
+| `urljoin`                                     | Converts relative links into complete URLs.      |
+| `requests.get(url)`                           | Sends a request to the website.                  |
+| `response.text`                               | Gets the HTML content of the webpage.            |
+| `BeautifulSoup(response.text, "html.parser")` | Parses HTML into a searchable structure.         |
+| `products = []`                               | Creates an empty list to store product details.  |
+| `find_all("article", class_="product_pod")`   | Finds all product containers on the page.        |
+| `book.h3.a["title"]`                          | Extracts the product title.                      |
+| `find("p", class_="price_color").text`        | Extracts the product price.                      |
+| `book.h3.a["href"]`                           | Extracts the product's relative link.            |
+| `urljoin(url, link)`                          | Converts the relative link into a full URL.      |
+| `products.append({...})`                      | Stores title, price and link in a dictionary.    |
+| `pd.DataFrame(products)`                      | Converts the product list into a DataFrame.      |
+| `df.to_csv("products.csv", index=False)`      | Saves the extracted information into a CSV file. |
+
+Viva answer:\
+This program is a basic web crawler. It sends an HTTP request to an e-commerce website, retrieves its HTML content and parses it using BeautifulSoup. It extracts product titles, prices and links, stores them in a list and converts the results into a CSV file.
+
+Important viva questions:
+
+- What is web crawling? Automatically visiting web pages and collecting their information.
+- What is BeautifulSoup? A Python library used to parse and extract data from HTML and XML.
+- What is Requests? A Python library used to send HTTP requests.
+- What is `urljoin()`? It combines a base URL and a relative URL to create a complete URL.
+- What is HTML parsing? Converting HTML source code into a structured format that can be searched.
+
+# Part B: Bioinformatics (BIF)
+
+## BIF 1: DNA sequence analysis
+
+Code used: Pandas dataset + motif search + ORF detection.
+
+| Code                                    | Explanation                                          |
+| --------------------------------------- | ---------------------------------------------------- |
+| `import pandas as pd`                   | Imports Pandas to read the DNA sequence dataset.     |
+| `pd.read_csv("human.csv")`              | Loads the CSV file containing DNA sequences.         |
+| `df["sequence"][0]`                     | Extracts the first DNA sequence from the dataset.    |
+| `sequence.upper()`                      | Converts the sequence into uppercase.                |
+| `sequence[:100]`                        | Displays the first 100 characters of the sequence.   |
+| `sequence.count("G")`                   | Counts guanine bases.                                |
+| `sequence.count("C")`                   | Counts cytosine bases.                               |
+| `(gc_count / len(sequence)) * 100`      | Calculates GC content as a percentage.               |
+| `motif = "ATG"`                         | Defines the DNA pattern to search for.               |
+| `range(len(sequence) - len(motif) + 1)` | Checks all possible starting positions of the motif. |
+| `sequence[i:i+len(motif)]`              | Extracts a small section of DNA for comparison.      |
+| `positions.append(i)`                   | Stores the position where the motif occurs.          |
+| `stop_codons = ["TAA", "TAG", "TGA"]`   | Defines the three stop codons.                       |
+| `for frame in range(3)`                 | Checks the three possible forward reading frames.    |
+| `sequence[i:i+3]`                       | Extracts one codon containing three nucleotides.     |
+| `if codon == "ATG"`                     | Checks for the start codon.                          |
+| `if codon in stop_codons`               | Checks whether a stop codon is found.                |
+| `orfs.append(sequence[i:j+3])`          | Stores the identified open reading frame.            |
+| `len(orf)`                              | Calculates the length of an ORF.                     |
+
+Viva answer:\
+This program performs DNA sequence analysis using a CSV dataset. It calculates sequence length and GC content, searches for a specific motif and identifies possible open reading frames. ORF detection checks for a start codon, ATG, followed by an in-frame stop codon such as TAA, TAG or TGA.
+
+Important viva questions:
+
+- What is DNA? Deoxyribonucleic acid, which stores genetic information.
+- What are the four DNA bases? Adenine, Thymine, Guanine and Cytosine.
+- What is GC content? The percentage of G and C bases in a DNA sequence.
+- What is a motif? A short, recurring sequence pattern that may have biological significance.
+- What is an ORF? An open reading frame is a sequence that begins with a start codon and ends with an in-frame stop codon.
+- What is ATG? The common DNA start codon.
+
+One important point: This code checks only the three forward reading frames. Complete ORF analysis can also examine the reverse strand.
+
+## BIF 2: RNA-Seq analysis and differential gene expression
+
+Code used: NumPy + Pandas + statistical testing + FDR correction.
+
+| Code                                               | Explanation                                                                       |
+| -------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `import numpy as np`                               | Imports NumPy for numerical calculations.                                         |
+| `import pandas as pd`                              | Imports Pandas for tabular data handling.                                         |
+| `ttest_ind`                                        | Imports the independent two-sample t-test.                                        |
+| `multipletests`                                    | Imports a function for correcting multiple statistical tests.                     |
+| `np.random.seed(10)`                               | Ensures reproducible random data.                                                 |
+| `genes = ["Gene_" + str(i) ...]`                   | Creates names for 100 genes.                                                      |
+| `np.random.poisson(100, (100, 3))`                 | Generates simulated expression counts for 100 genes across three control samples. |
+| `treated = ...`                                    | Generates simulated expression counts for treated samples.                        |
+| `treated[:10]`                                     | Makes the first 10 genes highly expressed in treated samples.                     |
+| `treated[10:20]`                                   | Makes the next 10 genes less expressed in treated samples.                        |
+| `np.column_stack((control, treated))`              | Combines control and treated data column-wise.                                    |
+| `pd.DataFrame(...)`                                | Organizes the gene expression data into a table.                                  |
+| `mean(axis=1)`                                     | Calculates the average expression of each gene across samples.                    |
+| `np.log2((treated_mean + 1) / (control_mean + 1))` | Calculates log2 fold change. Adding 1 avoids division by zero.                    |
+| `ttest_ind()`                                      | Compares control and treated expression values for each gene.                     |
+| `equal_var=False`                                  | Uses Welch's t-test, which does not assume equal variances.                       |
+| `p_values.append(p)`                               | Stores the p-value for each gene.                                                 |
+| `multipletests(..., method="fdr_bh")`              | Applies Benjamini-Hochberg correction to control the false discovery rate.        |
+| `Adjusted_P_Value < 0.05`                          | Selects genes with statistically significant adjusted p-values.                   |
+| `Log2_Fold_Change > 1`                             | Identifies genes with more than twofold higher expression in treatment.           |
+| `Log2_Fold_Change < -1`                            | Identifies genes with more than twofold lower expression in treatment.            |
+| `value_counts()`                                   | Counts upregulated, downregulated and non-significant genes.                      |
+| `to_csv()`                                         | Saves the results into a CSV file.                                                |
+
+Viva answer:\
+This program performs differential gene expression analysis between control and treated samples. It generates a simulated gene expression dataset, calculates average expression and log2 fold change, and performs a statistical t-test. It then applies Benjamini-Hochberg correction to identify significantly upregulated and downregulated genes.
+
+Important viva questions:
+
+- What is RNA-Seq? A sequencing-based technique used to study gene expression.
+- What is gene expression? The process through which information in a gene is used to produce a functional product.
+- What is upregulation? An increase in gene expression.
+- What is downregulation? A decrease in gene expression.
+- What is fold change? The ratio of expression in treated samples to expression in control samples.
+- What is log2 fold change? The base-2 logarithm of the fold change.
+- What is a p-value? It measures how compatible the observed data are with the null hypothesis.
+- Why adjust p-values? Because thousands of genes may be tested, increasing the chance of false positives.
+
+Remember: This is a simplified demonstration using simulated data and t-tests. Real RNA-Seq differential expression analysis generally uses raw read counts with tools such as DESeq2 or edgeR, along with appropriate biological replicates and normalization.
+
+## BIF 3: Molecular docking and virtual screening
+
+Code used: Alternative setup using AutoDock Vina, receptor preparation and ligand preparation.
+
+This practical has several notebook cells. Think of it as a sequence of stages rather than one large Python program.
+
+| Code / command                                 | Explanation                                                                  |
+| ---------------------------------------------- | ---------------------------------------------------------------------------- |
+| `conda tos accept ...`                         | Accepts the Anaconda channel Terms of Service so packages can be downloaded. |
+| `import urllib.request`                        | Imports a module for downloading files from URLs.                            |
+| `urllib.request.urlretrieve(url, "vina.exe")`  | Downloads the AutoDock Vina executable and saves it as `vina.exe`.           |
+| `os.path.exists("vina.exe")`                   | Checks whether the downloaded executable exists.                             |
+| `subprocess.run(["vina.exe", "version"], ...)` | Runs Vina and checks its installed version.                                  |
+| `sysconfig.get_path("scripts")`                | Finds the Python environment's Scripts directory.                            |
+| `Path(...)`                                    | Handles file and folder paths conveniently.                                  |
+| `mk_prepare_receptor.exe`                      | Prepares the protein receptor for molecular docking.                         |
+| `--read_pdb`                                   | Specifies the input protein PDB file.                                        |
+| `-o receptor`                                  | Specifies the output file name prefix.                                       |
+| `-p`                                           | Requests generation of the receptor PDBQT file.                              |
+| `-j`                                           | Requests a JSON output file.                                                 |
+| `--default_altloc A`                           | Selects alternate atom location A when applicable.                           |
+| `os.path.exists("receptor.pdbqt")`             | Checks whether receptor preparation succeeded.                               |
+| `mk_prepare_ligand.exe`                        | Prepares the ligand molecule for docking.                                    |
+| `-i`                                           | Specifies the input ligand file.                                             |
+| `-o ligand.pdbqt`                              | Specifies the output ligand file.                                            |
+| `PDBParser()`                                  | Reads the protein's PDB structure.                                           |
+| `cdist(A, E)`                                  | Calculates distances between two sets of atomic coordinates.                 |
+| `center = ...mean(axis=0)`                     | Calculates the approximate centre of the docking region.                     |
+| `vina.exe`                                     | Executes the molecular docking program.                                      |
+| `--receptor`                                   | Specifies the prepared receptor file.                                        |
+| `--ligand`                                     | Specifies the prepared ligand file.                                          |
+| `--center_x`, `--center_y`, `--center_z`       | Specify the centre of the docking search box.                                |
+| `--size_x`, `--size_y`, `--size_z`             | Specify the dimensions of the search box.                                    |
+| `--exhaustiveness 8`                           | Controls the search effort used by Vina.                                     |
+| `--num_modes 5`                                | Requests up to five possible binding poses.                                  |
+| `--out`                                        | Specifies the output docking file.                                           |
+| `"VINA RESULT"`                                | Identifies the lines containing docking affinity results.                    |
+| `glob.glob("ligands/*.sdf")`                   | Finds all SDF ligand files in the ligands folder.                            |
+| `Path(file).stem`                              | Extracts the ligand filename without its extension.                          |
+| `results.append([name, score])`                | Stores the ligand name and its binding score.                                |
+| `pd.DataFrame(results, ...)`                   | Creates a table of screening results.                                        |
+| `sort_values("Binding Affinity")`              | Sorts ligands by binding affinity.                                           |
+
+Viva answer:\
+This practical performs molecular docking and virtual screening using AutoDock Vina. First, the protein receptor and ligand molecules are prepared in PDBQT format. Then, the binding site is selected and a docking grid box is defined. Vina predicts possible ligand binding poses and calculates binding affinity scores. Virtual screening repeats this process for multiple ligands to identify promising candidates.
+
+Important viva questions:
+
+- What is molecular docking? A computational technique that predicts how a ligand binds to a protein.
+- What is a receptor? The target protein with which a ligand interacts.
+- What is a ligand? A small molecule that binds to a target protein.
+- What is PDB? Protein Data Bank format, used to store three-dimensional molecular structures.
+- What is PDBQT? A PDB-derived format used by AutoDock tools that includes atom types and partial charges.
+- What is AutoDock Vina? Software used for molecular docking and binding affinity estimation.
+- What is binding affinity? A measure of how strongly a ligand is predicted to bind to a target.
+- What does a negative binding score mean? It represents favourable predicted binding according to Vina's scoring function. A more negative score is generally considered more favourable.
+- What is virtual screening? Computationally testing multiple molecules against a target protein to shortlist potential candidates.
+- What is a docking grid box? The three-dimensional search region where Vina looks for ligand binding poses.
+
+
+
+Important correction
+
+&#x20;Your pasted alternative code contains a few typing or formatting mistakes, such as `--center y` instead of `--center_y`, and `-size x` instead of `--size_x`. The correct Vina options use underscores and two hyphens, for example `--center_y` and `--size_x`. Also, the ligand preparation command should use the correct `-i` input option.
+
+
+
+How to explain the result:\
+For example, if the best Vina score is `-5.734 kcal/mol`, say: The program predicted a binding affinity of -5.734 kcal/mol for the best docking pose. A more negative score generally indicates more favourable predicted binding, but it does not prove actual biological activity.
+
+## BIF 4: Machine learning for genomic classification
+
+Code used: DNA sequence classification using Random Forest and 3-mer features.
+
+| Code                                     | Explanation                                                                      |
+| ---------------------------------------- | -------------------------------------------------------------------------------- |
+| `import pandas as pd`                    | Imports Pandas to read the DNA dataset.                                          |
+| `CountVectorizer`                        | Converts DNA sequences into numerical features.                                  |
+| `train_test_split`                       | Divides the dataset into training and testing sets.                              |
+| `RandomForestClassifier`                 | Imports the Random Forest classification algorithm.                              |
+| `accuracy_score`                         | Calculates prediction accuracy.                                                  |
+| `pd.read_csv("human.csv")`               | Loads the DNA sequence dataset.                                                  |
+| `df["sequence"].astype(str).str.upper()` | Converts all sequences into uppercase strings.                                   |
+| `y = df["class"]`                        | Stores the class labels to be predicted.                                         |
+| `analyzer="char"`                        | Tells the vectorizer to process individual characters and character patterns.    |
+| `ngram_range=(3, 3)`                     | Extracts groups of three consecutive characters called 3-mers.                   |
+| `fit_transform(X)`                       | Learns the 3-mer vocabulary and converts sequences into numerical features.      |
+| `test_size=0.2`                          | Uses 80% data for training and 20% for testing.                                  |
+| `random_state=42`                        | Makes the data split reproducible.                                               |
+| `stratify=y`                             | Maintains approximately the same class proportions in training and testing data. |
+| `n_estimators=150`                       | Creates 150 decision trees in the Random Forest.                                 |
+| `class_weight="balanced"`                | Gives additional weight to underrepresented classes.                             |
+| `model.fit()`                            | Trains the Random Forest model.                                                  |
+| `model.predict()`                        | Predicts the class of test sequences.                                            |
+| `accuracy_score()`                       | Calculates the percentage of correct predictions.                                |
+| `classification_report()`                | Displays precision, recall, F1-score and support for each class.                 |
+
+Viva answer:\
+This program performs genomic sequence classification using a Random Forest algorithm. First, it loads DNA sequences and their class labels. It extracts 3-mer features, which are groups of three consecutive DNA characters. These features are converted into numerical values and supplied to the Random Forest classifier. Finally, the model predicts the sequence classes and evaluates its performance using accuracy and a classification report.
+
+Important viva questions:
+
+- What is genomic classification? Categorizing DNA or genomic data into predefined classes using computational methods.
+- What is Random Forest? An ensemble learning algorithm that combines multiple decision trees to make predictions.
+- What is a 3-mer? A sequence of three consecutive nucleotides.
+- Why use 3-mers? They capture short DNA sequence patterns that may help distinguish genomic classes.
+- What is a feature? A measurable input characteristic used by a machine learning model.
+- What is a class label? The category that the model is trained to predict.
+- What is overfitting? When a model learns training data too closely and performs poorly on unseen data.
+- Why use multiple decision trees? Combining predictions from many trees generally improves stability and reduces overfitting compared with relying on one tree.
+
+# Last-minute revision: Remember these functions
+
+These are the functions an external examiner may point to and ask you to explain.
+
+| Practical | Most important functions                                                                  |
+| --------- | ----------------------------------------------------------------------------------------- |
+| IR 1      | `re.findall()`, `stopwords.words()`, `PorterStemmer()`, `stem()`                          |
+| IR 2      | `defaultdict()`, `split()`, `set()`, `append()`                                           |
+| IR 3      | `read_csv()`, `TfidfVectorizer()`, `fit_transform()`, `MultinomialNB()`, `predict()`      |
+| IR 4      | `StandardScaler()`, `linkage()`, `dendrogram()`, `fit_predict()`                          |
+| IR 5      | `requests.get()`, `BeautifulSoup()`, `find_all()`, `urljoin()`, `to_csv()`                |
+| BIF 1     | `count()`, `find()`, `len()`, `append()`, `upper()`                                       |
+| BIF 2     | `mean()`, `np.log2()`, `ttest_ind()`, `multipletests()`                                   |
+| BIF 3     | `PDBParser()`, `subprocess.run()`, `cdist()`, `glob.glob()`                               |
+| BIF 4     | `CountVectorizer()`, `RandomForestClassifier()`, `fit()`, `predict()`, `accuracy_score()` |
+
+# 9 practicals: One-line answers for the external
+
+Learn these nine answers. They are useful when the examiner simply asks, What did you perform?
+
+| Practical | Answer                                                                                                                     |
+| --------- | -------------------------------------------------------------------------------------------------------------------------- |
+| IR 1      | I performed text preprocessing using stop-word removal and Porter stemming.                                                |
+| IR 2      | I created an inverted index to map words to their corresponding document IDs and retrieve documents.                       |
+| IR 3      | I classified emails as spam or ham using the Naive Bayes algorithm.                                                        |
+| IR 4      | I grouped similar data points using Agglomerative Hierarchical Clustering and visualized the hierarchy using a dendrogram. |
+| IR 5      | I extracted product names, prices and links from a website using Requests and BeautifulSoup.                               |
+| BIF 1     | I analyzed DNA sequences by calculating GC content, finding motifs and identifying ORFs.                                   |
+| BIF 2     | I compared gene expression between control and treated samples to identify upregulated and downregulated genes.            |
+| BIF 3     | I performed molecular docking and virtual screening using AutoDock Vina to estimate ligand binding affinity.               |
+| BIF 4     | I classified genomic DNA sequences using 3-mer features and a Random Forest classifier.                                    |
+
+Three corrections to remember before your practical exam:
+
+1. IR 4: Your second alternative code is a spam classification program, not clustering. Use the Mall Customers clustering code for IR 4.
+2. BIF 2: Your second code uses simulated expression data. Explain it as a demonstration of differential expression analysis, not actual experimental RNA-Seq results.
+3. BIF 3: Your alternative notebook has some copied command errors. Remember the correct Vina argument names and explain the actual docking workflow.
+
+My suggestion: Don't memorize every Python statement word for word. For each practical, remember the purpose, input, main library, important functions, algorithm and output. If you can explain those six things confidently, you can handle most external viva questions.
