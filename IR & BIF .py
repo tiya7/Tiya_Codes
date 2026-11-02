@@ -1,4 +1,5 @@
-# IR 1
+# IR 1 (1st)
+Write a program for pre-processing of a text document such as stop word removal, stemming.
 
 import nltk
 from nltk.corpus import stopwords
@@ -82,7 +83,8 @@ print("After Stemming:", stemmed_words)
 
 ------------------------------------------------------------------------------------------
 
-# IR 2
+# IR 2 (2nd)
+Implement a program for retrieval of documents using inverted files.
 
 documents = {
     1: "python is easy",
@@ -144,7 +146,8 @@ else:
 
 ------------------------------------------------------------------------------------------
 
-# IR 3
+# IR 3 (4th)
+Implement e-mail spam filtering using text classification algorithm with appropriate dataset. 
 
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
@@ -240,7 +243,8 @@ message = vectorizer.transform(message)
 print("Prediction:", model.predict(message))
 ------------------------------------------------------------------------------------------
 
-# IR 4
+# IR 4 (5th)
+Implement Agglomerative hierarchical clustering algorithm using appropriate dataset.
 
 from sklearn.datasets import load_iris
 from sklearn.cluster import AgglomerativeClustering
@@ -355,7 +359,8 @@ plt.ylabel("Spending Score")
 plt.show()
 ------------------------------------------------------------------------------------------
 
-# IR 5
+# IR 5 (7th)
+Build the web crawler to pull product information and links from an e-commerce website.
 
 import pandas as pd
 import matplotlib.pyplot as plt
