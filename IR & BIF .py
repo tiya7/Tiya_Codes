@@ -4007,3 +4007,231 @@ Three corrections to remember before your practical exam:
 3. BIF 3: Your alternative notebook has some copied command errors. Remember the correct Vina argument names and explain the actual docking workflow.
 
 My suggestion: Don't memorize every Python statement word for word. For each practical, remember the purpose, input, main library, important functions, algorithm and output. If you can explain those six things confidently, you can handle most external viva questions.
+---------------------------------------------------------------
+Here are the advantages, disadvantages and applications of all 9 IR and Bioinformatics practical topics, in simple SPPU viva-ready points. You can use these directly in your external practical exam.
+
+# Information Retrieval (IR)
+
+## 1. Text Preprocessing
+
+Advantages
+
+1. Removes unnecessary words and symbols.
+2. Reduces text size and complexity.
+3. Improves the efficiency of text analysis.
+4. Helps improve search and classification results.
+
+Disadvantages
+
+1. May remove words that are important in context.
+2. Stemming can produce incorrect root words.
+3. Language-specific preprocessing is required.
+
+Applications
+
+1. Search engines.
+2. Spam detection.
+3. Sentiment analysis.
+4. Text classification and document retrieval.
+
+## 2. Inverted Indexing
+
+Advantages
+
+1. Provides faster document searching.
+2. Reduces search time.
+3. Efficiently stores word-to-document mappings.
+4. Useful for searching large collections of documents.
+
+Disadvantages
+
+1. Requires extra storage.
+2. Index creation takes time.
+3. Index must be updated when documents change.
+4. May require additional processing for complex queries.
+
+Applications
+
+1. Google and other search engines.
+2. Digital libraries.
+3. Document management systems.
+4. E-commerce product searches.
+
+## 3. Email Spam Classification
+
+Advantages
+
+1. Automatically identifies spam emails.
+2. Saves users' time.
+3. Reduces unwanted and potentially harmful emails.
+4. Machine learning models can learn from labelled examples.
+
+Disadvantages
+
+1. May classify genuine emails as spam.
+2. New spam patterns can be difficult to detect.
+3. Requires labelled training data.
+4. Accuracy depends on data quality.
+
+Applications
+
+1. Gmail spam filters.
+2. Email security systems.
+3. Phishing detection.
+4. Business email management.
+
+## 4. Agglomerative Hierarchical Clustering
+
+Advantages
+
+1. Does not require labelled data.
+2. Shows hierarchical relationships between data points.
+3. Dendrogram helps visualize clusters.
+4. Useful for discovering hidden patterns.
+
+Disadvantages
+
+1. Computationally expensive for large datasets.
+2. Sensitive to noise and outliers.
+3. Once clusters are merged, they cannot be separated.
+4. Results depend on the distance and linkage method.
+
+Applications
+
+1. Customer segmentation.
+2. Document grouping.
+3. Gene expression analysis.
+4. Image segmentation.
+
+## 5. Web Crawler
+
+Advantages
+
+1. Automatically collects information from websites.
+2. Saves time compared to manual data collection.
+3. Can collect product names, prices and links.
+4. Helps gather large amounts of web data.
+
+Disadvantages
+
+1. Website structure changes can break the crawler.
+2. Some websites block automated requests.
+3. Large-scale crawling requires time and resources.
+4. Must follow website terms, robots.txt and applicable data rules.
+
+Applications
+
+1. Search engines.
+2. E-commerce price comparison.
+3. Product information collection.
+4. Website monitoring and research.
+
+# Bioinformatics (BIF)
+
+## 6. DNA Sequence Analysis
+
+Advantages
+
+1. Helps identify important DNA patterns.
+2. Calculates GC content.
+3. Identifies motifs and open reading frames.
+4. Helps understand genetic information.
+
+Disadvantages
+
+1. Large DNA sequences require more processing.
+2. Sequence errors can affect results.
+3. Simple methods may miss complex biological patterns.
+4. Identifying an ORF does not confirm that it is a functional gene.
+
+Applications
+
+1. Gene identification.
+2. Genome analysis.
+3. Disease research.
+4. Genetic engineering and biotechnology.
+
+## 7. RNA-Seq Differential Gene Expression
+
+Advantages
+
+1. Identifies genes with different expression levels.
+2. Helps compare treated and control samples.
+3. Can identify upregulated and downregulated genes.
+4. Helps understand biological responses.
+
+Disadvantages
+
+1. Requires high-quality RNA and sequencing data.
+2. Data analysis can be computationally expensive.
+3. Results can be affected by biological variation.
+4. Requires statistical analysis and proper normalization.
+
+Applications
+
+1. Cancer research.
+2. Drug discovery.
+3. Disease diagnosis research.
+4. Studying gene expression under different conditions.
+
+## 8. Molecular Docking and Virtual Screening
+
+Advantages
+
+1. Predicts how a ligand binds to a protein.
+2. Helps identify potential drug candidates.
+3. Saves time and cost in early drug discovery.
+4. Allows screening of multiple molecules.
+
+Disadvantages
+
+1. Docking scores are predictions, not experimental proof.
+2. Accuracy depends on protein structure and preparation.
+3. May not fully represent real biological conditions.
+4. Requires specialized software and computational resources.
+
+Applications
+
+1. Drug discovery.
+2. Protein-ligand interaction studies.
+3. Drug repurposing.
+4. Virtual screening of chemical compounds.
+
+## 9. Genomic Classification Using Machine Learning
+
+Advantages
+
+1. Automatically classifies genomic sequences.
+2. Can identify patterns in DNA data.
+3. Handles large datasets.
+4. Random Forest can reduce overfitting compared with a single decision tree.
+
+Disadvantages
+
+1. Requires sufficient and good-quality training data.
+2. Model performance depends on selected features.
+3. Training can be computationally expensive for large datasets.
+4. May not generalize well to unseen genomic data.
+
+Applications
+
+1. Disease prediction research.
+2. Gene and DNA sequence classification.
+3. Cancer genomics.
+4. Identification of biological patterns.
+
+# Quick revision table
+
+| Practical                     | Main advantage                       | Main disadvantage                        |
+| ----------------------------- | ------------------------------------ | ---------------------------------------- |
+| IR 1: Text preprocessing      | Reduces text complexity              | May remove useful words                  |
+| IR 2: Inverted index          | Faster searching                     | Requires extra storage                   |
+| IR 3: Spam classification     | Automatic spam detection             | False classification                     |
+| IR 4: Clustering              | Finds hidden groups                  | Sensitive to outliers                    |
+| IR 5: Web crawler             | Automatic data collection            | Website changes can break it             |
+| BIF 1: DNA analysis           | Identifies DNA patterns              | Simple methods have limitations          |
+| BIF 2: RNA-Seq                | Finds differentially expressed genes | Requires quality data and statistics     |
+| BIF 3: Molecular docking      | Helps identify drug candidates       | Predictions need experimental validation |
+| BIF 4: Genomic classification | Classifies DNA patterns              | Depends on training data                 |
+
+Viva tip: If the external asks for only one advantage, disadvantage and application, remember the first point under each heading. Those are the easiest and most relevant answers for your practical topics.
