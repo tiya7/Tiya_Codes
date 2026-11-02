@@ -3258,6 +3258,333 @@ Support Vector Machine. It classifies data by finding an optimal separating boun
 Q89. What is feature selection in genomic data?
 
 Selecting important genes or genetic markers for model training.
+_____________________________________________________________________________________________________
+PART D: IMPORTANT FULL FORMS – IR AND BIF
+These are very common viva questions. Learn these properly because examiners often ask direct full forms.
+1. Information Retrieval (IR)
+Short form	Full form
+IR	Information Retrieval
+NLP	Natural Language Processing
+TF	Term Frequency
+IDF	Inverse Document Frequency
+TF-IDF	Term Frequency–Inverse Document Frequency
+NLTK	Natural Language Toolkit
+NLP	Natural Language Processing
+HTML	HyperText Markup Language
+HTTP	HyperText Transfer Protocol
+HTTPS	HyperText Transfer Protocol Secure
+URL	Uniform Resource Locator
+XML	Extensible Markup Language
+API	Application Programming Interface
+WWW	World Wide Web
+SEO	Search Engine Optimization
+SVD	Singular Value Decomposition
+LSI	Latent Semantic Indexing
+PRP	Probability Ranking Principle
+MAP	Mean Average Precision
+MRR	Mean Reciprocal Rank
+NDCG	Normalized Discounted Cumulative Gain
+ROC	Receiver Operating Characteristic
+AUC	Area Under the Curve
+TP	True Positive
+TN	True Negative
+FP	False Positive
+FN	False Negative
+CSS	Cascading Style Sheets
+JSON	JavaScript Object Notation
+CSV	Comma-Separated Values
+
+2. Bioinformatics (BIF)
+Short form	Full form
+BIF	Bioinformatics
+DNA	Deoxyribonucleic Acid
+RNA	Ribonucleic Acid
+mRNA	Messenger RNA
+tRNA	Transfer RNA
+rRNA	Ribosomal RNA
+cDNA	Complementary DNA
+NCBI	National Center for Biotechnology Information
+PDB	Protein Data Bank
+BLAST	Basic Local Alignment Search Tool
+MSA	Multiple Sequence Alignment
+ORF	Open Reading Frame
+GC	Guanine-Cytosine
+PAM	Point Accepted Mutation
+BLOSUM	Blocks Substitution Matrix
+FASTA	FASTA sequence format (name derived from FAST-All)
+FASTQ	FASTA-like sequence and quality format
+SRA	Sequence Read Archive
+GEO	Gene Expression Omnibus
+ENA	European Nucleotide Archive
+DDBJ	DNA Data Bank of Japan
+GO	Gene Ontology
+KEGG	Kyoto Encyclopedia of Genes and Genomes
+RNA-Seq	RNA Sequencing
+DGE	Differential Gene Expression
+FC	Fold Change
+log2FC	Log Base 2 Fold Change
+FDR	False Discovery Rate
+DESeq2	Differential Expression analysis based on the Negative Binomial distribution (DESeq2 package)
+CADD	Computer-Aided Drug Design
+SBDD	Structure-Based Drug Design
+LBDD	Ligand-Based Drug Design
+ADMET	Absorption, Distribution, Metabolism, Excretion and Toxicity
+RMSD	Root Mean Square Deviation
+SVM	Support Vector Machine
+RF	Random Forest
+ML	Machine Learning
+AI	Artificial Intelligence
+PDBQT	Protein Data Bank, Partial Charge (Q) and Atom Type (T) format
+Vina	AutoDock Vina molecular docking software
+3D	Three-Dimensional
+NGS	Next-Generation Sequencing
+SNP	Single Nucleotide Polymorphism
+PCR	Polymerase Chain Reaction
+CDS	Coding DNA Sequence
+RPKM	Reads Per Kilobase of transcript per Million mapped reads
+FPKM	Fragments Per Kilobase of transcript per Million mapped fragments
+TPM	Transcripts Per Million
+GO	Gene Ontology
+PPI	Protein-Protein Interaction
+
+
+PART E: IMPORTANT NAME THE FOLLOWING QUESTIONS
+These are especially useful for quick viva preparation.
+IR – Name the following
+Question	Answer
+Name the three Boolean operators.	AND, OR, NOT
+Name two stemming algorithms.	Porter Stemmer, Snowball Stemmer
+Name two Python NLP libraries.	NLTK, spaCy
+Name two text vectorization techniques.	CountVectorizer, TF-IDF
+Name two classification algorithms.	Naive Bayes, SVM
+Name two clustering algorithms.	K-Means, Agglomerative Clustering
+Name four types of linkage.	Single, Complete, Average, Ward
+Name two types of hierarchical clustering.	Agglomerative, Divisive
+Name two web scraping libraries.	BeautifulSoup, Scrapy
+Name a Python library for HTTP requests.	Requests
+Name a library for data manipulation.	Pandas
+Name two search engines.	Google, Bing
+Name two retrieval evaluation metrics.	Precision, Recall
+Name two ranking models.	Vector Space, Probabilistic
+Name the matrix decomposition technique used in LSI.	SVD
+Name the three Boolean operations.	Intersection (AND), Union (OR), Difference (NOT)
+Name the data structure used for fast document search.	Inverted Index
+Name a method for phrase searching.	Positional Index
+Name a common text classification dataset.	Spam/Ham email dataset
+Name the main components of a search engine.	Crawler, Indexer, Query Processor, Ranker
+
+BIF – Name the following
+Question	Answer
+Name the four DNA bases.	A, T, G, C
+Name the four RNA bases.	A, U, G, C
+Name the start codon.	ATG in DNA, AUG in mRNA
+Name the three stop codons.	TAA, TAG, TGA in DNA
+Name the four protein structural levels.	Primary, Secondary, Tertiary, Quaternary
+Name two protein secondary structures.	Alpha helix, Beta sheet
+Name two sequence alignment methods.	Global, Local
+Name two sequence alignment algorithms.	Needleman-Wunsch, Smith-Waterman
+Name two sequence search tools.	BLAST, FASTA
+Name two protein scoring matrices.	PAM, BLOSUM
+Name two protein databases.	UniProt, PDB
+Name two nucleotide databases.	GenBank, ENA
+Name three major nucleotide databases.	GenBank, ENA, DDBJ
+Name two docking software tools.	AutoDock Vina, AutoDock
+Name two cheminformatics tools.	RDKit, Open Babel
+Name two protein visualization tools.	PyMOL, UCSF Chimera
+Name two ML algorithms for genomic classification.	Random Forest, SVM
+Name three differential expression outputs.	Fold Change, p-value, Adjusted p-value
+Name three GO categories.	Biological Process, Molecular Function, Cellular Component
+Name four biological networks.	Gene Regulatory, PPI, Metabolic, Signalling
+Name two RNA-Seq analysis tools.	DESeq2, edgeR
+Name three drug properties considered in ADMET.	Absorption, Metabolism, Toxicity (among five)
+Name two types of drug design.	Structure-Based, Ligand-Based
+Name two DNA sequence file formats.	FASTA, FASTQ
+
+
+PART F: VERY IMPORTANT DIFFERENCES
+These questions are frequently useful in theory papers and viva.
+1. IR differences
+Topic	Difference
+IR vs Data Retrieval	IR retrieves relevant information; data retrieval finds exact data.
+Stemming vs Lemmatization	Stemming cuts word endings; lemmatization finds meaningful dictionary forms.
+Crawling vs Scraping	Crawling discovers pages; scraping extracts webpage data.
+Precision vs Recall	Precision measures correctness of retrieved results; recall measures coverage of relevant results.
+Boolean vs Vector Model	Boolean uses exact logical matching; Vector uses numerical similarity and ranking.
+TF vs IDF	TF measures word frequency in a document; IDF measures its rarity across documents.
+Forward vs Inverted Index	Forward maps documents to terms; inverted maps terms to documents.
+Classification vs Clustering	Classification uses labelled data; clustering uses unlabelled data.
+Agglomerative vs Divisive	Agglomerative merges clusters; divisive splits clusters.
+Single vs Complete Linkage	Single uses minimum distance; complete uses maximum distance.
+
+2. BIF differences
+Topic	Difference
+DNA vs RNA	DNA contains thymine; RNA contains uracil.
+DNA vs Protein	DNA stores genetic information; proteins perform biological functions.
+Genotype vs Phenotype	Genotype is genetic makeup; phenotype is observable characteristics.
+Gene vs Genome	Gene is a DNA segment; genome is the complete genetic material.
+Global vs Local Alignment	Global compares entire sequences; local finds similar regions.
+BLAST vs FASTA	Both perform sequence similarity searches using different heuristic approaches.
+Homology vs Similarity	Homology indicates common evolutionary origin; similarity is measurable sequence resemblance.
+Primary vs Secondary Protein Structure	Primary is amino acid sequence; secondary is local folding.
+Docking vs Virtual Screening	Docking predicts binding; screening searches compound libraries for promising candidates.
+Upregulation vs Downregulation	Increased gene expression vs decreased gene expression.
+Random Forest vs SVM	Multiple decision trees vs optimal separating hyperplane.
+Structure-Based vs Ligand-Based Drug Design	Uses target protein structure vs known active ligand information.
+
+
+PART G: IMPORTANT FORMULAS FOR IR AND BIF
+Very important for numerical questions
+1. IR formulas
+1. Term Frequency
+\[
+TF(t,d)=\text{Frequency of term }t\text{ in document }d
+\]
+
+2. Inverse Document Frequency
+\[
+IDF(t)=\log\frac{N}{DF(t)}
+\]
+
+3. TF-IDF
+\[
+TFIDF=TF\times IDF
+\]
+
+4. Cosine Similarity
+\[
+Cosine(A,B)=\frac{A\cdot B}{|A||B|}
+\]
+
+5. Precision
+\[
+Precision=\frac{TP}{TP+FP}
+\]
+
+6. Recall
+\[
+Recall=\frac{TP}{TP+FN}
+\]
+
+7. F1-score
+\[
+F1=\frac{2PR}{P+R}
+\]
+
+8. Accuracy
+\[
+Accuracy=\frac{TP+TN}{TP+TN+FP+FN}
+\]
+
+2. BIF formulas
+1. GC Content
+\[
+GC\%=\frac{G+C}{A+T+G+C}\times100
+\]
+
+2. Fold Change
+\[
+FC=\frac{Treatment}{Control}
+\]
+
+3. Log2 Fold Change
+\[
+log_2FC=\log_2(FC)
+\]
+
+4. Protein Sequence Identity
+\[
+Identity\%=\frac{\text{Number of identical positions}}{\text{Total aligned positions}}\times100
+\]
+
+5. Sequence Similarity
+
+It is commonly expressed as the percentage of aligned positions considered similar according to a scoring matrix. It is not necessarily the same as sequence identity.
+
+6. RMSD
+\[
+RMSD=\sqrt{\frac{1}{N}\sum_{i=1}^{N}d_i^2}
+\]
+
+Where \(d_i\) is the distance between corresponding atoms after structural superposition.
+
+7. Precision
+\[
+Precision=\frac{TP}{TP+FP}
+\]
+
+8. Recall
+\[
+Recall=\frac{TP}{TP+FN}
+\]
+
+9. F1-score
+\[
+F1=\frac{2PR}{P+R}
+\]
+
+
+PART H: PRACTICAL CODE EXPLANATION – WHAT TO WRITE IN THEORY
+This is particularly important because the examiner may show you a line from your Jupyter Notebook and ask what it does.
+IR practicals: Important Python functions
+Function / Library	Purpose
+import nltk	Imports NLTK
+word_tokenize()	Splits text into tokens
+stopwords.words()	Gets stop words
+PorterStemmer()	Creates a stemmer
+stem()	Applies stemming
+lower()	Converts text to lowercase
+TfidfVectorizer()	Converts text into TF-IDF features
+CountVectorizer()	Converts text into word counts
+train_test_split()	Splits data into training and testing
+MultinomialNB()	Creates a Naive Bayes classifier
+fit()	Trains the model
+predict()	Predicts output
+accuracy_score()	Calculates accuracy
+confusion_matrix()	Creates confusion matrix
+precision_score()	Calculates precision
+recall_score()	Calculates recall
+f1_score()	Calculates F1-score
+AgglomerativeClustering()	Creates hierarchical clusters
+dendrogram()	Displays a dendrogram
+linkage()	Calculates hierarchical linkage
+requests.get()	Sends HTTP GET request
+BeautifulSoup()	Parses HTML
+find_all()	Finds multiple HTML elements
+get()	Retrieves an HTML attribute
+DataFrame()	Creates a Pandas table
+to_csv()	Saves data in CSV format
+
+BIF practicals: Important Python functions
+Function / Library	Purpose
+from Bio.Seq import Seq	Imports sequence handling
+Seq()	Creates a biological sequence
+len()	Calculates sequence length
+count()	Counts bases or motifs
+complement()	Finds complementary DNA
+reverse_complement()	Finds reverse complement
+transcribe()	Converts DNA into RNA
+translate()	Converts coding sequence into protein
+gc_fraction()	Calculates GC fraction
+SeqIO.read()	Reads a biological sequence file
+SeqIO.parse()	Reads multiple sequences
+pandas.read_csv()	Loads a dataset
+dropna()	Removes missing values
+fillna()	Fills missing values
+log2()	Calculates base-2 logarithm
+RandomForestClassifier()	Creates Random Forest
+SVC()	Creates SVM classifier
+StandardScaler()	Standardizes features
+classification_report()	Displays classification metrics
+confusion_matrix()	Displays actual vs predicted classes
+accuracy_score()	Calculates accuracy
+PDBParser()	Reads PDB structures
+MoleculePreparation	Prepares molecules for docking in supported preparation workflows
+Vina()	Initializes AutoDock Vina
+set_receptor()	Sets the receptor
+set_ligand_from_file()	Loads the ligand
+compute_vina_maps()	Computes docking maps
+dock()	Performs docking
+score()	Calculates docking score
 
 Q90. What is a biomarker?
 
