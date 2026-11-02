@@ -476,7 +476,899 @@ print(df)
 
 df.to_csv("products.csv", index=False)
 ------------------------------------------------------------------------------------------
+_____________________________________________________________________________________________________________
+VIVA Questions for IR with algos
 
+PART A: PRACTICAL-WISE VIVA QUESTIONS
+1. INFORMATION RETRIEVAL (IR) PRACTICALS
+Practical 1: Text preprocessing – Stop-word removal and stemming
+Aim: To preprocess a text document by removing stop words and performing stemming.
+A. Theory to write in the practical exam
+Theory:
+
+Text preprocessing is the process of cleaning and preparing raw text before applying information retrieval or NLP techniques.
+
+It involves:
+1. Tokenization: Dividing text into individual words.
+2. Lowercasing: Converting all text into lowercase.
+3. Stop-word removal: Removing common words such as is, the, and, are.
+4. Stemming: Reducing words to their root form.
+5. Cleaning: Removing unnecessary punctuation and special characters.
+Example:
+
+Input: The students are studying information retrieval.
+
+Output after preprocessing: student studi inform retriev
+B. One-line algorithm
+1. Start.
+2. Import the required NLP libraries.
+3. Take a text document as input.
+4. Convert text into lowercase.
+5. Tokenize the text into words.
+6. Remove stop words.
+7. Apply stemming to remaining words.
+8. Display the preprocessed text.
+9. Stop.
+C. Practical viva questions and answers
+Q1. What is text preprocessing?
+
+It is the process of cleaning and preparing raw text for further analysis.
+
+Q2. What is tokenization?
+
+Dividing a sentence into smaller units called tokens.
+
+Q3. What are stop words?
+
+Common words that usually carry little information, such as is, the, are, an, and.
+
+Q4. Why do we remove stop words?
+
+To reduce unnecessary words and improve processing efficiency.
+
+Q5. What is stemming?
+
+Stemming reduces words to their root or stem by removing prefixes or suffixes.
+
+Q6. Give an example of stemming.
+
+Playing → Play, Studies → Studi, Connected → Connect.
+
+Q7. What is lemmatization?
+
+Lemmatization converts words into their meaningful dictionary base form.
+
+Example: Better → Good.
+
+Q8. Difference between stemming and lemmatization?
+Stemming	Lemmatization
+Removes word endings	Finds dictionary base form
+May produce meaningless words	Produces meaningful words
+Faster	Comparatively slower
+Example: Studies → Studi	Example: Studies → Study
+
+Q9. What is NLTK?
+
+NLTK stands for Natural Language Toolkit. It is a Python library for natural language processing.
+
+Q10. What is Porter Stemmer?
+
+It is a stemming algorithm used to remove common suffixes from English words.
+
+Q11. What is NLP?
+
+Natural Language Processing is a branch of AI that enables computers to understand and process human language.
+
+Q12. What is the difference between a token and a sentence?
+
+A sentence is a complete statement, while a token is an individual word or unit obtained from it.
+
+Q13. Why do we convert text to lowercase?
+
+To treat uppercase and lowercase versions of the same word equally.
+
+Q14. Where is text preprocessing used?
+
+Search engines, chatbots, spam detection, sentiment analysis and document classification.
+
+Q15. What is corpus?
+
+A corpus is a collection of text documents used for language processing.
+
+Practical 2: Document retrieval using inverted files
+Aim: To implement document retrieval using an inverted index.
+A. Theory to write
+An inverted index is a data structure that stores each unique word along with the list of documents in which that word appears.
+
+It helps retrieve documents quickly without searching every document individually.
+
+Example:
+
+Documents:
+- D1: Information Retrieval System
+- D2: Information Storage System
+- D3: Retrieval of Documents
+Inverted index:
+Word	Document IDs
+Information	D1, D2
+Retrieval	D1, D3
+System	D1, D2
+Storage	D2
+Documents	D3
+
+When a user searches for Retrieval, the system directly returns D1 and D3.
+B. One-line algorithm
+1. Start.
+2. Take multiple documents as input.
+3. Preprocess the documents.
+4. Tokenize each document.
+5. Create an empty inverted index.
+6. Store each word with its document ID.
+7. Accept a search query.
+8. Search the inverted index for matching terms.
+9. Display the relevant documents.
+10. Stop.
+C. Practical viva questions and answers
+Q1. What is an inverted index?
+
+It is a data structure that maps each word to the documents containing that word.
+
+Q2. Why is it called an inverted index?
+
+Because it reverses the relationship between documents and words.
+
+Q3. What is indexing?
+
+Indexing is the process of organizing documents so that information can be retrieved quickly.
+
+Q4. What is a forward index?
+
+A forward index maps each document to the words it contains.
+
+Q5. Difference between forward and inverted index?
+- Forward index: Document → Words.
+- Inverted index: Word → Documents.
+Q6. What is a posting list?
+
+A posting list contains the document IDs in which a particular term appears.
+
+Q7. What is a dictionary in an inverted index?
+
+It stores all unique terms present in the document collection.
+
+Q8. What is a query?
+
+A query is a user's search input.
+
+Q9. What is Boolean retrieval?
+
+It retrieves documents using Boolean operators such as AND, OR and NOT.
+
+Q10. Explain AND, OR and NOT.
+- AND: Both conditions must be true.
+- OR: At least one condition must be true.
+- NOT: Excludes a particular term.
+Q11. What is document frequency?
+
+The number of documents containing a particular term.
+
+Q12. What is term frequency?
+
+The number of times a term appears in a particular document.
+
+Q13. What are the advantages of an inverted index?
+- Faster searching.
+- Efficient storage of searchable terms.
+- Supports Boolean queries.
+- Suitable for large document collections.
+Q14. Where is an inverted index used?
+
+Google, search engines, digital libraries and document search systems.
+
+Q15. What is the difference between indexing and searching?
+
+Indexing organizes the documents, while searching retrieves relevant documents based on a query.
+
+Practical 3: Email spam filtering using text classification
+Aim: To classify emails as Spam or Ham using a machine learning classification algorithm.
+A. Theory to write
+Email spam filtering is a text classification technique used to identify unwanted emails.
+
+A machine learning model learns from labelled emails and predicts whether a new email is Spam or Ham.
+
+Steps:
+1. Collect an email dataset.
+2. Clean and preprocess the text.
+3. Convert text into numerical features using TF-IDF.
+4. Split the dataset into training and testing sets.
+5. Train a classification model.
+6. Predict whether emails are Spam or Ham.
+7. Evaluate the model using accuracy, precision and recall.
+Algorithms used:
+- Naive Bayes
+- Logistic Regression
+- Support Vector Machine
+- Decision Tree
+B. One-line algorithm
+1. Start.
+2. Import required libraries.
+3. Load the spam email dataset.
+4. Remove missing values.
+5. Separate email text and labels.
+6. Convert text into numerical features using TF-IDF.
+7. Split data into training and testing sets.
+8. Train a classification model.
+9. Predict Spam or Ham.
+10. Calculate performance metrics.
+11. Display the results.
+12. Stop.
+C. Practical viva questions and answers
+Q1. What is spam?
+
+Spam is an unwanted or unsolicited email, usually sent for advertising, fraud or malicious purposes.
+
+Q2. What is Ham?
+
+Ham refers to a genuine or legitimate email.
+
+Q3. What is text classification?
+
+It is the process of assigning predefined categories to text documents.
+
+Q4. What is supervised learning?
+
+A machine learning technique in which a model learns from labelled training data.
+
+Q5. Which algorithm is commonly used for spam detection?
+
+Naive Bayes is commonly used because it works well with text classification.
+
+Q6. What is Naive Bayes?
+
+It is a probabilistic classification algorithm based on Bayes' theorem and the assumption of conditional independence between features.
+
+Q7. What is TF-IDF?
+
+TF-IDF stands for Term Frequency–Inverse Document Frequency. It measures the importance of a word in a document relative to a collection of documents.
+
+Q8. Why is TF-IDF used?
+
+It converts text into numerical values so machine learning algorithms can process it.
+
+Q9. What is CountVectorizer?
+
+It converts text into numerical features based on word occurrence counts.
+
+Q10. What is a training dataset?
+
+The data used to teach the machine learning model.
+
+Q11. What is a testing dataset?
+
+The data used to evaluate the trained model on unseen examples.
+
+Q12. What is classification?
+
+Predicting a category or class for given input data.
+
+Q13. What is a confusion matrix?
+
+A table that compares actual and predicted classifications.
+
+Q14. What is accuracy?
+
+The percentage of total predictions that are correct.
+\[
+Accuracy=\frac{TP+TN}{TP+TN+FP+FN}
+\]
+
+Q15. What are precision and recall?
+- Precision: Out of all emails predicted as spam, how many were actually spam?
+- Recall: Out of all actual spam emails, how many were correctly detected?
+Q16. What is F1-score?
+
+The harmonic mean of precision and recall.
+\[
+F1=2\times\frac{Precision\times Recall}{Precision+Recall}
+\]
+
+Q17. What is overfitting?
+
+When a model performs well on training data but poorly on unseen testing data.
+
+Q18. What is underfitting?
+
+When a model fails to learn the important patterns in the training data.
+
+Q19. What is a false positive in spam detection?
+
+A genuine email incorrectly classified as spam.
+
+Q20. What is a false negative?
+
+A spam email incorrectly classified as genuine.
+
+Q21. What is the use of train_test_split()?
+
+It divides the dataset into training and testing subsets.
+
+Q22. Which Python libraries are used?
+
+Pandas, NumPy and Scikit-learn.
+
+Q23. What is Scikit-learn?
+
+A Python library used for machine learning, classification, regression and clustering.
+
+Q24. What is a label?
+
+A label is the expected output or category, such as Spam or Ham.
+
+Practical 4: Agglomerative hierarchical clustering
+Aim: To implement Agglomerative Hierarchical Clustering on a suitable dataset.
+A. Theory to write
+Agglomerative clustering is an unsupervised machine learning algorithm that groups similar data points into clusters.
+
+It follows a bottom-up approach. Initially, every data point is considered an individual cluster. The algorithm repeatedly merges the closest clusters until the required number of clusters is obtained.
+
+Steps:
+1. Consider every data point as a separate cluster.
+2. Calculate distances between clusters.
+3. Find the two nearest clusters.
+4. Merge them.
+5. Recalculate distances.
+6. Repeat until the required clusters are formed.
+Dendrogram: A tree-like diagram that shows how clusters are merged.
+B. One-line algorithm
+1. Start.
+2. Import the required libraries.
+3. Load the dataset.
+4. Select numerical features.
+5. Standardize the data if required.
+6. Calculate hierarchical distances.
+7. Create a dendrogram.
+8. Apply Agglomerative Clustering.
+9. Assign cluster labels.
+10. Visualize the clusters.
+11. Stop.
+C. Practical viva questions and answers
+Q1. What is clustering?
+
+Clustering is the process of grouping similar data points together.
+
+Q2. What is unsupervised learning?
+
+Learning from data without predefined output labels.
+
+Q3. What is hierarchical clustering?
+
+It is a clustering method that creates a hierarchy of clusters.
+
+Q4. What are the two types of hierarchical clustering?
+1. Agglomerative clustering.
+2. Divisive clustering.
+Q5. What is Agglomerative clustering?
+
+It is a bottom-up clustering method in which individual clusters are repeatedly merged.
+
+Q6. What is Divisive clustering?
+
+It is a top-down method in which one large cluster is repeatedly divided into smaller clusters.
+
+Q7. What is a dendrogram?
+
+A tree-like diagram that represents the merging or splitting of clusters.
+
+Q8. What is linkage?
+
+Linkage determines how the distance between two clusters is calculated.
+
+Q9. Name the types of linkage.
+- Single linkage.
+- Complete linkage.
+- Average linkage.
+- Ward linkage.
+Q10. What is single linkage?
+
+It calculates the minimum distance between points of two clusters.
+
+Q11. What is complete linkage?
+
+It calculates the maximum distance between points of two clusters.
+
+Q12. What is average linkage?
+
+It calculates the average distance between all pairs of points from two clusters.
+
+Q13. What is Ward linkage?
+
+It merges clusters by minimizing the increase in within-cluster variance.
+
+Q14. What is Euclidean distance?
+
+It is the straight-line distance between two data points.
+\[
+d=\sqrt{\sum_{i=1}^{n}(x_i-y_i)^2}
+\]
+
+Q15. What is the difference between K-Means and Agglomerative clustering?
+K-Means	Agglomerative
+Partition-based	Hierarchical
+Requires K initially	Can inspect dendrogram
+Uses centroids	Uses linkage
+Iteratively updates centroids	Repeatedly merges clusters
+
+Q16. What is the use of StandardScaler?
+
+It standardizes features to have approximately zero mean and unit variance.
+
+Q17. What is the use of SciPy?
+
+SciPy is a Python library used for scientific computing and hierarchical clustering.
+
+Q18. What is the use of Scikit-learn?
+
+It provides machine learning algorithms, including AgglomerativeClustering.
+
+Q19. Is clustering supervised or unsupervised?
+
+Unsupervised learning.
+
+Q20. What are the applications of clustering?
+
+Customer segmentation, image segmentation, document grouping and biological data analysis.
+
+Practical 5: Web crawler for e-commerce product information
+Aim: To develop a web crawler to extract product information and links from an e-commerce website.
+A. Theory to write
+A web crawler is an automated program that visits web pages and collects information.
+
+It is also called a spider or bot.
+
+For an e-commerce website, it can collect:
+- Product name.
+- Product price.
+- Product description.
+- Product URL.
+- Product image link.
+Libraries used:
+- Requests: To send HTTP requests.
+- BeautifulSoup: To parse HTML.
+- Pandas: To store extracted information in tabular form.
+B. One-line algorithm
+1. Start.
+2. Import Requests and BeautifulSoup.
+3. Specify the website URL.
+4. Send an HTTP request to the website.
+5. Retrieve the HTML page.
+6. Parse the HTML using BeautifulSoup.
+7. Locate product details using HTML tags and CSS selectors.
+8. Extract product names, prices and links.
+9. Store the extracted information in a list or DataFrame.
+10. Display or save the results.
+11. Stop.
+C. Practical viva questions and answers
+Q1. What is a web crawler?
+
+A web crawler is an automated program that visits web pages and collects information.
+
+Q2. What is web scraping?
+
+Web scraping is the process of extracting specific information from web pages.
+
+Q3. Difference between crawling and scraping?
+- Crawling: Discovering and visiting web pages.
+- Scraping: Extracting specific data from web pages.
+Q4. What is HTML?
+
+HTML stands for HyperText Markup Language. It is used to structure web pages.
+
+Q5. What is BeautifulSoup?
+
+BeautifulSoup is a Python library used to parse HTML and XML documents.
+
+Q6. What is Requests?
+
+Requests is a Python library used to send HTTP requests and receive responses.
+
+Q7. What is an HTTP request?
+
+A request sent by a client to a web server to access a resource.
+
+Q8. What is an HTTP response?
+
+The reply received from the server after processing a request.
+
+Q9. What is status code 200?
+
+It means the HTTP request was successful.
+
+Q10. What is status code 404?
+
+It means the requested page or resource was not found.
+
+Q11. What is a URL?
+
+URL stands for Uniform Resource Locator. It is the address of a resource on the internet.
+
+Q12. What is a CSS selector?
+
+It is a pattern used to select HTML elements based on their tags, classes or IDs.
+
+Q13. What is a tag?
+
+An HTML element identifier such as p, h1, a or div.
+
+Q14. What is an attribute?
+
+An attribute provides additional information about an HTML element.
+
+Example: href in an anchor tag.
+
+Q15. What is the href attribute?
+
+It specifies the destination URL of a hyperlink.
+
+Q16. What is robots.txt?
+
+A file that provides crawling instructions to web crawlers.
+
+Q17. What is pagination?
+
+Dividing website content into multiple pages.
+
+Q18. What is User-Agent?
+
+A header that identifies the client making an HTTP request.
+
+Q19. What is the use of Pandas?
+
+It is used for data manipulation and analysis.
+
+Q20. Is web scraping allowed on every website?
+
+No. We should follow website terms, access restrictions, robots instructions and applicable laws.
+
+Theory questions
+_________________
+PART B: IR THEORY QUESTIONS AND ANSWERS
+These questions cover the important IR syllabus concepts, especially Unit I, along with indexing, retrieval, evaluation, text classification and web search concepts connected to your practicals.
+Unit I: Introduction to Information Retrieval
+Q1. What is Information Retrieval?
+
+Information Retrieval (IR) is the process of finding relevant information or documents from a large collection based on a user's query.
+
+Example: Searching for machine learning notes on Google.
+
+Q2. What are the main components of an IR system?
+1. Document collection.
+2. Document preprocessing.
+3. Indexing.
+4. Query processing.
+5. Matching and ranking.
+6. Retrieval of results.
+Q3. Draw the block diagram of an IR system.
+Document Collection
+
+
+Document Preprocessing
+
+
+Indexing / Inverted Index
+
+
+Query Processing
+
+
+Matching and Ranking
+
+
+Relevant Search Results
+
+
+Q4. What are the objectives of an IR system?
+- Retrieve relevant documents.
+- Reduce search time.
+- Improve search accuracy.
+- Organize large document collections.
+- Provide relevant information to users.
+Q5. What are the challenges in Information Retrieval?
+1. Large document collections.
+2. Ambiguous queries.
+3. Synonyms and different word forms.
+4. Language differences.
+5. Irrelevant results.
+6. Information overload.
+Q6. What is the difference between Information Retrieval and Data Retrieval?
+Information Retrieval	Data Retrieval
+Retrieves relevant information	Retrieves exact data
+Often handles unstructured data	Often handles structured data
+Results may be ranked	Results generally match conditions
+Relevance-based	Exact-match based
+Example: Google Search	Example: SQL query
+
+Q7. What are the applications of IR?
+
+Search engines, digital libraries, e-commerce, medical information systems and document management.
+
+Q8. What are the different IR models?
+1. Boolean model.
+2. Vector Space Model.
+3. Probabilistic model.
+4. Latent Semantic Indexing model.
+Unit I: Boolean Retrieval Model
+Q9. What is the Boolean model?
+
+It is an IR model that retrieves documents based on Boolean operators AND, OR and NOT.
+
+Q10. What are the advantages of the Boolean model?
+- Simple to understand.
+- Easy to implement.
+- Supports complex queries.
+- Gives exact matching results.
+Q11. What are its disadvantages?
+- Does not rank documents by relevance.
+- Requires users to understand Boolean operators.
+- Exact matching can miss relevant documents.
+Q12. Explain Boolean operators with examples.
+
+Suppose:
+- D1 = AI and ML
+- D2 = AI and Data Science
+- D3 = ML and Python
+Query	Result
+AI AND ML	D1
+AI OR ML	D1, D2, D3
+AI NOT ML	D2
+
+Q13. What is an exact-match retrieval system?
+
+A system that returns documents satisfying the specified query conditions.
+Unit I: Vector Space Model
+Q14. What is Vector Space Model?
+
+It represents documents and queries as numerical vectors and calculates their similarity.
+
+Q15. What is a document vector?
+
+A numerical representation of the terms present in a document.
+
+Q16. What is cosine similarity?
+
+It measures the similarity between two vectors using the cosine of the angle between them.
+\[
+Cosine(A,B)=\frac{A\cdot B}{|A||B|}
+\]
+
+Q17. What is the range of cosine similarity?
+
+For nonnegative term-weight vectors, the range is 0 to 1.
+- 0 = No similarity.
+- 1 = Maximum similarity.
+Q18. What is TF-IDF?
+
+It is a term-weighting method used to measure the importance of a word in a document relative to a document collection.
+
+Q19. Explain TF and IDF.
+- TF: Term Frequency, how often a word appears in a document.
+- IDF: Inverse Document Frequency, how rare or informative a word is across documents.
+\[
+IDF(t)=\log\frac{N}{DF(t)}
+\]
+
+\[
+TFIDF=TF\times IDF
+\]
+
+Where:
+- N = Total number of documents.
+- DF = Number of documents containing the term.
+Q20. What are the advantages of Vector Space Model?
+- Supports document ranking.
+- Calculates similarity.
+- Allows partial matching.
+- Simple mathematical representation.
+Q21. What are the disadvantages of Vector Space Model?
+- Ignores word order.
+- May ignore semantic meaning.
+- High-dimensional vectors can be expensive to process.
+Unit I: Probabilistic Model
+Q22. What is a Probabilistic IR model?
+
+It retrieves documents based on the probability that they are relevant to a user's query.
+
+Q23. What is the Probability Ranking Principle (PRP)?
+
+It states that documents should be ranked in decreasing order of their probability of relevance to the query.
+
+Q24. What is relevance?
+
+Relevance measures how useful a retrieved document is for a user's information need.
+
+Q25. What is Bayes' theorem?
+
+It is a mathematical theorem used to calculate conditional probability.
+\[
+P(A|B)=\frac{P(B|A)P(A)}{P(B)}
+\]
+
+Q26. What are the advantages of probabilistic models?
+- Rank documents by estimated relevance.
+- Handle uncertainty.
+- Support relevance-based searching.
+Unit I: Latent Semantic Indexing (LSI)
+Q27. What is LSI?
+
+Latent Semantic Indexing is an information retrieval technique that identifies hidden relationships between terms and documents.
+
+Q28. Which mathematical technique is used in LSI?
+
+Singular Value Decomposition (SVD).
+
+Q29. What is SVD?
+
+Singular Value Decomposition is a matrix factorization technique used to represent a matrix using three matrices.
+\[
+A=U\Sigma V^T
+\]
+
+Q30. Why is LSI used?
+
+To identify semantic relationships and reduce dimensionality in document representation.
+
+Q31. What is dimensionality reduction?
+
+Reducing the number of features while preserving important information.
+
+Q32. What is the main advantage of LSI?
+
+It can identify relationships between documents and terms even when they do not share exactly the same words.
+
+Q33. What is the limitation of LSI?
+
+It can be computationally expensive and may lose some information during dimensionality reduction.
+Unit II: Indexing and Query Processing
+Q34. What is an index?
+
+An index is an organized structure used to locate information quickly.
+
+Q35. What is an inverted file?
+
+A structure that stores terms and their corresponding document references.
+
+Q36. What is a posting?
+
+A document reference associated with a term in an inverted index.
+
+Q37. What is a positional index?
+
+An inverted index that also stores the positions of terms within documents.
+
+Q38. Why is a positional index useful?
+
+It supports phrase queries and proximity searches.
+
+Q39. What is a phrase query?
+
+A query that searches for an exact sequence of words.
+
+Example: "Information Retrieval".
+
+Q40. What is query processing?
+
+The process of analyzing and preparing a user's search query before retrieving results.
+
+Q41. What is query expansion?
+
+Adding related words or synonyms to a query to improve retrieval.
+
+Q42. What is query optimization?
+
+Improving the execution of a search query to reduce processing time.
+
+Q43. What is stemming in IR?
+
+Reducing words to their stem to match different forms of the same word.
+
+Q44. What is stop-word removal?
+
+Removing frequently occurring words that generally provide little information for retrieval.
+Unit III: Retrieval Evaluation and Performance
+Q45. What is precision?
+
+The proportion of retrieved documents that are relevant.
+\[
+Precision=\frac{Relevant\ Retrieved}{Total\ Retrieved}
+\]
+
+Q46. What is recall?
+
+The proportion of all relevant documents that are retrieved.
+\[
+Recall=\frac{Relevant\ Retrieved}{Total\ Relevant}
+\]
+
+Q47. What is F-measure?
+
+It combines precision and recall into one performance measure.
+\[
+F1=\frac{2PR}{P+R}
+\]
+
+Q48. What is accuracy?
+
+The proportion of all correct predictions among total predictions.
+
+Q49. What is a confusion matrix?
+
+A table showing true positive, true negative, false positive and false negative predictions.
+
+Q50. What is an ROC curve?
+
+Receiver Operating Characteristic curve. It plots True Positive Rate against False Positive Rate at different classification thresholds.
+
+Q51. What is AUC?
+
+Area Under the ROC Curve. It measures how well a classifier distinguishes between classes.
+
+Q52. What is MAP?
+
+Mean Average Precision. It calculates the mean of average precision values across multiple queries.
+
+Q53. What is MRR?
+
+Mean Reciprocal Rank. It measures the average reciprocal rank of the first relevant result.
+
+Q54. What is NDCG?
+
+Normalized Discounted Cumulative Gain. It evaluates ranked search results by considering both relevance and ranking position.
+Unit IV: Text Classification and Web Search
+Q55. What is text categorization?
+
+It is the process of assigning text documents to predefined categories.
+
+Q56. Name some text classification algorithms.
+
+Naive Bayes, SVM, Decision Tree, Logistic Regression and Random Forest.
+
+Q57. What is a search engine?
+
+A search engine is a software system that retrieves relevant information from a collection of web pages.
+
+Q58. What are the main components of a search engine?
+1. Crawler.
+2. Indexer.
+3. Search processor.
+4. Ranking system.
+5. Search interface.
+Q59. What is a web crawler?
+
+An automated program that visits and discovers web pages.
+
+Q60. What is a web spider?
+
+Another name for a web crawler.
+
+Q61. What is web indexing?
+
+The process of storing and organizing extracted webpage information for searching.
+
+Q62. What is PageRank?
+
+An algorithm originally developed by Google to estimate the importance of web pages based on their link structure.
+
+Q63. What is anchor text?
+
+The clickable text associated with a hyperlink.
+
+Q64. What is a sitemap?
+
+A file that lists important URLs of a website to help search engines discover pages.
+
+Q65. What is robots.txt?
+
+A file that specifies crawling rules for automated web crawlers.
+_______________________________________________________________________________________________________
 # BIF 1
 
 dna = "ATGCGATCGATGAAATAG"
