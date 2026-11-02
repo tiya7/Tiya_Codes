@@ -312,6 +312,47 @@ prediction = model.predict([email])
 
 print("Email Classification:", prediction[0])
 
+#OR#
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import AgglomerativeClustering
+from scipy.cluster.hierarchy import dendrogram, linkage
+
+df = pd.read_csv("Mall_Customers.csv")
+
+X = df[["Annual Income (k$)", "Spending Score (1-100)"]]
+
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+Z = linkage(X_scaled, method="ward")
+
+plt.figure(figsize=(10, 5))
+dendrogram(Z)
+plt.title("Dendrogram")
+plt.xlabel("Customers")
+plt.ylabel("Distance")
+plt.show()
+
+model = AgglomerativeClustering(n_clusters=5, linkage="ward")
+
+df["Cluster"] = model.fit_predict(X_scaled)
+
+print(df.head())
+
+plt.scatter(
+    X_scaled[:, 0],
+    X_scaled[:, 1],
+    c=df["Cluster"]
+)
+
+plt.title("Agglomerative Clustering")
+plt.xlabel("Annual Income")
+plt.ylabel("Spending Score")
+plt.show()
 ------------------------------------------------------------------------------------------
 
 # IR 5
@@ -395,6 +436,45 @@ for product in products:
     print("Link:", link)
     print()
 
+#OR#
+
+import requests
+import pandas as pd
+
+from bs4 import BeautifulSoup
+from urllib.parse import urljoin
+
+url = "https://books.toscrape.com/catalogue/page-1.html"
+
+response = requests.get(url)
+
+soup = BeautifulSoup(response.text, "html.parser")
+
+products = []
+
+books = soup.find_all("article", class_="product_pod")
+
+for book in books:
+
+    title = book.h3.a["title"]
+
+    price = book.find("p", class_="price_color").text
+
+    link = book.h3.a["href"]
+
+    full_link = urljoin(url, link)
+
+    products.append({
+        "Title": title,
+        "Price": price,
+        "Link": full_link
+    })
+
+df = pd.DataFrame(products)
+
+print(df)
+
+df.to_csv("products.csv", index=False)
 ------------------------------------------------------------------------------------------
 
 # BIF 1
@@ -423,6 +503,71 @@ if start != -1 and stop != -1:
 else:
     print("Coding region not found")
 
+#OR#
+
+import pandas as pd
+
+df = pd.read_csv("human.csv")
+
+sequence = df["sequence"][0]
+
+sequence = sequence.upper()
+
+print("DNA Sequence:")
+print(sequence[:100])
+
+# Calculate GC Content
+
+gc_count = sequence.count("G") + sequence.count("C")
+
+gc_content = (gc_count / len(sequence)) * 100
+
+print("GC Content:", round(gc_content, 2), "%")
+
+# Find motif
+
+motif = "ATG"
+
+positions = []
+
+for i in range(len(sequence) - len(motif) + 1):
+
+    if sequence[i:i+len(motif)] == motif:
+        positions.append(i)
+
+print("Motif:", motif)
+
+print("Motif Positions:", positions[:20])
+
+# Find ORFs in three forward reading frames
+
+stop_codons = ["TAA", "TAG", "TGA"]
+
+orfs = []
+
+for frame in range(3):
+
+    i = frame
+
+    while i < len(sequence) - 2:
+
+        if sequence[i:i+3] == "ATG":
+
+            for j in range(i+3, len(sequence)-2, 3):
+
+                codon = sequence[j:j+3]
+
+                if codon in stop_codons:
+
+                    orfs.append(sequence[i:j+3])
+                    break
+
+        i += 3
+
+print("Number of ORFs:", len(orfs))
+
+for orf in orfs[:10]:
+    print("ORF:", orf[:60], "Length:", len(orf))
 ------------------------------------------------------------------------------------------
 
 # BIF 2
@@ -454,7 +599,638 @@ for i, row in data.iterrows():
     else:
         print(row["Gene"], "shows little change")
 
+#OR#
+
+import numpy as np
+import pandas as pd
+
+from scipy.stats import ttest_ind
+from statsmodels.stats.multitest import multipletests
+
+np.random.seed(10)
+
+genes = ["Gene_" + str(i) for i in range(1, 101)]
+
+control = np.random.poisson(100, (100, 3))
+
+treated = np.random.poisson(100, (100, 3))
+
+# Simulate upregulated genes
+treated[:10] = np.random.poisson(250, (10, 3))
+
+# Simulate downregulated genes
+treated[10:20] = np.random.poisson(35, (10, 3))
+
+data = np.column_stack((control, treated))
+
+df = pd.DataFrame(
+    data,
+    index=genes,
+    columns=[
+        "Control1", "Control2", "Control3",
+        "Treated1", "Treated2", "Treated3"
+    ]
+)
+
+print("Gene Expression Data:")
+print(df.head())
+
+# Calculate mean expression
+
+control_mean = df.iloc[:, :3].mean(axis=1)
+
+treated_mean = df.iloc[:, 3:].mean(axis=1)
+
+# Calculate log2 Fold Change
+
+log2fc = np.log2((treated_mean + 1) / (control_mean + 1))
+
+# Calculate p-values
+
+p_values = []
+
+for i in range(len(df)):
+
+    p = ttest_ind(
+        df.iloc[i, :3],
+        df.iloc[i, 3:],
+        equal_var=False
+    ).pvalue
+
+    p_values.append(p)
+
+# Multiple testing correction
+
+adjusted_p = multipletests(
+    p_values,
+    method="fdr_bh"
+)[1]
+
+result = pd.DataFrame({
+    "Control_Mean": control_mean,
+    "Treated_Mean": treated_mean,
+    "Log2_Fold_Change": log2fc,
+    "P_Value": p_values,
+    "Adjusted_P_Value": adjusted_p
+})
+
+result["Expression"] = "Not Significant"
+
+result.loc[
+    (result["Adjusted_P_Value"] < 0.05) &
+    (result["Log2_Fold_Change"] > 1),
+    "Expression"
+] = "Upregulated"
+
+result.loc[
+    (result["Adjusted_P_Value"] < 0.05) &
+    (result["Log2_Fold_Change"] < -1),
+    "Expression"
+] = "Downregulated"
+
+print(result.head(20))
+
+print(result["Expression"].value_counts())
+
+result.to_csv("differential_expression_results.csv")
+
 ------------------------------------------------------------------------------------------
+# BIF 3
+
+#cell 1
+import os
+import sys
+import glob
+import subprocess
+import sysconfig
+import numpy as np
+from pathlib import Path
+from Bio.PDB import PDBParser, PDBIO, Select
+from scipy.spatial.distance import cdist
+
+scripts = Path(sysconfig.get_path("scripts"))
+
+print("Libraries imported successfully!")
+
+#cell 2
+class ProteinSelect(Select):
+    def accept_chain(self, chain):
+        return chain.id == "A"
+
+    def accept_residue(self, residue):
+        return residue.id[0] == " "
+
+    def accept_atom(self, atom):
+        return atom.get_altloc() in (" ", "A")
+
+parser = PDBParser(QUIET=True)
+structure = parser.get_structure("protein", "6m0j.pdb")
+
+io = PDBIO()
+io.set_structure(structure)
+io.save("ACE2.pdb", ProteinSelect())
+
+cmd = [
+    str(scripts / "mk_prepare_receptor.exe"),
+    "--read_pdb", "ACE2.pdb",
+    "-o", "ACE2_receptor",
+    "-p", "-j",
+    "--default_altloc", "A"
+]
+
+result = subprocess.run(cmd, capture_output=True, text=True)
+print(result.stdout)
+print(result.stderr)
+
+#cell 3
+cmd = [
+    str(scripts / "mk_prepare_ligand.exe"),
+    "-i", "Conformer3D_COMPOUND_CID_135398740.sdf",
+    "-o", "ligand.pdbqt"
+]
+
+result = subprocess.run(cmd, capture_output=True, text=True)
+
+print(result.stdout)
+print("Ligand prepared:", os.path.exists("ligand.pdbqt"))
+
+#cell 4
+p = PDBParser(QUIET=True).get_structure("p", "6m0j.pdb")[0]
+
+A = np.array([
+    a.coord for a in p["A"].get_atoms()
+    if a.element not in ("H", "D")
+])
+
+E = np.array([
+    a.coord for a in p["E"].get_atoms()
+    if a.element not in ("H", "D")
+])
+
+d = cdist(A, E)
+
+center = A[np.any(d < 5, axis=1)].mean(axis=0)
+
+print("Docking centre:", center)
+
+#cell 5
+cmd = [
+    "vina.exe",
+    "--receptor", "ACE2_receptor.pdbqt",
+    "--ligand", "ligand.pdbqt",
+    "--center_x", str(center[0]),
+    "--center_y", str(center[1]),
+    "--center_z", str(center[2]),
+    "--size_x", "24",
+    "--size_y", "24",
+    "--size_z", "24",
+    "--exhaustiveness", "8",
+    "--num_modes", "5",
+    "--out", "docked_pose.pdbqt"
+]
+
+result = subprocess.run(cmd, capture_output=True, text=True)
+
+print(result.stdout)
+print(result.stderr)
+
+#cell 6
+with open("docked_pose.pdbqt") as f:
+    for line in f:
+        if "VINA RESULT" in line:
+            print(line.strip())
+
+#cell 7
+results = []
+
+for file in glob.glob("ligands/*.sdf"):
+
+    name = Path(file).stem
+
+    subprocess.run([
+        str(scripts / "mk_prepare_ligand.exe"),
+        "-i", file,
+        "-o", name + ".pdbqt"
+    ], capture_output=True, text=True, check=True)
+
+    subprocess.run([
+        "vina.exe",
+        "--receptor", "ACE2_receptor.pdbqt",
+        "--ligand", name + ".pdbqt",
+        "--center_x", str(center[0]),
+        "--center_y", str(center[1]),
+        "--center_z", str(center[2]),
+        "--size_x", "24",
+        "--size_y", "24",
+        "--size_z", "24",
+        "--out", name + "_docked.pdbqt"
+    ], capture_output=True, text=True, check=True)
+
+    with open(name + "_docked.pdbqt") as f:
+        for line in f:
+            if "VINA RESULT" in line:
+                score = float(line.split()[3])
+                results.append([name, score])
+                break
+
+print("Virtual screening completed!")
+
+import pandas as pd
+
+df = pd.DataFrame(results, columns=["Ligand", "Binding Affinity"])
+df = df.sort_values("Binding Affinity")
+
+display(df)
+
+#OR#
+
+Iconda tos accept --override-channels-channel https://repo.anaconda.com/pkgs/main accepted Terms of Service for https://repo.anaconda.com/pkgs/main
+
+↑↓古早
+
+ENG
+
+[4]:
+
+Iconda tos accept --override-channels--channel https://repo.anaconda.com/pkgs/r accepted Terms of Service for https://repo.anaconda.com/pkgs/r
+
+[5]:
+
+Iconda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/msys2 accepted Terms of Service for https://repo.anaconda.com/pkgs/msys2
+
+[1]: import urllib.request
+
+url = "https://github.com/ccsb-scripps/AutoDock-Vina/releases/download/v1.2.7/vina_1.2.7_win.exe" urllib.request.urlretrieve(url, "vina.exe")
+
+print("Vina downloaded successfully!")
+
+Vina downloaded successfully!
+
+[2]: import os
+
+print(os.path.exists("vins.exe"))
+
+True
+[3]: import subprocess
+
+result subprocess.run(
+
+["vina.exe", "version"], capture_output=True,
+
+text=True
+
+print(result.stdout)
+
+print(result.stderr)
+
+AutoDock Vina v1.2.7
+
+[4]: import os
+
+print(os.listdir())
+
+['antigravity-ide', 'cache', '.claude', 'claude.json', 'corda, copilot', 'gemini', 'git-for-windows-updater', '.ipynb_checkpoints', 'ipython", jupyter', 'matplotlib', '.vscode', 'vscode-shared', 'om@j.pdb", "AppData', 'awesome-11m-apps', 'car_evaluation.csv', 'CC GENERAL.csv', 'Cisco Packet Tracer 8.2.2', 'city_day.csv', 'city_hour.csv", "Claude', 'Cleaned Delhi_AQI_Data.csv', 'Cleaned_RealEstate_Data.csv', 'Cleaned Retail_Sales_Data.csv", *Cleaned_Sales_Data.csv', 'Cleaned_Telecom_Data.csv", "Clustered_Customers.csv", "Conformer3D_COMPOUND CID_135398748.sdf", "Contacts', 'CrossDevice', 'D esktop', 'differential_expression_results.csv', 'document.txt", "Documents', 'Downloads', 'face recognition', 'Favorites', 'heart disease.csv", "human.c sv', 'Intel Graphics Profiles', 'Iris.csv', 'Iris_Clustered.csv', 'LeetCode", "Links", "Mall_Customers.csv', 'Music', 'myenv', 'NTUSER.DAT', 'ntuser.dat. LOG1', 'ntuser.dat.LOG2', 'NTUSER.DAT (@df87728-6060-11f8-a4fa-000c295c6f9a).TM.bLF', 'NTUSER.DAT(edf87728-6064-11f0-a4fa-000c295c6f9a). TMContainer@@@@@@ 00000000000001.regtrans-ms', 'NTUSER.DAT{edfe7720-6062-11f0-a4fa-000c295c6f9a).TMContainer@@@@@@@@@@@@@@@@@@2.regtrans-ms', 'ntuser.ini", "OneDrive", 'PCA_Output.csv', 'products.csv', 'realestate_prices.csv', 'Retail Sales Data.csv', 'sales.csv', 'sales data.csv', 'sales_data.json', 'sales_data.xlsx', "Saved Games', 'Searches', 'spam.csv', 'spam_ham_dataset.csv', 'stations.csv', 'station_day.csv', 'station_hour.csv", 'telecom customer churn.csv", "tel ecom_data_dictionary.csv', 'telecom_zipcode_population.csv', 'tiya', 'tiyal', 'uber.csv', 'Untitled.ipynb', 'Untitled1.ipynb", "venv", "Videos", 'vina.e xe', 'Wine.csv', 'pycache']
+[8]:
+
+import sys
+
+![sys.executable) -m pip install gemmi
+
+Collecting gemmi
+
+Downloading gemmi-0.7.5-cp313-cp313-win_amd64.whl.metadata (2.3 kB)
+
+Downloading gemmi-0.7.5-cp313-cp313-win_amd64.whl (2.3 MB)
+
+0.0/2.3 MB ? eta:
+
+0.5/2.3 MB 3.0 MB/s eta 0:00:01
+
+1.0/2.3 MB 4.7 MB/s eta 0:00:01
+
+1.0/2.3 MB 4.7 MB/s eta 0:00:01
+
+1.0/2.3 MB 4.7 MB/s eta 0:00:01
+
+1.6/2.3 MB 1.4 MB/s eta 0:00:01
+
+2.3/2.3 MB 1.7 MB/s eta 0:00:00
+
+Installing collected packages: gemmi
+
+Successfully installed gemmi-0.7.5
+[2] import subprocess
+
+import sysconfig
+
+from pathlib import Path
+
+scripts Path (sysconfig.get_path("scripts"))
+
+cmd = [
+
+str(scripts/"mk_prepare_receptor.exe"), "--read_pdb", "6m0j.pdb", "-o", "receptor", "-p", "j", "-d", "A:903,904,905,906, E:601", "--default_altloc", "A"
+
+result = subprocess.run(cmd, capture_output=True, text=True)
+
+print("Return code:", result.returncode)
+
+print(result.stdout)
+
+print(result.stderr)
+
+Return code: e
+
+Template padding will be used.
+
+gasteiger charges will be read from template file
+
+Files written:
+
+receptor.json parameterized receptor
+
+receptor.pdbqt static (i.e., rigid) receptor input file
+import os
+
+print("Receptor PDBQT:", os.path.exists("receptor.pdbqt"))
+
+print("Receptor JSON:", os.path.exists("receptor.json"))
+
+Receptor PDBQT: True
+
+Receptor 350N: True
+
+[4]: import subprocess
+
+import sysconfig from pathlib import Path
+
+scripts Path(sysconfig.get_path("scripts"))
+
+cmd = [
+
+str(scripts/ "mk_prepare_ligand.exe"), "-1", "Conformer3D_COMPOUND_CID_135398740.sdf", "-o", "ligand.pdbqt"
+
+result = subprocess.run(cmd, capture_output=True, text=True)
+
+print("Return code:", result.returncode)
+
+print(result.stdout)
+
+print(result.stderr)
+
+Return code: 6
+
+Input molecules processed: 1, skipped:
+
+PDBQT files written: 1
+
+PDBQT files not written due to error:
+
+Input molecules with errors: 8
+
+リ
+
+125°C
+[5]: import os
+
+print("Ligand prepared:", os.path.exists("ligand.pdbqt"))
+
+Ligand prepared: True
+
+[
+
+6]: from Bio.PDB import PDBParser from scipy.spatial.distance import cdist import numpy as np
+
+p= PDBParser (QUIET=True).get_structure("p", "6m0j.pdb")[0]
+
+A= np.array([a.coord for a in p["A"].get_atoms() if a.element not in ("H", "0")])
+
+E= np.array([a.coord for a in p["E"].get_atoms() if a.element not in ("H", "D")])
+
+dcdist(A, Ε)
+
+center= A[np.any(d< 5, axis=1)].mean(axis=0)
+
+print("Docking centre:", center)
+
+Docking centre: [-35.34925 29.908133 -1.0004]
+[7]: import subprocess
+
+cmd = [
+
+"vina.exe",
+
+"--receptor", "receptor.pdbqt",
+
+"--ligand", "ligand.pdbqt",
+
+"--center_x", str(center[0]),
+
+"--center y", str(center[1]),
+
+"--center_z", str(center[2]),
+
+"-size x", "24",
+
+"--size y", "24",
+
+"size_z", "24",
+
+"--exhaustiveness", "8",
+
+"--num_modes", "5",
+
+"--out", "docked_pose.pdbqt"
+
+1
+
+result = subprocess.run(cmd, capture_output=True, text=True)
+
+print(result.stdout)
+
+print(result.stderr)
+AutoDock Vina v1.2.7
+
+#If you used AutoDock Vina in your work, please cite:
+
+#
+
+#3. Eberhardt, D. Santos-Martins, A. F. Tillack, and S. Forli #
+
+AutoDock Vina 1.2.0: New Docking Methods, Expanded Force
+
+# Field, and Python Bindings, J. Chem. Inf. Model. (2021)
+
+# DOI 10.1021/acs.jcim.1c00203
+
+#0. Trott, A. J. Olson,
+
+# AutoDock Vina: improving the speed and accuracy of docking # with a new scoring function, efficient optimization and
+
+#multithreading, J. Comp. Chem. (2010)
+
+#DOI 10.1002/jcc.21334
+
+#
+
+# Please see https://github.com/ccsb-scripps/AutoDock-Vina for
+
+# more information.
+
+Scoring function: vina
+
+Rigid receptor: receptor.pdbqt
+
+Ligand: ligand.pdbqt
+
+Grid center: X -35.3492 Y 29.9081 2 -1.0004
+
+Grid size X 24 Y 24 Z 24
+
+Grid space: 0.375
+
+Exhaustiveness: 8
+
+CPU: 0
+
+Verbosity: 1
+
+#
+
+#
+
+#
+
+Computing Vina grid done.
+
+Performing docking (random seed: -1273144815)
+
+0% 40 50 60 70 80 90 100%
+
+10 20 30
+
+mode
+
+affinity | (kcal/mol) |
+
+dist from best mode
+
+rmsd l.b.
+
+rmsd u.b.
+
+1
+
+-5.734
+
+0
+
+0
+
+2
+
+2.501
+
+5.535
+
+3
+
+-5.607
+
+3.172
+
+5.654
+
+4
+
+-5.479
+
+15.08
+
+16.14
+
+5
+
+-5.24
+
+-5.364
+
+1.975
+
+2.994
+
+WARNING: At low exhaustiveness, it may be impossible to utilize all CPUs.
+8]: with open("docked_pose.pdbqt") as f:
+
+for line in f:
+
+if "VINA RESULT" in line:
+
+print(line.strip())
+
+I
+
+REMARK VINA RESULT:
+
+-5.734
+
+0.000
+
+0.000
+
+REMARK VINA RESULT:
+
+-5.607
+
+2.501
+
+5.535
+
+REMARK VINA RESULT:
+
+-5.479
+
+3.172
+
+5.654
+
+REMARK VINA RESULT:
+
+-5.364
+
+15.080
+
+16.141
+
+REMARK VINA R[9]:
+
+import glob
+
+import os
+
+for file in glob.glob("ligands/*.sdf"): name= os.path.basename(file).replace(".sdf", "")
+
+subprocess.run([
+
+"mk_prepare_ligand.exe", "-1", file, "-o", name + ".pdbqt" ], capture_output=True, text=True, check=True)
+
+subprocess.run([
+
+"vina.exe", "--receptor", "receptor.pdbqt", "--ligand", name + ".pdbqt", "--center_x", str (center[0]), "--center_y", str (center[1]), "--center_z", str (center[2]), --size_x", "24", "--size_y", "24", "--size_z", "24", "--out", name + "_docked.pdbqt"
+
+1, capture_output=True, text=True, check=True)
+
+print("Virtual screening completed!")
+
+Virtual screening completed!
+
+[]:ESULT:
+
+-5.240
+
+1.975
+
+2.994
 
 # BIF 4
 
@@ -487,3 +1263,60 @@ print("Accuracy:", accuracy_score(y_test, y_pred) * 100, "%")
 print("Important Features:")
 for name, score in zip(data.feature_names, model.feature_importances_):
     print(name, ":", round(score, 3))
+
+#OR#
+
+import pandas as pd
+
+from sklearn.feature_extraction.text import CountVectorizer
+
+from sklearn.model_selection import train_test_split
+
+from sklearn.ensemble import RandomForestClassifier
+
+from sklearn.metrics import accuracy_score, classification_report
+
+df = pd.read_csv("human.csv")
+
+X = df["sequence"].astype(str).str.upper()
+
+y = df["class"]
+
+# Extract DNA 3-mer features
+
+vectorizer = CountVectorizer(
+    analyzer="char",
+    ngram_range=(3, 3)
+)
+
+X = vectorizer.fit_transform(X)
+
+# Split data
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.2,
+    random_state=42,
+    stratify=y
+)
+
+# Train Random Forest
+
+model = RandomForestClassifier(
+    n_estimators=150,
+    random_state=42,
+    class_weight="balanced"
+)
+
+model.fit(X_train, y_train)
+
+# Prediction
+
+y_pred = model.predict(X_test)
+
+print("Accuracy:", accuracy_score(y_test, y_pred))
+
+print("Classification Report:")
+
+print(classification_report(y_test, y_pred))
